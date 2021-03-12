@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CC_MobileApp</string>
+    <string name="title_homepage">Homepage</string>
 </resources>
