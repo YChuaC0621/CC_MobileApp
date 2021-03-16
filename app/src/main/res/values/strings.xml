@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">CC_MobileApp</string>
     <string name="title_homepage">Homepage</string>
+
+    <!-- for client -->
+    <string name="client_id">Client ID</string>
+    <string name="sitemap">Site Map</string>
+    <string name="supplier">Supplier</string>
+    <string name="client">Client</string>
+    <string name="visualizeData">Visualize Data</string>
+    <string name="product">Product</string>
+    <string name="stocks">Stocks</string>
+    <dimen name="min_text_height">48dp</dimen>
 </resources>
+

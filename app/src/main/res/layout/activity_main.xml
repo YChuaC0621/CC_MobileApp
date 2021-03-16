@@ -4,4 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    android:background="#00678880"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/btn_visualizeData"
+        style="@style/homepage_btn"
+        android:layout_marginStart="224dp"
+        android:layout_marginTop="232dp"
+        android:drawableTop="@drawable/ic_visualdata_icon"
+        android:text="@string/visualizeData"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_client2"
+        style="@style/homepage_btn"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="232dp"
+        android:drawableTop="@drawable/ic_client_icon"
+        android:text="@string/client"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_product"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="420dp"
+        android:drawableTop="@drawable/ic_product_icon"
+        android:text="@string/product"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/homepage_btn"/>
+
+    <Button
+        android:id="@+id/btn_stocks"
+        android:layout_width="137dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="236dp"
+        android:layout_marginTop="420dp"
+        android:drawableTop="@drawable/ic_stock_icon"
+        android:text="@string/stocks"
+        android:textColor="#000000"
+        app:backgroundTint="#0000BCD4"
+        app:cornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#000000"
+        app:strokeWidth="1dp"
+        style="@style/homepage_btn"/>
+
+    <Button
+        android:id="@+id/btn_sitemap"
+        android:layout_width="137dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="40dp"
+        android:drawableTop="@drawable/ic_sitemap_icon"
+        android:includeFontPadding="false"
+        android:paddingTop="8dp"
+        android:text="@string/sitemap"
+        android:textColor="#000000"
+        app:backgroundTint="#0000BCD4"
+        app:cornerRadius="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#000000"
+        app:strokeWidth="1dp"
+        style="@style/homepage_btn"/>
+
+    <Button
+        android:id="@+id/btn_supplier"
+        style="@style/homepage_btn"
+        android:layout_width="137dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="236dp"
+        android:layout_marginTop="40dp"
+        android:drawableTop="@drawable/ic_supplier_icon"
+        android:textColor="#000000"
+        app:backgroundTint="#0000BCD4"
+        app:cornerRadius="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#000000"
+        app:strokeWidth="1dp"
+        tools:text="@string/supplier" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.cc_mobileapp.client
+package com.example.cc_mobileapp;
 
 class ClientMainActivity {
 

@@ -11,10 +11,10 @@ import com.mongodb.MongoClientURI
 //var mongoClient = MongoClient(uri)
 //var db = mongoClient.getDatabase(uri.database)
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        Toast.makeText(this, "firebase connection success", Toast.LENGTH_LONG ).show()
+
+        //Toast.makeText(this, "firebase connection success", Toast.LENGTH_LONG ).show()
     }
 }
