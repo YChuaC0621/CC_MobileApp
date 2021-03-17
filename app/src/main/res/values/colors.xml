@@ -10,4 +10,6 @@
 
     <color name="pink">#FDC9FF</color>
     <color name="blue_61">#094391</color>
+
+    <color name="transparent">#0000BCD4</color>
 </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="homepg_btnHeight">137dp</dimen>
+    <dimen name="homepg_btnWidth">137dp</dimen>
+    <dimen name="homepg_btnPaddingTop">8dp</dimen>
+    <dimen name="homepg_btnRadius">25dp</dimen>
+    <dimen name="homepg_btnStrokeWidth">3dp</dimen>
+</resources>
