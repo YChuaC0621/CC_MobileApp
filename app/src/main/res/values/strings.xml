@@ -7,9 +7,17 @@
     <string name="sitemap">Site Map</string>
     <string name="supplier">Supplier</string>
     <string name="client">Client</string>
-    <string name="visualizeData">Visualize Data</string>
+    <string name="visualize">Visualize</string>
     <string name="product">Product</string>
     <string name="stocks">Stocks</string>
-    <dimen name="min_text_height">48dp</dimen>
+
+    <!-- general use -->
+    <string name="company_name">Company Name</string>
+    <string name="email">Email</string>
+    <string name="location">Location</string>
+    <string name="contact_num">Contact Number</string>
+
+    <!-- all page title name -->
+    <string name="add_client"><b>Add Client</b></string>
 </resources>
 

@@ -7,57 +7,11 @@
     android:background="#00678880"
     tools:context=".MainActivity">
 
-
-    <Button
-        android:id="@+id/btn_visualizeData"
-        style="@style/homepage_btn"
-        android:layout_marginStart="224dp"
-        android:layout_marginTop="232dp"
-        android:background="@drawable/homepg_btn"
-        android:drawableTop="@drawable/ic_visualdata_icon"
-        android:text="@string/visualizeData"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_client"
-        style="@style/homepage_btn"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="232dp"
-        android:background="@drawable/homepg_btn"
-        android:drawableTop="@drawable/ic_client_icon"
-        android:text="@string/client"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_product"
-        style="@style/homepage_btn"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="420dp"
-        android:background="@drawable/homepg_btn"
-        android:drawableTop="@drawable/ic_product_icon"
-        android:text="@string/product"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_stocks"
-        style="@style/homepage_btn"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="420dp"
-        android:background="@drawable/homepg_btn"
-        android:drawableTop="@drawable/ic_stock_icon"
-        android:text="@string/stocks"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeWidth="1dp" />
-
     <Button
         android:id="@+id/btn_sitemap"
         style="@style/homepage_btn"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/homepg_btn"
         android:drawableTop="@drawable/ic_sitemap_icon"
         android:text="@string/sitemap"
@@ -67,12 +21,61 @@
     <Button
         android:id="@+id/btn_supplier"
         style="@style/homepage_btn"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/homepg_btn"
         android:drawableTop="@drawable/ic_supplier_icon"
+        android:text="@string/supplier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.836"
+        app:layout_constraintStart_toEndOf="@+id/btn_sitemap"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_client"
+        style="@style/homepage_btn"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/homepg_btn"
+        android:drawableTop="@drawable/ic_client_icon"
+        android:text="@string/client"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/supplier" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_sitemap" />
+
+    <Button
+        android:id="@+id/btn_visualizeData"
+        style="@style/homepage_btn"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/homepg_btn"
+        android:drawableTop="@drawable/ic_visualdata_icon"
+        android:text="@string/visualize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_supplier" />
+
+    <Button
+        android:id="@+id/btn_product"
+        style="@style/homepage_btn"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/homepg_btn"
+        android:drawableTop="@drawable/ic_product_icon"
+        android:text="@string/product"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_client" />
+
+    <Button
+        android:id="@+id/btn_stocks"
+        style="@style/homepage_btn"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/homepg_btn"
+        android:drawableTop="@drawable/ic_stock_icon"
+        android:text="@string/stocks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_product"
+        app:layout_constraintTop_toBottomOf="@+id/btn_visualizeData"
+        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

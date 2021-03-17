@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- homepage button dimensions-->
     <dimen name="homepg_btnHeight">137dp</dimen>
     <dimen name="homepg_btnWidth">137dp</dimen>
     <dimen name="homepg_btnPaddingTop">8dp</dimen>
     <dimen name="homepg_btnRadius">25dp</dimen>
     <dimen name="homepg_btnStrokeWidth">3dp</dimen>
+
+    <!-- general edit text dimensions-->
+    <dimen name="editTxt_width">340dp</dimen>
+    <dimen name="editTxt_marginTop">30dp</dimen>
+    <dimen name="editTxt_marginStart">18dp</dimen>
+
 </resources>
