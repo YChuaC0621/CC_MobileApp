@@ -19,5 +19,7 @@
 
     <!-- all page title name -->
     <string name="add_client"><b>Add Client</b></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 

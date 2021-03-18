@@ -1,109 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".client.Client_Add">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTxt_clientID"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="@dimen/editTxt_width"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/editTxt_marginStart"
-        android:layout_marginTop="@dimen/editTxt_marginTop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <data>
+        <variable
+            name="clientViewModel"
+            type="com.example.cc_mobileapp.client.ClientViewModel" />
+    </data>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/client_id"
-            android:inputType="number" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".client.Client_Add">
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTxt_clientID"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTxt_companyName"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="@dimen/editTxt_width"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/editTxt_marginStart"
-        android:layout_marginTop="@dimen/editTxt_marginTop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxt_clientID">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/client_id"
+                android:inputType="number" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/company_name"
-            android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTxt_companyName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTxt_clientID">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTxt_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="@dimen/editTxt_width"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/editTxt_marginStart"
-        android:layout_marginTop="@dimen/editTxt_marginTop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxt_companyName">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/company_name"
+                android:inputType="number" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/email"
-            android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTxt_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTxt_companyName">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTxt_contactNum"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="@dimen/editTxt_width"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/editTxt_marginStart"
-        android:layout_marginTop="@dimen/editTxt_marginTop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxt_email">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/email"
+                android:inputType="number" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/contact_num"
-            android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTxt_contactNum"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTxt_email">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTxt_location"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="@dimen/editTxt_width"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/editTxt_marginStart"
-        android:layout_marginTop="@dimen/editTxt_marginTop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxt_contactNum">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/contact_num"
+                android:inputType="number" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/location"
-            android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTxt_location"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTxt_contactNum">
 
-    <TextView
-        android:id="@+id/txtView_addClient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Add Client"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/location"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/txtView_addClient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Add Client"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="save" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

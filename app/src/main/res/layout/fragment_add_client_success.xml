@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="clientViewModel"
+            type="com.example.cc_mobileapp.client.ClientViewModel" />
+
+        <variable
+            name="addClientSuccessFragment"
+            type="com.example.cc_mobileapp.client.AddClientSuccessFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".client.AddClientSuccessFragment">
+
+
+        <TextView
+            android:id="@+id/txtView_clientID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="64dp"
+            android:text="Client ID:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtView_companyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="44dp"
+            android:text="Company Name:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_clientID" />
+
+        <TextView
+            android:id="@+id/txtView_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="44dp"
+            android:text="Email:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_companyName" />
+
+        <TextView
+            android:id="@+id/txtView_contactNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="44dp"
+            android:text="Contact Number:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_email" />
+
+        <TextView
+            android:id="@+id/txtView_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="44dp"
+            android:text="Location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_contactNo" />
+
+        <TextView
+            android:id="@+id/txtView_bind_clientID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="64dp"
+            android:text="abc"
+            app:layout_constraintStart_toEndOf="@+id/txtView_clientID"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtView_bind_companyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="44dp"
+            android:text="cde"
+            app:layout_constraintStart_toEndOf="@+id/txtView_companyName"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_bind_clientID" />
+
+        <TextView
+            android:id="@+id/txtView_bind_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="44dp"
+            android:text="efg"
+            app:layout_constraintStart_toEndOf="@+id/txtView_email"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_bind_companyName" />
+
+        <TextView
+            android:id="@+id/txtView_bind_contactNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="44dp"
+            android:text="001122"
+            app:layout_constraintStart_toEndOf="@+id/txtView_contactNo"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_bind_email" />
+
+        <TextView
+            android:id="@+id/txtView_bind_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="44dp"
+            android:text="ghi"
+            app:layout_constraintStart_toEndOf="@+id/txtView_location"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_bind_contactNo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
