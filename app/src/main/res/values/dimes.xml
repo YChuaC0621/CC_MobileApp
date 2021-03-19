@@ -9,7 +9,7 @@
 
     <!-- general edit text dimensions-->
     <dimen name="editTxt_width">340dp</dimen>
-    <dimen name="editTxt_marginTop">30dp</dimen>
+    <dimen name="editTxt_marginTop">12dp</dimen>
     <dimen name="editTxt_marginStart">18dp</dimen>
 
     <!-- all form title text size -->
