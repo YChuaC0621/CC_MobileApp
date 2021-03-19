@@ -119,13 +119,11 @@
 
         <Button
             android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="48dp"
+            style="@style/circlebtn_standard"
+            app:icon="@drawable/ic_save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="save" />
+            android:background="@drawable/circlebtn_standard"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

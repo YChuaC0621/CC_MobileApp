@@ -6,6 +6,8 @@
     <dimen name="homepg_btnPaddingTop">8dp</dimen>
     <dimen name="homepg_btnRadius">25dp</dimen>
     <dimen name="homepg_btnStrokeWidth">3dp</dimen>
+    <dimen name="homepg_btnMarginTop">40dp</dimen>
+    <dimen name="homepg_btnMarginEndOrStart">30dp</dimen>
 
     <!-- general edit text dimensions-->
     <dimen name="editTxt_width">340dp</dimen>
@@ -14,4 +16,12 @@
 
     <!-- all form title text size -->
     <dimen name="form_titleSize">25dp</dimen>
+
+    <!-- circle button dimension -->
+    <dimen name="btnCircle_heightWidth">78dp</dimen>
+    <dimen name="btnCircle_marginEnd">28dp</dimen>
+    <dimen name="btnCircle_marginBottom">28dp</dimen>
+    <dimen name="btnCircle_insetTop">0dp</dimen>
+    <dimen name="btnCircle_insetBottom">0dp</dimen>
+    <dimen name="btnCircle_cornerRadius">100dp</dimen>
 </resources>
