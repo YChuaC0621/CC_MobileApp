@@ -12,4 +12,7 @@
     <color name="blue_61">#094391</color>
 
     <color name="transparent">#0000BCD4</color>
+
+    <!-- circle button color standard -->
+    <color name="circleBtnStdColor">#2196F3</color>
 </resources>

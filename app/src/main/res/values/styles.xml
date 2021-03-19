@@ -5,6 +5,7 @@
 
     </style>
 
+    <!-- homepage button style-->
     <style name="homepage_btn" parent="@style/Widget.MaterialComponents.Button">
         <item name="android:layout_width">@dimen/homepg_btnWidth</item>
         <item name="android:layout_height">@dimen/homepg_btnHeight</item>
@@ -15,4 +16,16 @@
         <item name="strokeColor">@color/black</item>
         <item name="backgroundTint">@color/black</item>
    </style>
+
+
+    <style name="circlebtn_standard" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">@dimen/btnCircle_heightWidth</item>
+        <item name="android:layout_height">@dimen/btnCircle_heightWidth</item>
+        <item name="android:insetTop">@dimen/btnCircle_insetTop</item>
+        <item name="android:insetBottom">@dimen/btnCircle_insetBottom</item>
+        <item name="android:layout_marginBottom">@dimen/btnCircle_marginBottom</item>
+        <item name="android:layout_marginEnd">@dimen/btnCircle_marginEnd</item>
+        <item name="android:buttonCornerRadius">@dimen/btnCircle_cornerRadius</item>
+        <item name="backgroundTint">@color/circleBtnStdColor</item>
+    </style>
 </resources>

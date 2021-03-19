@@ -12,7 +12,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".client.Client_Add">
+        tools:context=".client.Client_Add"
+        >
+
+        <TextView
+            android:id="@+id/txtView_addClient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_client"
+            android:textSize="@dimen/form_titleSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTxt_clientID"
@@ -22,7 +34,8 @@
             android:layout_marginStart="@dimen/editTxt_marginStart"
             android:layout_marginTop="@dimen/editTxt_marginTop"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/txtView_addClient"
+            >
 
             <EditText
                 android:layout_width="match_parent"
@@ -104,27 +117,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/txtView_addClient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Add Client"
-            android:textSize="@dimen/form_titleSize"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <Button
             android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="48dp"
+            style="@style/circlebtn_standard"
+            app:icon="@drawable/ic_save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="save" />
-
+            android:background="@drawable/circlebtn_standard"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
