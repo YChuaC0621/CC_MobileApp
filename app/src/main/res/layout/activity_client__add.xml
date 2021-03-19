@@ -110,6 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Add Client"
+            android:textSize="@dimen/form_titleSize"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

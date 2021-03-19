@@ -12,4 +12,6 @@
     <dimen name="editTxt_marginTop">30dp</dimen>
     <dimen name="editTxt_marginStart">18dp</dimen>
 
+    <!-- all form title text size -->
+    <dimen name="form_titleSize">25dp</dimen>
 </resources>
