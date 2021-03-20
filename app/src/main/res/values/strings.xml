@@ -20,5 +20,17 @@
     <!-- all page title name -->
     <string name="add_client"><b>Add Client</b></string>
 
+    <!-- sign up & login-->
+    <string name="username">User Name</string>
+    <string name="hpNum">Phone Number</string>
+    <string name="psw">Password</string>
+    <string name="repeatPsw">Repeat Password</string>
+    <string name="loginMsg"><u>Already have an account? <b>Login</b></u></string>
+    <string name="signupMsg"><u>Don't have an account? <b>Register</b></u></string>
+    <string name="showPsw">Show Password</string>
+    <string name="verificationCode">Verification Code</string>
+    <string name="newPsw">New Password</string>
+    <string name="forgtPsw">Forgot Password</string>
+
 </resources>
 
