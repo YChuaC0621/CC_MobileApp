@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAlignment="center">
+
+
+    <Button
+        android:id="@+id/btn_home"
+        style="@style/transparentbtn_standard"
+        android:drawableTop="@drawable/ic_home_icon"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_verification"
+        style="@style/transparentbtn2_standard"
+        android:clickable="false"
+        android:drawableTop="@drawable/ic_email_icon"
+        app:layout_constraintEnd_toStartOf="@+id/txtVerification"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_home" />
+
+    <TextView
+        android:id="@+id/txtVerification"
+        style="@style/txtUserfield_standard"
+        android:clickable="true"
+        android:background="@drawable/borderbottom_txtfield"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/verificationCode"
+        app:layout_constraintStart_toEndOf="@+id/btn_verification"
+        app:layout_constraintTop_toBottomOf="@+id/btn_home" />
+
+    <Button
+        android:id="@+id/btn_psw"
+        style="@style/transparentbtn2_standard"
+        android:layout_marginEnd="20dp"
+        android:clickable="false"
+        android:drawableTop="@drawable/ic_lock_icon"
+        app:layout_constraintEnd_toStartOf="@+id/txtPsw"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_verification" />
+
+    <TextView
+        android:id="@+id/txtPsw"
+        style="@style/txtUserfield_standard"
+        android:background="@drawable/borderbottom_txtfield"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/newPsw"
+        android:clickable="true"
+        app:layout_constraintStart_toEndOf="@+id/btn_psw"
+        app:layout_constraintTop_toBottomOf="@+id/txtVerification" />
+
+    <Button
+        android:id="@+id/btn_repeatPsw"
+        style="@style/transparentbtn2_standard"
+        android:drawableTop="@drawable/ic_lock_icon"
+        android:clickable="false"
+        app:layout_constraintEnd_toStartOf="@+id/txtRepeatPsw"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_psw" />
+
+    <TextView
+        android:id="@+id/txtRepeatPsw"
+        style="@style/txtUserfield_standard"
+        android:background="@drawable/borderbottom_txtfield"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/repeatPsw"
+        android:clickable="true"
+        app:layout_constraintStart_toEndOf="@+id/btn_repeatPsw"
+        app:layout_constraintTop_toBottomOf="@+id/txtPsw" />
+
+
+
+    <Button
+        android:id="@+id/btn_continue"
+        style="@style/continuebtn_standard"
+        android:background="@drawable/continue_btn"
+        android:drawableRight="@drawable/ic_continue_icon"
+        android:text="Continue"
+        app:backgroundTint="@color/txtFieldColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/circle_background"
+        android:layout_width="649dp"
+        android:layout_height="684dp"
+        android:layout_marginBottom="132dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/circle_gradientbackground" />
+
+    <TextView
+        android:id="@+id/txtLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:text="@string/signupMsg"
+        android:textColor="@color/blue_61"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_continue" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

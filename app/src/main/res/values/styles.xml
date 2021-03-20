@@ -5,11 +5,15 @@
 
     </style>
 
-    <!-- homepage button style-->
+    <!-- homepage button style
+
+    <item name="android:buttonCornerRadius">@dimen/homepg_btnRadius</item>
+     <item name="android:buttonCornerRadius">@dimen/btnCircle_cornerRadius</item>
+    -->
     <style name="homepage_btn" parent="@style/Widget.MaterialComponents.Button">
         <item name="android:layout_width">@dimen/homepg_btnWidth</item>
         <item name="android:layout_height">@dimen/homepg_btnHeight</item>
-        <item name="android:buttonCornerRadius">@dimen/homepg_btnRadius</item>
+
         <item name="android:paddingTop">@dimen/homepg_btnPaddingTop</item>
         <item name="android:textColor">@color/black</item>
         <item name="strokeWidth">@dimen/homepg_btnStrokeWidth</item>
@@ -25,7 +29,40 @@
         <item name="android:insetBottom">@dimen/btnCircle_insetBottom</item>
         <item name="android:layout_marginBottom">@dimen/btnCircle_marginBottom</item>
         <item name="android:layout_marginEnd">@dimen/btnCircle_marginEnd</item>
-        <item name="android:buttonCornerRadius">@dimen/btnCircle_cornerRadius</item>
+
         <item name="backgroundTint">@color/circleBtnStdColor</item>
+    </style>
+
+    <style name="transparentbtn_standard" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">@dimen/trans_btnWidth</item>
+        <item name="android:layout_height">@dimen/trans_btnHeight</item>
+        <item name="android:paddingTop">@dimen/trans_btnPaddingTop</item>
+        <item name="backgroundTint">@color/transparent</item>
+    </style>
+
+    <style name="transparentbtn2_standard" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">@dimen/trans_btn2Width</item>
+        <item name="android:layout_height">@dimen/trans_btn2Height</item>
+        <item name="android:layout_marginEnd">@dimen/trans_btn2MarginEnd</item>
+        <item name="android:layout_marginTop">@dimen/trans_btn2MarginTop</item>
+        <item name="android:layout_marginStart">@dimen/trans_btn2MarginStart</item>
+        <item name="backgroundTint">@color/transparent</item>
+    </style>
+
+    <style name="continuebtn_standard" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">@dimen/continue_btnWidth</item>
+        <item name="android:layout_height">@dimen/continue_btnHeight</item>
+        <item name="android:layout_marginEnd">@dimen/continue_btnMarginEnd</item>
+        <item name="android:layout_marginBottom">@dimen/continue_btnMarginBottom</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:radius">@dimen/continue_btnRadius</item>
+    </style>
+
+    <style name="txtUserfield_standard" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">@dimen/txt_Width</item>
+        <item name="android:layout_height">@dimen/txt_Height</item>
+        <item name="android:layout_marginTop">@dimen/txt_MarginTop</item>
+        <item name="android:layout_marginStart">@dimen/txt_MarginStart</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

@@ -24,4 +24,34 @@
     <dimen name="btnCircle_insetTop">0dp</dimen>
     <dimen name="btnCircle_insetBottom">0dp</dimen>
     <dimen name="btnCircle_cornerRadius">100dp</dimen>
+
+    <!-- transparent button dimensions-->
+    <dimen name="trans_btnHeight">92dp</dimen>
+    <dimen name="trans_btnWidth">92dp</dimen>
+    <dimen name="trans_btnPaddingTop">8dp</dimen>
+    <dimen name="trans_btnRadius">25dp</dimen>
+    <dimen name="trans_btnStrokeWidth">3dp</dimen>
+    <dimen name="trans_btnMarginTop">40dp</dimen>
+    <dimen name="trans_btnMarginEndOrStart">30dp</dimen>
+
+    <!-- transparent btn 2 dimensions-->
+    <dimen name="trans_btn2Height">48dp</dimen>
+    <dimen name="trans_btn2Width">52dp</dimen>
+    <dimen name="trans_btn2MarginTop">16dp</dimen>
+    <dimen name="trans_btn2MarginEnd">36dp</dimen>
+    <dimen name="trans_btn2MarginStart">36dp</dimen>
+
+    <!-- text field dimensions for user management module-->
+    <dimen name="txt_Height">28dp</dimen>
+    <dimen name="txt_Width">241dp</dimen>
+    <dimen name="txt_MarginTop">24dp</dimen>
+    <dimen name="txt_MarginStart">20dp</dimen>
+
+    <!-- continue button dimensions-->
+    <dimen name="continue_btnHeight">52dp</dimen>
+    <dimen name="continue_btnWidth">150dp</dimen>
+    <dimen name="continue_btnMarginBottom">60dp</dimen>
+    <dimen name="continue_btnMarginEnd">70dp</dimen>
+    <dimen name="continue_btnRadius">25dp</dimen>
+
 </resources>

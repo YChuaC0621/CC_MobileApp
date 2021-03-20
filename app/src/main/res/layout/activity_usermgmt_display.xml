@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/circle_background2"
+        android:layout_width="801dp"
+        android:layout_height="218dp"
+        android:layout_marginBottom="520dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/circle_gradientbackground" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="65dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_user_icon" />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/btn_hpNum"
+        style="@style/transparentbtn2_standard"
+        android:layout_marginTop="68dp"
+        android:clickable="false"
+        android:drawableTop="@drawable/ic_phone_icon"
+        app:layout_constraintEnd_toStartOf="@+id/txthpNum"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtName" />
+
+    <TextView
+        android:id="@+id/txthpNum"
+        style="@style/txtUserfield_standard"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/borderbottom_txtfield"
+        android:clickable="true"
+        android:text="@string/hpNum"
+        app:layout_constraintStart_toEndOf="@+id/btn_hpNum"
+        app:layout_constraintTop_toBottomOf="@+id/txtName" />
+
+    <Button
+        android:id="@+id/btn_email"
+        style="@style/transparentbtn2_standard"
+        android:drawableTop="@drawable/ic_email_icon"
+        android:clickable="false"
+        app:layout_constraintEnd_toStartOf="@+id/txtEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_hpNum" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        style="@style/txtUserfield_standard"
+        android:clickable="true"
+        android:background="@drawable/borderbottom_txtfield"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/email"
+        app:layout_constraintStart_toEndOf="@+id/btn_email"
+        app:layout_constraintTop_toBottomOf="@+id/txthpNum" />
+
+    <Button
+        android:id="@+id/btn_psw"
+        style="@style/transparentbtn2_standard"
+        android:drawableTop="@drawable/ic_lock_icon"
+        android:clickable="false"
+        app:layout_constraintEnd_toStartOf="@+id/txtPsw"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_email" />
+
+    <TextView
+        android:id="@+id/txtPsw"
+        style="@style/txtUserfield_standard"
+        android:background="@drawable/borderbottom_txtfield"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/psw"
+        android:clickable="true"
+        app:layout_constraintStart_toEndOf="@+id/btn_psw"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+
+    <Button
+        android:id="@+id/btn_repeatPsw"
+        style="@style/transparentbtn2_standard"
+        android:drawableTop="@drawable/ic_lock_icon"
+        android:clickable="false"
+        app:layout_constraintEnd_toStartOf="@+id/txtRepeatPsw"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_psw" />
+
+    <TextView
+        android:id="@+id/txtRepeatPsw"
+        style="@style/txtUserfield_standard"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:clickable="true"
+        android:background="@drawable/borderbottom_txtfield"
+        android:text="@string/repeatPsw"
+        app:layout_constraintStart_toEndOf="@+id/btn_repeatPsw"
+        app:layout_constraintTop_toBottomOf="@+id/txtPsw" />
+
+    <Button
+        android:id="@+id/btn_setting"
+        style="@style/transparentbtn2_standard"
+        android:clickable="false"
+        android:drawableTop="@drawable/ic_setting_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_repeatPsw" />
+
+    <Spinner
+        android:id="@+id/ddlTheme"
+        style="@style/txtUserfield_standard"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/dropdown_bckgrd"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toEndOf="@+id/btn_setting"
+        app:layout_constraintTop_toBottomOf="@+id/txtRepeatPsw" />
+
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/circlebtn_standard"
+        app:icon="@drawable/ic_edit_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/circlebtn_standard"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
