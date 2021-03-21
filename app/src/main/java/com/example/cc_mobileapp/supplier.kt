@@ -42,7 +42,7 @@ class supplier : AppCompatActivity() {
             return i.toLong()
         }
 
-        override fun getView(i: Int, view: View, viewGroup: ViewGroup): View {
+        override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
             var view = view
             if (view == null) {
                 //inflate layout resource if its null
@@ -53,19 +53,21 @@ class supplier : AppCompatActivity() {
             val sup = this.getItem(i) as supplierCollection
 
             //reference textviews from our layout
-            val txtSupName = view.findViewById<TextView>(R.id.txtSupplierName) as TextView
-            val txtCmpName = view.findViewById<TextView>(R.id.txtCmpName) as TextView
+            val txtSupName = view?.findViewById<TextView>(R.id.txtSupplierName) as TextView
+            val txtCmpName = view?.findViewById<TextView>(R.id.txtCmpName) as TextView
 
             //Bind data to textview
             txtSupName.text = sup.getSupName()
             txtCmpName.text = sup.getCmpName()
 
             //handle itemclicks for the ListView
-            view.setOnClickListener {
-                Toast.makeText(c, sup.getSupName(), Toast.LENGTH_SHORT).show()
+            if (view != null) {
+                view.setOnClickListener {
+                    Toast.makeText(c, sup.getSupName(), Toast.LENGTH_SHORT).show()
+                }
             }
 
-            return view
+            return view!!
         }
     }
 
