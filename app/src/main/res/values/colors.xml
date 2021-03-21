@@ -15,6 +15,9 @@
 
     <!-- circle button color standard -->
     <color name="circleBtnStdColor">#2196F3</color>
-
+    <color name="circleBtnHoverColor">#95989A</color>
     <color name="txtFieldColor">#C2DFFF</color>
+    <color name="supplierColor">#DCF0FF</color>
+    <color name="supplierColor2">#B2DEFF</color>
+
 </resources>

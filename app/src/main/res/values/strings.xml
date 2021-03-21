@@ -26,7 +26,7 @@
     <string name="psw">Password</string>
     <string name="repeatPsw">Repeat Password</string>
     <string name="loginMsg"><u>Already have an account? <b>Login</b></u></string>
-    <string name="signupMsg"><u>Don't have an account? <b>Register</b></u></string>
+    <string name="signupMsg"><u>No have an account? <b>Register</b></u></string>
     <string name="showPsw">Show Password</string>
     <string name="verificationCode">Verification Code</string>
     <string name="newPsw">New Password</string>
