@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.cc_mobileapp.client.Constant.NODE_CLIENT
+import com.example.cc_mobileapp.Constant.NODE_CLIENT
 import com.example.cc_mobileapp.model.Client
 import com.google.firebase.database.*
 
