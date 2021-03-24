@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/list_item_client"
@@ -15,7 +15,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/listview_bckgrd" />
+        app:srcCompat="@drawable/listview_bckgrd_client" />
 
     <TextView
         android:id="@+id/txtView_CompanyName"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/list_item_client" />
 
     <TextView
-        android:id="@+id/txtCmpName"
+        android:id="@+id/txtView_clientLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtView_CompanyName" />
 
     <Button
-        android:id="@+id/btn_clientAdd"
+        android:id="@+id/btn_clientEdit"
         style="@style/circlebtn_standard"
         android:layout_width="77dp"
         android:layout_height="76dp"
@@ -47,7 +47,7 @@
         app:backgroundTint="@color/circleBtnHoverColor"
         app:icon="@drawable/ic_edit_icon"
         app:layout_constraintEnd_toEndOf="@+id/list_item_client"
-        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintHorizontal_bias="0.017"
         app:layout_constraintStart_toStartOf="@+id/list_item_client"
         app:layout_constraintTop_toTopOf="@+id/list_item_client" />
 
@@ -56,15 +56,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/spinner_client"
-        app:layout_constraintStart_toEndOf="@+id/btn_clientAdd"
+        app:layout_constraintStart_toEndOf="@+id/btn_clientEdit"
         app:layout_constraintTop_toTopOf="@+id/list_item_client"
-        app:srcCompat="@drawable/ic_supplier_icon" />
+        app:srcCompat="@drawable/ic_client_icon" />
 
     <Spinner
         android:id="@+id/spinner_client"
         android:layout_width="255dp"
         android:layout_height="24dp"
-        android:background="@drawable/lv_ddl_bckgrd"
+        android:background="@drawable/lv_ddl_bckgrd_client"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_item_client" />

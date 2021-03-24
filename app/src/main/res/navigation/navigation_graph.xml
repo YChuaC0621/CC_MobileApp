@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/clientFragment">
 
+    <fragment
+        android:id="@+id/addClientDialogFragment"
+        android:name="com.example.cc_mobileapp.client.AddClientDialogFragment"
+        android:label="fragment_add_client_dialog"
+        tools:layout="@layout/fragment_add_client_dialog" />
+
+    <fragment
+        android:id="@+id/clientFragment"
+        android:name="com.example.cc_mobileapp.client.ClientFragment"
+        android:label="fragment_client"
+        tools:layout="@layout/fragment_client" >
+        <action
+            android:id="@+id/action_clientFragment_to_addClientDialogFragment"
+            app:destination="@id/addClientDialogFragment" />
+    </fragment>
 </navigation>

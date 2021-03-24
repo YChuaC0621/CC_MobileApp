@@ -20,4 +20,9 @@
     <color name="supplierColor">#DCF0FF</color>
     <color name="supplierColor2">#B2DEFF</color>
 
+    <!-- client -->
+    <color name="lv_ddl_bckgrd_color_client">#B8E3C9</color>
+    <color name="lv_bckgrd_color_client">#ADE4C5</color>
+
+
 </resources>

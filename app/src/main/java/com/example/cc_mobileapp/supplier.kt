@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil.setContentView
 import java.util.ArrayList
-import java.util.function.Supplier
 
 class supplier : AppCompatActivity() {
 
@@ -53,7 +51,7 @@ class supplier : AppCompatActivity() {
             val sup = this.getItem(i) as supplierCollection
 
             //reference textviews from our layout
-            val txtSupName = view?.findViewById<TextView>(R.id.txtSupplierName) as TextView
+            val txtSupName = view?.findViewById<TextView>(R.id.txtView_CompanyName) as TextView
             val txtCmpName = view?.findViewById<TextView>(R.id.txtCmpName) as TextView
 
             //Bind data to textview
