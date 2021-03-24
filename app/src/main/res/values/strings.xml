@@ -40,5 +40,11 @@
     <!-- error string -->
     <string name="error_field_required">This Field Required</string>
     <string name="error">Error: %15s</string>
+    <string name="title_activity_product__main">Product_Main</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 </resources>
 
