@@ -37,12 +37,15 @@ class EditClientFragment(private val client: Client) : Fragment() {
         edit_text_editClientLocation.setText(client.clientLocation)
 
         viewModel.result.observe(viewLifecycleOwner, Observer {
-            val message = if (it == null) {
-                getString(R.string.client_added)
+            val message:String
+            if (it == null) {
+                message = (R.string.client_added).toString()
             } else {
-                getString(R.string.error, it.message)
+                message = getString(R.string.error, it.message)
             }
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show().toString()
+            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
             //dismiss()
         })
 
@@ -75,7 +78,6 @@ class EditClientFragment(private val client: Client) : Fragment() {
                     client.clientLocation = clientLocation
                     Log.d("Check", "Update client data $client")
                     viewModel.updateClient(client)
-                    requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
             }
         }

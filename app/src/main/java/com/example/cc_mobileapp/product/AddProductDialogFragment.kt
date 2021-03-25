@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Client
 import com.example.cc_mobileapp.model.Product
@@ -22,7 +23,8 @@ import kotlinx.android.synthetic.main.product_display_item.*
 
 class AddProductDialogFragment : Fragment() {
 
-    private val viewModel: ProductViewModel by activityViewModels()
+    private lateinit var viewModel: ProductViewModel
+    private val sharedBarcodeViewModel: BarcodeViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,7 @@ class AddProductDialogFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        //viewModel = ViewModelProvider(this@AddProductDialogFragment).get(ProductViewModel::class.java)
+        viewModel = ViewModelProvider(this@AddProductDialogFragment).get(ProductViewModel::class.java)
         return inflater.inflate(R.layout.fragment_add_product_dialog, container, false)
     }
 
@@ -105,8 +107,9 @@ class AddProductDialogFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if(!viewModel.scannedCode.value.isNullOrEmpty()){
-            edit_text_prodBarcode.setText(viewModel.scannedCode.value)
+        if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty()){
+            edit_text_prodBarcode.setText(sharedBarcodeViewModel.scannedCode.value)
+            sharedBarcodeViewModel.clearBarcode()
         }
         else{
             Toast.makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()

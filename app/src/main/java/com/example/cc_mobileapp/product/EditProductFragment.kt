@@ -21,7 +21,9 @@ import kotlinx.android.synthetic.main.fragment_edit_product.*
 
 class EditProductFragment(private val product: Product) : Fragment() {
 
-    private val editSharedViewModel: ProductViewModel by activityViewModels()
+    private lateinit var viewModel: ProductViewModel
+    private val sharedBarcodeViewModel: BarcodeViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        //viewModel = ViewModelProvider(this@EditProductFragment).get(ProductViewModel::class.java)
+        viewModel = ViewModelProvider(this@EditProductFragment).get(ProductViewModel::class.java)
         return inflater.inflate(R.layout.fragment_edit_product, container, false)
     }
 
@@ -44,15 +46,20 @@ class EditProductFragment(private val product: Product) : Fragment() {
         edit_text_editProdPrice.setText(product.prodPrice.toString())
         edit_text_editProdBarcode.setText(product.prodBarcode.toString())
 
-        editSharedViewModel.result.observe(viewLifecycleOwner, Observer {
-            val message = if (it == null) {
-                "Product edit successfully"
+        viewModel.result.observe(viewLifecycleOwner, Observer {
+            val message:String
+            if (it == null) {
+                message = (R.string.client_added).toString()
+
             } else {
-                getString(R.string.error, it.message)
+                message = getString(R.string.error, it.message)
             }
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show().toString()
+            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
             //dismiss()
         })
+
 
         btn_productConfirmEdit.setOnClickListener {
             val prodName = edit_text_editProductName.text.toString().trim()
@@ -88,9 +95,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
                     product.prodPrice = prodPrice.toFloat()
                     product.prodBarcode = prodBarcode.toInt()
                     Log.d("Check", "Update client data $product")
-                    editSharedViewModel.updateProduct(product)
-                    requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
+                    viewModel.updateProduct(product)
                 }
             }
         }
@@ -98,7 +103,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
         btn_productDelete.setOnClickListener{
             AlertDialog.Builder(requireContext()).also{
                 it.setTitle(getString(R.string.delete_confirmation))
-                it.setPositiveButton(getString(R.string.yes)){ dialog, which -> editSharedViewModel.deleteProduct(product)
+                it.setPositiveButton(getString(R.string.yes)){ dialog, which -> viewModel.deleteProduct(product)
                 }
             }.create().show()
         }
@@ -114,8 +119,9 @@ class EditProductFragment(private val product: Product) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if(!editSharedViewModel.scannedCode.value.isNullOrEmpty()){
-            edit_text_editProdBarcode.setText(editSharedViewModel.scannedCode.value)
+        if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty()){
+            edit_text_editProdBarcode.setText(sharedBarcodeViewModel.scannedCode.value)
+            sharedBarcodeViewModel.clearBarcode()
         }
         else{
             Toast.makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()

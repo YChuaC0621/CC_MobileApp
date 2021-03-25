@@ -17,9 +17,6 @@ class ProductViewModel: ViewModel() {
     val result: LiveData<Exception?>
         get() = _result
 
-    private val _scannedCode = MutableLiveData<String?>()
-    val scannedCode: LiveData<String?>
-        get() = _scannedCode
 
     private val _products = MutableLiveData<List<Product>>()
     val products: LiveData<List<Product>>
@@ -123,10 +120,6 @@ class ProductViewModel: ViewModel() {
                     _result.value = it.exception
                 }
             }
-    }
-
-    fun productBarcode(retrievedCode :String){
-        _scannedCode.value = retrievedCode
     }
 
     override fun onCleared() {

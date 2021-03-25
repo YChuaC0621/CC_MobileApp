@@ -21,8 +21,7 @@ import kotlinx.android.synthetic.main.fragment_scan_barcode.*
 class ScanBarcodeFragment : Fragment() {
 
     private lateinit var codeScanner: CodeScanner
-    private val viewModel: ProductViewModel by activityViewModels()
-    private val editSharedViewModel: ProductViewModel by activityViewModels()
+    private val sharedBarcodeViewModel: BarcodeViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +36,14 @@ class ScanBarcodeFragment : Fragment() {
         setupPermission()
         codeScanner()
 
-        viewModel.scannedCode.observe(viewLifecycleOwner, Observer {
-            if(getCallerFragment().equals("addBarcodeFragment")){
-                requireActivity().supportFragmentManager.popBackStack("addBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            }else{
-                requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        sharedBarcodeViewModel.scannedCode.observe(viewLifecycleOwner, Observer {
+            if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty())
+            {
+                if(getCallerFragment().equals("addBarcodeFragment")){
+                    requireActivity().supportFragmentManager.popBackStack("addBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }else{
+                    requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
             }
         })
     }
@@ -73,12 +75,7 @@ class ScanBarcodeFragment : Fragment() {
                     requireActivity().runOnUiThread {   // it = result
                         Log.e("Main", "require context successful $it")
 
-
-                        if(getCallerFragment().equals("addBarcodeFragment")){
-                            viewModel.productBarcode(it.text)
-                        }else{
-                            editSharedViewModel.productBarcode(it.text)
-                        }
+                        sharedBarcodeViewModel.productBarcode(it.text)
 
                         Toast.makeText(requireContext(), it.text, Toast.LENGTH_SHORT).show()
                     }

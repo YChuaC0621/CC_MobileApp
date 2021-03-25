@@ -11,6 +11,8 @@ import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.client.ClientAdapter
 import com.example.cc_mobileapp.client.ClientViewModel
 import com.example.cc_mobileapp.client.EditClientFragment
+import com.example.cc_mobileapp.databinding.ActivityClientAddBinding.inflate
+import com.example.cc_mobileapp.databinding.ActivityClientUpdateBinding.inflate
 import com.example.cc_mobileapp.model.Product
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_client.*
@@ -20,6 +22,7 @@ class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
 
     private lateinit var viewModel: ProductViewModel
     private val adapter = ProductAdapter()
+    private var binding: ProductFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +32,13 @@ class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+         //Inflate the layout for this fragment
         viewModel = ViewModelProvider(requireActivity()).get(ProductViewModel::class.java)
         return inflater.inflate(R.layout.fragment_product, container, false)
+
+//        val fragmentBinding = ProductFragment.inflate(inflater, container, false)
+//        binding = fragmentBinding
+//        return fragmentBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
