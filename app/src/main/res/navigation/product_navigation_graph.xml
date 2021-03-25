@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/product_navigation_graph"
+    app:startDestination="@id/productFragment2">
+    <dialog
+        android:id="@+id/addProductDialogFragment"
+        android:name="com.example.cc_mobileapp.product.AddProductDialogFragment"
+        android:label="fragment_add_product_dialog"
+        tools:layout="@layout/fragment_add_product_dialog" />
+    <fragment
+        android:id="@+id/productFragment2"
+        android:name="com.example.cc_mobileapp.product.ProductFragment"
+        android:label="ProductFragment" >
+        <action
+            android:id="@+id/action_productFragment2_to_addProductDialogFragment"
+            app:destination="@id/addProductDialogFragment" />
+    </fragment>
+</navigation>

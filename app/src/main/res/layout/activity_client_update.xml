@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/txtView_addClient"
+            android:id="@+id/txtView_updateClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/editTxt_marginStart"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_clientID">
 
             <EditText
-                android:id="@+id/editTxt_clientCompanyName"
+                android:id="@+id/editTxt_updateClientCompanyName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/company_name"
@@ -73,7 +73,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_clientCompanyName">
 
             <EditText
-                android:id="@+id/editTxt_clientEmail"
+                android:id="@+id/editTxt_updateClientEmail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/email"
@@ -92,7 +92,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_clientEmail">
 
             <EditText
-                android:id="@+id/editTxt_clientHpNum"
+                android:id="@+id/editTxt_updateClientHpNum"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/contact_num"
@@ -111,7 +111,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_clienHpNum">
 
             <EditText
-                android:id="@+id/editTxt_clientLocation"
+                android:id="@+id/editTxt_udateClientLocation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/location"
