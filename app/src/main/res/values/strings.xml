@@ -31,6 +31,7 @@
     <string name="verificationCode">Verification Code</string>
     <string name="newPsw">New Password</string>
     <string name="forgtPsw">Forgot Password</string>
-
+    <string name="viewLessMsg">View Less</string>
+    <string name="viewMoreMsg">View More</string>
 </resources>
 

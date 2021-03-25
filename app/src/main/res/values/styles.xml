@@ -49,6 +49,13 @@
         <item name="backgroundTint">@color/transparent</item>
     </style>
 
+    <style name="transparentbtn3_standard" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:layout_width">@dimen/trans_btn3Width</item>
+        <item name="android:layout_height">@dimen/trans_btn3Height</item>
+        <item name="android:layout_marginStart">@dimen/trans_btn3MarginStart</item>
+        <item name="backgroundTint">@color/transparent</item>
+    </style>
+
     <style name="continuebtn_standard" parent="@style/Widget.MaterialComponents.Button">
         <item name="android:layout_width">@dimen/continue_btnWidth</item>
         <item name="android:layout_height">@dimen/continue_btnHeight</item>

@@ -8,15 +8,12 @@
                     <solid android:color="@color/supplierColor2"/>
 
                     <size
-                        android:width="200dp"
-                        android:height="30dp"/>
+                        android:width="360dp"
+                        android:height="40dp"/>
 
 
                 </shape>
 
-            </item>
-
-            <item android:gravity="center|center_vertical" android:drawable="@drawable/ic_dropdown_icon">
             </item>
         </layer-list>
     </item>

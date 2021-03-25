@@ -41,6 +41,11 @@
     <dimen name="trans_btn2MarginEnd">36dp</dimen>
     <dimen name="trans_btn2MarginStart">36dp</dimen>
 
+    <!-- transparent btn 3 dimensions-->
+    <dimen name="trans_btn3Height">18dp</dimen>
+    <dimen name="trans_btn3Width">19dp</dimen>
+    <dimen name="trans_btn3MarginStart">8dp</dimen>
+
     <!-- text field dimensions for user management module-->
     <dimen name="txt_Height">28dp</dimen>
     <dimen name="txt_Width">241dp</dimen>
