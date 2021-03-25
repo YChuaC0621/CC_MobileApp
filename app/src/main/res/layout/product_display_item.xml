@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/list_item_product"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtView_productName" />
 
     <Button
-        android:id="@+id/btn_productAdd"
+        android:id="@+id/btn_productEdit"
         style="@style/circlebtn_standard"
         android:layout_width="77dp"
         android:layout_height="76dp"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/spinner_product"
-        app:layout_constraintStart_toEndOf="@+id/btn_productAdd"
+        app:layout_constraintStart_toEndOf="@+id/btn_productEdit"
         app:layout_constraintTop_toTopOf="@+id/list_item_product"
         app:srcCompat="@drawable/ic_product_icon" />
 

@@ -93,7 +93,7 @@
         android:text="Scan Barcode" />
 
     <Button
-        android:id="@+id/btn_addProd"
+        android:id="@+id/btn_addProdInDialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="12dp"

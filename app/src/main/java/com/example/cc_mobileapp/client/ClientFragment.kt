@@ -19,8 +19,6 @@ class ClientFragment : Fragment(), ClientRecyclerViewClickListener {
     private lateinit var viewModel: ClientViewModel
     private val adapter = ClientAdapter()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
