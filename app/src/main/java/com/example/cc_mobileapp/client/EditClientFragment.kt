@@ -47,7 +47,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
             requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         })
 
-        btn_dialog_clientEdit.setOnClickListener {
+        btn_clientConfirmEdit.setOnClickListener {
             val clientCoName = edit_text_editClientCoName.text.toString().trim()
             val clientEmail = edit_text_editClientEmail.text.toString().trim()
             val clientHp = edit_text_editClientHp.text.toString().trim()

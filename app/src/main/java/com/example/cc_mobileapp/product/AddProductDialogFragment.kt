@@ -77,7 +77,9 @@ class AddProductDialogFragment : Fragment() {
                     return@setOnClickListener
                 }
                 else -> {
+                    Log.d("Check", "before val product")
                     val product = Product()
+                    Log.d("Check", "after val product")
                     product.prodName = prodName
                     product.supplierId = supplierId
                     product.prodDesc = prodDesc

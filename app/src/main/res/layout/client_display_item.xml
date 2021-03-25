@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/listview_bckgrd_client" />
 
     <TextView
-        android:id="@+id/txtView_CompanyName"
+        android:id="@+id/txtView_productDesc"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
@@ -35,7 +35,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/client_icon"
-        app:layout_constraintTop_toBottomOf="@+id/txtView_CompanyName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtView_productDesc" />
 
     <Button
         android:id="@+id/btn_clientEdit"

@@ -11,5 +11,24 @@ data class Product(
     var prodDesc: String? = null,
     var prodBarcode: Int? = null,
     var prodQty: Int? = null,
-    var prodPrice: Float? = null
-)
+    var prodPrice: Float? = null,
+    @get:Exclude
+    var isDeleted: Boolean = false
+){
+    override fun equals(other: Any?): Boolean {
+        return if(other is Product){
+            other.prodId == prodId
+        }else false
+    }
+
+    override fun hashCode(): Int {
+        var result = prodId?.hashCode() ?: 0
+        result = 31 * result + (prodName?.hashCode() ?: 0)
+        result = 31 * result + (supplierId?.hashCode() ?: 0)
+        result = 31 * result + (prodDesc?.hashCode() ?: 0)
+        result = 31 * result + (prodBarcode ?: 0)
+        result = 31 * result + (prodQty ?: 0)
+        result = 31 * result + (prodPrice?.hashCode() ?: 0)
+        return result
+    }
+}

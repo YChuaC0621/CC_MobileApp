@@ -4,14 +4,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Client
-import kotlinx.android.synthetic.main.activity_client__add.view.*
-import kotlinx.android.synthetic.main.activity_client__main.*
-import kotlinx.android.synthetic.main.activity_client__main.view.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.client_display_item.view.*
 
 
@@ -32,7 +27,7 @@ class ClientAdapter: RecyclerView.Adapter<ClientAdapter.ClientViewModel>(){
 
     override fun onBindViewHolder(holder: ClientViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
-        holder.view.txtView_CompanyName.text = clients[position].clientCoName
+        holder.view.txtView_productDesc.text = clients[position].clientCoName
         holder.view.txtView_clientLocation.text = clients[position].clientLocation
         holder.view.btn_clientEdit.setOnClickListener { listener?.onRecycleViewItemClicked(it, clients[position])}
     }

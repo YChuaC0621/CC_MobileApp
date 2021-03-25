@@ -51,7 +51,7 @@ class supplier : AppCompatActivity() {
             val sup = this.getItem(i) as supplierCollection
 
             //reference textviews from our layout
-            val txtSupName = view?.findViewById<TextView>(R.id.txtView_CompanyName) as TextView
+            val txtSupName = view?.findViewById<TextView>(R.id.txtView_productDesc) as TextView
             val txtCmpName = view?.findViewById<TextView>(R.id.txtCmpName) as TextView
 
             //Bind data to textview

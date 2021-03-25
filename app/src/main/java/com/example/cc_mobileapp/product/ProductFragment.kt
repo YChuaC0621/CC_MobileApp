@@ -5,13 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.client.ClientAdapter
+import com.example.cc_mobileapp.client.ClientViewModel
 import com.example.cc_mobileapp.client.EditClientFragment
+import com.example.cc_mobileapp.model.Product
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_client.*
 import kotlinx.android.synthetic.main.fragment_product.*
 
-class ProductFragment : Fragment() {
+class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
+
+    private lateinit var viewModel: ProductViewModel
+    private val adapter = ProductAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +30,26 @@ class ProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        viewModel = ViewModelProvider(requireActivity()).get(ProductViewModel::class.java)
         return inflater.inflate(R.layout.fragment_product, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        adapter.listener = this
+        recycler_view_product.adapter = adapter
+
+        viewModel.fetchProduct()
+        viewModel.getRealtimeUpdates()
+
+        viewModel.products.observe(viewLifecycleOwner, Observer{
+            adapter.setProducts(it)
+        })
+
+        viewModel.product.observe(viewLifecycleOwner, Observer{
+            adapter.addProduct(it)
+        })
 
         btn_productAdd.setOnClickListener {
 //            AddProductDialogFragment()
@@ -37,5 +60,13 @@ class ProductFragment : Fragment() {
             transaction.addToBackStack("fragmentA")
             transaction.commit()
         }
+    }
+
+    override fun onRecyclerViewItemClicked(view: View, product: Product) {
+        val currentView = (requireView().parent as ViewGroup).id
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(currentView, EditProductFragment(product))
+        transaction.addToBackStack("fragmentA")
+        transaction.commit()
     }
 }
