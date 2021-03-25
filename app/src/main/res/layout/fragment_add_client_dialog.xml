@@ -23,52 +23,56 @@
         android:id="@+id/input_layout_clientCoName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:hint="Company Name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_clientCoName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Company Name" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_clientEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:hint="Email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_clientEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_clientHp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:hint="Contact Number">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_clientHp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contact Number" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_clientLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:hint="Location">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_clientLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Location" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

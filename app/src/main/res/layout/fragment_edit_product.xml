@@ -22,65 +22,70 @@
         android:id="@+id/input_layout_editProductName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp">
+        android:padding="6dp"
+        android:hint="Product Name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_editProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Product Name" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_editSupplierId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp">
+        android:padding="6dp"
+        android:hint="Supplier Id">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_editSupplierId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Supplier Id" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_editProdDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp">
+        android:padding="6dp"
+        android:hint="Product Description">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_editProdDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Product Description" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_editProdPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp">
+        android:padding="6dp"
+        android:hint="Product Price">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_editProdPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Product Price" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_editProdBarcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp">
+        android:padding="6dp"
+        android:hint="Product Barcode">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_editProdBarcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Product Barcode" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

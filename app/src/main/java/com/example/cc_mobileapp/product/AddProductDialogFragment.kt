@@ -96,7 +96,7 @@ class AddProductDialogFragment : Fragment() {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, ScanBarcodeFragment())
-            transaction.addToBackStack("addProdFragment")
+            transaction.addToBackStack("addBarcodeFragment")
             transaction.commit()
         }
 

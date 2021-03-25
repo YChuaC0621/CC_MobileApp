@@ -69,4 +69,5 @@ class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
         transaction.addToBackStack("fragmentA")
         transaction.commit()
     }
+
 }

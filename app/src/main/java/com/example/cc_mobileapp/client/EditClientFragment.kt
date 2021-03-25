@@ -44,7 +44,6 @@ class EditClientFragment(private val client: Client) : Fragment() {
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             //dismiss()
-            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         })
 
         btn_clientConfirmEdit.setOnClickListener {
@@ -76,6 +75,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
                     client.clientLocation = clientLocation
                     Log.d("Check", "Update client data $client")
                     viewModel.updateClient(client)
+                    requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
             }
         }

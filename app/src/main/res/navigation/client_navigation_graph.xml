@@ -19,5 +19,13 @@
         <action
             android:id="@+id/action_clientFragment_to_addClientDialogFragment"
             app:destination="@id/addClientDialogFragment" />
+        <action
+            android:id="@+id/action_clientFragment_to_editClientFragment"
+            app:destination="@id/editClientFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/editClientFragment"
+        android:name="com.example.cc_mobileapp.client.EditClientFragment"
+        android:label="EditClientFragment" />
 </navigation>
