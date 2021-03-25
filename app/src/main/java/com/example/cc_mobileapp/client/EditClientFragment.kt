@@ -1,15 +1,14 @@
 package com.example.cc_mobileapp.client
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
@@ -18,14 +17,9 @@ import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_edit_client.*
 
 
-class EditClientFragment(private val client: Client) : DialogFragment() {
+class EditClientFragment(private val client: Client) : Fragment() {
 
     private lateinit var  viewModel: ClientViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -42,14 +36,15 @@ class EditClientFragment(private val client: Client) : DialogFragment() {
         edit_text_editClientHp.setText(client.clientHpNum)
         edit_text_editClientLocation.setText(client.clientLocation)
 
-        viewModel.result.observe(viewLifecycleOwner, Observer{
-            val message = if(it==null){
+        viewModel.result.observe(viewLifecycleOwner, Observer {
+            val message = if (it == null) {
                 getString(R.string.client_added)
-            }else{
+            } else {
                 getString(R.string.error, it.message)
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            dismiss()
+            //dismiss()
+            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         })
 
         btn_dialog_clientEdit.setOnClickListener {
@@ -88,8 +83,7 @@ class EditClientFragment(private val client: Client) : DialogFragment() {
         btn_dialog_clientDelete.setOnClickListener{
             AlertDialog.Builder(requireContext()).also{
                 it.setTitle(getString(R.string.delete_confirmation))
-                it.setPositiveButton(getString(R.string.yes)){
-                    dialog, which -> viewModel.deleteClient(client)
+                it.setPositiveButton(getString(R.string.yes)){ dialog, which -> viewModel.deleteClient(client)
                 }
             }.create().show()
         }

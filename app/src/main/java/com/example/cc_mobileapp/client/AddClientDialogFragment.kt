@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -17,7 +18,7 @@ import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Client
 import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 
-class AddClientDialogFragment : DialogFragment() {
+class AddClientDialogFragment : Fragment() {
 
     private lateinit var viewModel: ClientViewModel
 
@@ -73,6 +74,7 @@ class AddClientDialogFragment : DialogFragment() {
                     client.clientLocation = clientLocation
                     Log.d("Check", "client data $client")
                     viewModel.addClient(client)
+                    requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
             }
         }

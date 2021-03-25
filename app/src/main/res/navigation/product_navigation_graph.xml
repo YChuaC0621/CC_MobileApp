@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/product_navigation_graph"
+    app:startDestination="@id/product_Main">
+    <activity
+        android:id="@+id/product_Main"
+        android:name="com.example.cc_mobileapp.product.Product_Main"
+        android:label="fragment_product"
+        tools:layout="@layout/fragment_product" />
+</navigation>

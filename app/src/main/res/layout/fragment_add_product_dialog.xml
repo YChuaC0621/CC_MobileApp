@@ -1,92 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addProdFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:background="#FFFF"
-    tools:context=".client.AddClientDialogFragment">
+    android:orientation="vertical"
+    tools:context=".product.AddProductDialogFragment">
 
     <TextView
-        android:id="@+id/title_editClient"
+        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="12dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Edit Client"
+        android:text="Add New Author"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_editClientCoName"
+        android:id="@+id/input_layout_prodName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_editClientCoName"
+            android:id="@+id/edit_text_prodName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Company Name" />
+            android:hint="Product Name" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_editClientEmail"
+        android:id="@+id/input_layout_prodDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_editClientEmail"
+            android:id="@+id/edit_text_prodDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email" />
+            android:hint="Product Description" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_editClientHp"
+        android:id="@+id/input_layout_prodSupplierId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_editClientHp"
+            android:id="@+id/edit_text_prodSupplierId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contact Number" />
+            android:hint="Supplier Id" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_editClientLocation"
+        android:id="@+id/input_layout_prodPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_editClientLocation"
+            android:id="@+id/edit_text_prodPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Location" />
+            android:hint="Product Price" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_prodBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_prodBarcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Barcode" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_dialog_clientDelete"
+        android:id="@+id/btn_addProdScanBarcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="Delete"
-        android:drawableRight="@drawable/ic_delete"
-        />
+        android:text="Scan Barcode" />
 
     <Button
-        android:id="@+id/btn_dialog_clientEdit"
+        android:id="@+id/btn_addProd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="Edit"
-        />
+        android:text="Add" />
 </LinearLayout>
