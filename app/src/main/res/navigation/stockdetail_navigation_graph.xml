@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/stockdetail_navigation_graph"
+    app:startDestination="@id/stockDetailFragment">
+    <fragment
+        android:id="@+id/stockDetailFragment"
+        android:name="com.example.cc_mobileapp.stock.stockDetail.StockDetailFragment"
+        android:label="StockDetailFragment" >
+        <action
+            android:id="@+id/action_stockDetailFragment_to_addStockDetailFragment2"
+            app:destination="@id/addStockDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/addStockDetailFragment2"
+        android:name="com.example.cc_mobileapp.stock.stockDetail.AddStockDetailFragment"
+        android:label="AddStockDetailFragment" />
+</navigation>
