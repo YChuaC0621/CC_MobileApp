@@ -9,7 +9,7 @@ data class StockIn (
     var stockInId: String? = null,
     var stockInDateTime: String? = null,
     var stockInSupplierId: String? = null,
-    var totalProdNo: Int = 0
+    var totalProdPrice: Int = 0
     )
     {
         override fun equals(other: Any?): Boolean

@@ -31,12 +31,23 @@ class StockInViewModel: ViewModel() {
     val totalNoStockDetail: LiveData<StockIn>
         get() = _totalNoStockDetail
 
+    private val _stockTypePushKey = MutableLiveData<String>()
+    val stockTypePushKey: LiveData<String>
+        get() = _stockTypePushKey
+
+    private val _stockInSupplierId = MutableLiveData<String>()
+    val stockInSupplierId: LiveData<String>
+        get() = _stockInSupplierId
+
+    fun generateTypePuskKey(){
+        _stockTypePushKey.value = dbStockIn.push().key
+    }
+
     fun addStockIn(stockIn: StockIn) {
         Log.d("Check", "view model add stock in $stockIn")
         //create unique key
         // TODO if stock in then another push key
-        stockIn.stockInId = dbStockIn.push().key
-
+        stockIn.stockInId = stockTypePushKey.value
         // save inside the unique key
         dbStockIn.child(stockIn.stockInId!!).setValue(stockIn)
                 .addOnCompleteListener {
@@ -100,5 +111,9 @@ class StockInViewModel: ViewModel() {
     override fun onCleared() {
         super.onCleared()
         dbStockIn.removeEventListener(childEventListener)
+    }
+
+    fun setStockInSupplierId(stockInSupplierId:String){
+        _stockInSupplierId.value = stockInSupplierId
     }
 }

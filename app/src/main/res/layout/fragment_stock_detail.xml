@@ -14,13 +14,23 @@
         tools:listitem="@layout/stockdetail_display_item"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_stockDetailAdd"
+        android:id="@+id/btn_stockDetailSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         app:backgroundTint="@color/supplierColor2"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_save"
-        />
+        app:srcCompat="@drawable/ic_save" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_stockDetailAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp"
+        app:backgroundTint="@color/supplierColor2"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_input_add" />
 </FrameLayout>

@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_scan_barcode.*
 class ScanBarcodeFragment : Fragment() {
 
     private lateinit var codeScanner: CodeScanner
-    private val sharedBarcodeViewModel: BarcodeViewModel by activityViewModels()
+    private val sharedBarcodeViewModel: ProductBarcodeViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,

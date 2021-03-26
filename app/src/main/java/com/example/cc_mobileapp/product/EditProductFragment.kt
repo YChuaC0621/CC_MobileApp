@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_edit_product.*
 class EditProductFragment(private val product: Product) : Fragment() {
 
     private lateinit var viewModel: ProductViewModel
-    private val sharedBarcodeViewModel: BarcodeViewModel by activityViewModels()
+    private val sharedBarcodeViewModel: ProductBarcodeViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

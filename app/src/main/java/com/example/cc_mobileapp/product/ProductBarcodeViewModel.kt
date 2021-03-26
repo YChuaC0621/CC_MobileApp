@@ -1,4 +1,4 @@
-package com.example.cc_mobileapp.stock.stockDetail
+package com.example.cc_mobileapp.product
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.example.cc_mobileapp.Constant
 import com.google.firebase.database.FirebaseDatabase
 
-class BarcodeViewModel: ViewModel() {
+class ProductBarcodeViewModel: ViewModel() {
 
-    private val dbStockDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
+    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
 
 
     private val _scannedCode = MutableLiveData<String?>()

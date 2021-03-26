@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_stock_in___main.*
 
 class StockIn_Fragment_Main : Fragment() {
 
-    private lateinit var viewModel: StockInViewModel
+    private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     private val adapter = StockInAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +31,7 @@ class StockIn_Fragment_Main : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         //Inflate the layout for this fragment
-        viewModel = ViewModelProvider(requireActivity()).get(StockInViewModel::class.java)
+        //viewModel = ViewModelProvider(requireActivity()).get(StockInViewModel::class.java)
         return inflater.inflate(R.layout.fragment_stock_in___main, container, false)
 
     }
@@ -39,22 +40,22 @@ class StockIn_Fragment_Main : Fragment() {
 
         recycler_view_stockin.adapter = adapter
 
-        viewModel.fetchStockIn()
-        viewModel.getRealtimeUpdates()
+        sharedStockInViewModel.fetchStockIn()
+        sharedStockInViewModel.getRealtimeUpdates()
 
-        viewModel.stocksIn.observe(viewLifecycleOwner, Observer{
+        sharedStockInViewModel.stocksIn.observe(viewLifecycleOwner, Observer{
             adapter.setStocksIn(it)
         })
 
-        viewModel.stockIn.observe(viewLifecycleOwner, Observer{
+        sharedStockInViewModel.stockIn.observe(viewLifecycleOwner, Observer{
             adapter.addStockIn(it)
         })
 
         btn_stockInDetail_add.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(currentView, StockDetailFragment())
-            transaction.addToBackStack("stockDetailFragment")
+            transaction.replace(currentView, StockInSupplierDialogFragment())
+            transaction.addToBackStack("stockInSupplierDialogFragment")
             transaction.commit()
         }
     }

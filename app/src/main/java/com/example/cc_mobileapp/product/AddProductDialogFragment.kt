@@ -7,16 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.cc_mobileapp.R
-import com.example.cc_mobileapp.model.Client
 import com.example.cc_mobileapp.model.Product
-import com.google.common.primitives.UnsignedBytes.toInt
 import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.product_display_item.*
@@ -24,7 +20,7 @@ import kotlinx.android.synthetic.main.product_display_item.*
 class AddProductDialogFragment : Fragment() {
 
     private lateinit var viewModel: ProductViewModel
-    private val sharedBarcodeViewModel: BarcodeViewModel by activityViewModels()
+    private val sharedBarcodeViewModel: ProductBarcodeViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

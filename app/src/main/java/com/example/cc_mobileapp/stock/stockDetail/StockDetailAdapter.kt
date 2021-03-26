@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.StockDetail
-import kotlinx.android.synthetic.main.product_display_item.view.*
 import kotlinx.android.synthetic.main.stockdetail_display_item.view.*
-import kotlinx.android.synthetic.main.stockin_display_item.view.*
+
 
 class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewModel>(){
 
@@ -21,7 +20,7 @@ class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewMode
         viewType: Int
     ) = StockViewModel(
         LayoutInflater.from(parent.context)
-            .inflate(R.layout.stockin_display_item, parent, false)
+            .inflate(R.layout.stockdetail_display_item, parent, false)
     )
 
     override fun getItemCount() = stocksDetail.size
@@ -33,16 +32,16 @@ class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewMode
         holder.view.stockDetail_rowNum.text = stocksDetail[position].stockDetailRowNum
         holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty
         // TODO require to calculate total price [Query]
-        //holder.view.stockDetail_totalPrice.text = stocksDetail[position].stockInSupplierId
+        holder.view.stockDetail_totalPrice.text = "20.00"
         holder.view.btn_edit_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
         holder.view.btn_delete_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
     }
 
-//    fun setStocksIn(stocksIn: List<StockIn>){
-//        Log.d("Check", "stock in set: $stocksIn")
-//        this.stocksIn = stocksIn as MutableList<StockIn>
-//        notifyDataSetChanged()
-//    }
+    fun setStocksDetail(stocksDetail: List<StockDetail>){
+        Log.d("Check", "stock in set: $stocksDetail")
+        this.stocksDetail = stocksDetail as MutableList<StockDetail>
+        notifyDataSetChanged()
+    }
 
     fun addStockDetail(stockDetail: StockDetail) {
         Log.d("Check", "real time add stock in $stockDetail")
@@ -52,6 +51,10 @@ class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewMode
         }
         notifyDataSetChanged()
     }
+
+//    fun clearAdapterValue(){
+//        stocksDetail.
+//    }
 
     class StockViewModel(val view: View) : RecyclerView.ViewHolder(view)
 }

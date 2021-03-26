@@ -18,10 +18,11 @@ import com.example.cc_mobileapp.Constant.CAMERA_REQUEST_CODE
 import com.example.cc_mobileapp.R
 import kotlinx.android.synthetic.main.fragment_scan_barcode.*
 
-class ScanBarcodeFragment : Fragment() {
+class ScanBarcodeFragment( btnName:String) : Fragment() {
 
+    private val calledBtnName: String = btnName
     private lateinit var codeScanner: CodeScanner
-    private val sharedBarcodeViewModel: BarcodeViewModel by activityViewModels()
+    private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +37,17 @@ class ScanBarcodeFragment : Fragment() {
         setupPermission()
         codeScanner()
 
-        sharedBarcodeViewModel.scannedCode.observe(viewLifecycleOwner, Observer {
-            if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty())
+        sharedStockBarcodeViewModel.scannedRackCode.observe(viewLifecycleOwner, Observer {
+            if(!sharedStockBarcodeViewModel.scannedRackCode.value.isNullOrEmpty())
             {
-                if(getCallerFragment().equals("addBarcodeFragment")){
-                    requireActivity().supportFragmentManager.popBackStack("addBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                }else{
-                    requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                }
+                requireActivity().supportFragmentManager.popBackStack("rackBarcode", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+        })
+
+        sharedStockBarcodeViewModel.scannedProductCode.observe(viewLifecycleOwner, Observer {
+            if(!sharedStockBarcodeViewModel.scannedProductCode.value.isNullOrEmpty())
+            {
+                requireActivity().supportFragmentManager.popBackStack("productBarcode", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         })
     }
@@ -75,7 +79,11 @@ class ScanBarcodeFragment : Fragment() {
                     requireActivity().runOnUiThread {   // it = result
                         Log.e("Main", "require context successful $it")
 
-                        sharedBarcodeViewModel.productBarcode(it.text)
+                        if(calledBtnName.equals("rack")){
+                            sharedStockBarcodeViewModel.rackBarcode(it.text)
+                        }else{
+                            sharedStockBarcodeViewModel.productBarcode(it.text)
+                        }
 
                         Toast.makeText(requireContext(), it.text, Toast.LENGTH_SHORT).show()
                     }
@@ -150,6 +158,7 @@ class ScanBarcodeFragment : Fragment() {
      fun getCallerFragment(): String? {
         val fm: FragmentManager = requireActivity().supportFragmentManager
         val count: Int = requireActivity().supportFragmentManager.backStackEntryCount
+        Toast.makeText(requireContext(), fm.getBackStackEntryAt(count - 2).name, Toast.LENGTH_SHORT).show()
         return fm.getBackStackEntryAt(count - 2).name
     }
 }

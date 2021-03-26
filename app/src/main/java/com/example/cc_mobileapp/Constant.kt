@@ -5,5 +5,6 @@ object Constant {
     const val NODE_PRODUCT ="Product"
     const val NODE_STOCKDETAIL ="StockDetail"
     const val NODE_STOCKIN = "StockIn"
+    const val NODE_TEMP = "Temporary"
     const val CAMERA_REQUEST_CODE = 101
 }

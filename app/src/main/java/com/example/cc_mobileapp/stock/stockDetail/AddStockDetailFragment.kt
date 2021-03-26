@@ -8,39 +8,37 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
-import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
-import com.example.cc_mobileapp.product.ProductViewModel
-import com.example.cc_mobileapp.product.ScanBarcodeFragment
+import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
-import kotlinx.android.synthetic.main.fragment_add_product_dialog.btn_addProdInDialog
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 
 class AddStockDetailFragment : Fragment() {
 
-    private lateinit var viewModel: StockViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var stockViewModel: StockViewModel
+    private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
+    private val sharedStockInViewModel: StockInViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        viewModel = ViewModelProvider(this@AddStockDetailFragment).get(StockViewModel::class.java)
+        stockViewModel = ViewModelProvider(this@AddStockDetailFragment).get(StockViewModel::class.java)
         return inflater.inflate(R.layout.fragment_add_stock_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.result.observe(viewLifecycleOwner, Observer{
+        Log.e("StockIN", "access add stock detail fragment on activity created ")
+
+        stockViewModel.result.observe(viewLifecycleOwner, Observer{
             val message = if(it==null){
                 getString(R.string.prodAddSuccess)
             }else{
@@ -49,7 +47,7 @@ class AddStockDetailFragment : Fragment() {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         })
 
-        btn_stockDetailAdd.setOnClickListener {
+        btn_stockDetail_add.setOnClickListener {
             val prodBarcode = edit_text_stockDetail_ProdBarcode.text.toString().trim()
             val rackId = edit_text_stockDetail_rackId.text.toString().trim()
             val rowNo = edit_text_stockDetail_rowNum.text.toString().trim()
@@ -79,10 +77,11 @@ class AddStockDetailFragment : Fragment() {
                     stockDetail.stockDetailRackId = rackId
                     stockDetail.stockDetailRowNum = rowNo
                     stockDetail.stockDetailQty = stockQty
+                    stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
                     // TODO add in the stockType Id
                     Log.d("Check", "client data $stockDetail")
-                    viewModel.addStockDetail(stockDetail)
-                    requireActivity().supportFragmentManager.popBackStack("stockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    stockViewModel.addStockDetail(stockDetail)
+                    requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 }
             }
         }
@@ -90,21 +89,33 @@ class AddStockDetailFragment : Fragment() {
         btn_stockDetail_scanBarcode.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(currentView, ScanBarcodeFragment())
-            transaction.addToBackStack("addBarcodeFragment")
+            transaction.replace(currentView, ScanBarcodeFragment("product"))
+            transaction.addToBackStack("productBarcode")
+            transaction.commit()
+        }
+
+        btn_stockDetail_scanRackId.setOnClickListener {
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, ScanBarcodeFragment("rack"))
+            transaction.addToBackStack("rackBarcode")
             transaction.commit()
         }
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty()){
-//            edit_text_prodBarcode.setText(sharedBarcodeViewModel.scannedCode.value)
-//            sharedBarcodeViewModel.clearBarcode()
-//        }
-//        else{
-//            Toast.makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()
-//        }
-//    }
+    override fun onResume() {
+        super.onResume()
+        if(!sharedStockBarcodeViewModel.scannedProductCode.value.isNullOrEmpty()){
+            edit_text_stockDetail_ProdBarcode.setText(sharedStockBarcodeViewModel.scannedProductCode.value)
+            sharedStockBarcodeViewModel.clearBarcode()
+        }
+        else if(!sharedStockBarcodeViewModel.scannedRackCode.value.isNullOrEmpty()){
+            edit_text_stockDetail_rackId.setText(sharedStockBarcodeViewModel.scannedRackCode.value)
+            sharedStockBarcodeViewModel.clearBarcode()
+        }
+        else{
+            Toast.makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()
+        }
+    }
 
 }
