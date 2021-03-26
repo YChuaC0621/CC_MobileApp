@@ -1,5 +1,7 @@
 package com.example.cc_mobileapp.stock.stockDetail
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.AlertDialogLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -41,6 +44,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         recycler_view_stockDetail.adapter = adapter
 
         stockViewModel.fetchStockDetail()
+
         stockViewModel.getRealtimeUpdates()
 
         stockViewModel.stocksDetail.observe(viewLifecycleOwner, Observer{
@@ -80,7 +84,23 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
     }
 
     override fun onRecyclerViewItemClicked(view: View, stockDetail: StockDetail) {
-        TODO("Not yet implemented")
+        when(view.id){
+            R.id.btn_edit_stockDetail -> {
+                val currentView = (requireView().parent as ViewGroup).id
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(currentView, EditStockDetailFragment(stockDetail))
+                transaction.addToBackStack("editStockDetailFragment")
+                transaction.commit()
+            }
+            R.id.btn_delete_stockDetail ->{
+                AlertDialog.Builder(requireContext()).also{
+                    it.setTitle(getString(R.string.delete_confirmation))
+                    it.setPositiveButton(getString(R.string.yes)){ dialog, which ->
+                        stockViewModel.deleteStockDetail(stockDetail)
+                    }
+                }.create().show()
+            }
+        }
     }
-
 }
+

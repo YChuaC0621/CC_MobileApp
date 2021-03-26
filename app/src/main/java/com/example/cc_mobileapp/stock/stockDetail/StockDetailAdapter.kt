@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
 import kotlinx.android.synthetic.main.stockdetail_display_item.view.*
 
@@ -47,14 +48,16 @@ class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewMode
         Log.d("Check", "real time add stock in $stockDetail")
         if (!stocksDetail.contains(stockDetail)) {
             stocksDetail.add(stockDetail)
-        }else{  // only can perform add
+        }else{
+            val index = stocksDetail.indexOf(stockDetail)
+            if(stockDetail.isDeleted){
+                stocksDetail.removeAt(index)
+            }else{ // for update product
+                stocksDetail[index] = stockDetail
+            }
         }
         notifyDataSetChanged()
     }
-
-//    fun clearAdapterValue(){
-//        stocksDetail.
-//    }
 
     class StockViewModel(val view: View) : RecyclerView.ViewHolder(view)
 }

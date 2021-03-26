@@ -13,7 +13,9 @@ data class StockDetail(
     var stockDetailRackId: String? = null,
     var stockDetailRowNum: String? = null,
     var stockDetailQty: String? = null,
-    var stockTypeId: String? = null
+    var stockTypeId: String? = null,
+    @get:Exclude
+    var isDeleted: Boolean = false
 )
 {
     override fun equals(other: Any?): Boolean
@@ -22,5 +24,16 @@ data class StockDetail(
         {
             other.stockDetailId == stockDetailId
         } else false
+    }
+
+    override fun hashCode(): Int {
+        var result = stockDetailId?.hashCode() ?: 0
+        result = 31 * result + (stockDetailProdBarcode?.hashCode() ?: 0)
+        result = 31 * result + (stockDetailRackId?.hashCode() ?: 0)
+        result = 31 * result + (stockDetailRowNum?.hashCode() ?: 0)
+        result = 31 * result + (stockDetailQty?.hashCode() ?: 0)
+        result = 31 * result + (stockTypeId?.hashCode() ?: 0)
+        result = 31 * result + isDeleted.hashCode()
+        return result
     }
 }

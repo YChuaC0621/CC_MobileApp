@@ -79,13 +79,11 @@ class ScanBarcodeFragment( btnName:String) : Fragment() {
                     requireActivity().runOnUiThread {   // it = result
                         Log.e("Main", "require context successful $it")
 
-                        if(calledBtnName.equals("rack")){
+                        if(calledBtnName == "rack"){
                             sharedStockBarcodeViewModel.rackBarcode(it.text)
                         }else{
                             sharedStockBarcodeViewModel.productBarcode(it.text)
                         }
-
-                        Toast.makeText(requireContext(), it.text, Toast.LENGTH_SHORT).show()
                     }
                 }catch (e: Exception){
                     Toast.makeText(requireContext(), "Error on decode call back", Toast.LENGTH_SHORT).show()
