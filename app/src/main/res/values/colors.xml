@@ -27,4 +27,17 @@
     <!-- product -->
     <color name="lv_bckgrd_color_product">#caabe7</color>
     <color name="lv_ddl_bckgrd_color_product">#c1a9d8</color>
+
+    <!-- stock in -->
+    <color name="lv_ddl_bckgrd_color_stockin">#f5acc4</color>
+    <color name="lv_bckgrd_color_stockin">#f5a0bf</color>
+    <color name="btn_supplierId_color">#c93479</color>
+
+    <!-- stock out -->
+    <color name="lv_ddl_bckgrd_color_stockout">#f7b780</color>
+    <color name="lv_bckgrd_color_stockout">#f59862</color>
+    <color name="btn_clientId_color">#dd7012</color>
+
+    <!-- stock detail -->
+    <color name="stockdetail_box">#4A878380</color>
 </resources>

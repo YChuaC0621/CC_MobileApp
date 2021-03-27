@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.cc_mobileapp.Constant
 import com.google.firebase.database.FirebaseDatabase
 
-class BarcodeViewModel: ViewModel() {
+class ProductBarcodeViewModel: ViewModel() {
 
     private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
 
