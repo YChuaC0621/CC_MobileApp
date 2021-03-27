@@ -7,6 +7,16 @@
     android:textAlignment="center">
 
 
+    <ImageView
+        android:id="@+id/circle_background"
+        android:layout_width="649dp"
+        android:layout_height="684dp"
+        android:layout_marginBottom="232dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/circle_gradientbackground" />
+
     <Button
         android:id="@+id/btn_home"
         style="@style/transparentbtn_standard"
@@ -16,68 +26,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <EditText
+        android:id="@+id/txtVerification"
+        style="@style/txtUserfield_standard"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/borderbottom_txtfield"
+        android:clickable="true"
+        android:hint="@string/email"
+        app:layout_constraintStart_toEndOf="@+id/btn_verification"
+        app:layout_constraintTop_toBottomOf="@+id/txtResetPswMsg" />
+
     <Button
         android:id="@+id/btn_verification"
         style="@style/transparentbtn2_standard"
+        android:layout_marginTop="28dp"
         android:clickable="false"
         android:drawableTop="@drawable/ic_email_icon"
         app:layout_constraintEnd_toStartOf="@+id/txtVerification"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_home" />
-
-    <TextView
-        android:id="@+id/txtVerification"
-        style="@style/txtUserfield_standard"
-        android:clickable="true"
-        android:background="@drawable/borderbottom_txtfield"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/verificationCode"
-        app:layout_constraintStart_toEndOf="@+id/btn_verification"
-        app:layout_constraintTop_toBottomOf="@+id/btn_home" />
-
-    <Button
-        android:id="@+id/btn_psw"
-        style="@style/transparentbtn2_standard"
-        android:layout_marginEnd="20dp"
-        android:clickable="false"
-        android:drawableTop="@drawable/ic_lock_icon"
-        app:layout_constraintEnd_toStartOf="@+id/txtPsw"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_verification" />
-
-    <TextView
-        android:id="@+id/txtPsw"
-        style="@style/txtUserfield_standard"
-        android:background="@drawable/borderbottom_txtfield"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/newPsw"
-        android:clickable="true"
-        app:layout_constraintStart_toEndOf="@+id/btn_psw"
-        app:layout_constraintTop_toBottomOf="@+id/txtVerification" />
-
-    <Button
-        android:id="@+id/btn_repeatPsw"
-        style="@style/transparentbtn2_standard"
-        android:drawableTop="@drawable/ic_lock_icon"
-        android:clickable="false"
-        app:layout_constraintEnd_toStartOf="@+id/txtRepeatPsw"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_psw" />
-
-    <TextView
-        android:id="@+id/txtRepeatPsw"
-        style="@style/txtUserfield_standard"
-        android:background="@drawable/borderbottom_txtfield"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/repeatPsw"
-        android:clickable="true"
-        app:layout_constraintStart_toEndOf="@+id/btn_repeatPsw"
-        app:layout_constraintTop_toBottomOf="@+id/txtPsw" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/txtResetPswMsg" />
 
     <Button
         android:id="@+id/btn_continue"
@@ -89,18 +58,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/circle_background"
-        android:layout_width="649dp"
-        android:layout_height="684dp"
-        android:layout_marginBottom="132dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/circle_gradientbackground" />
 
     <TextView
-        android:id="@+id/txtLogin"
+        android:id="@+id/txtRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -111,6 +71,30 @@
         android:textColor="@color/blue_61"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_continue" />
+
+    <TextView
+        android:id="@+id/txtResetPswMsg"
+        android:layout_width="309dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/resetPswMsg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_home" />
+
+    <TextView
+        android:id="@+id/txtBack"
+        android:layout_width="57dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="40dp"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_back_icon"
+        android:text="@string/back"
+        android:textColor="@color/blue_61"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtVerification" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,7 +37,23 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".testing">
+        <activity android:name=".user.Registration">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".user.Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".user.ResetPsw">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
