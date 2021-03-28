@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/supplier_navigation_graph"
+    app:startDestination="@id/supplierFragment">
+
+    <fragment
+        android:id="@+id/addSupplierDialogFragment"
+        android:name="com.example.cc_mobileapp.supplier.AddSupplierDialogFragment"
+        android:label="AddSupplierDialogFragment"
+        tools:layout="@layout/fragment_add_supplier" />
+    <fragment
+        android:id="@+id/editSupplierFragment"
+        android:name="com.example.cc_mobileapp.supplier.EditSupplierFragment"
+        android:label="EditSupplierFragment" />
+    <fragment
+        android:id="@+id/supplierFragment"
+        android:name="com.example.cc_mobileapp.supplier.SupplierFragment"
+        android:label="fragment_supplier"
+        tools:layout="@layout/fragment_supplier" >
+        <action
+            android:id="@+id/action_supplierFragment_to_addSupplierDialogFragment"
+            app:destination="@id/addSupplierDialogFragment" />
+        <action
+            android:id="@+id/action_supplierFragment_to_editSupplierFragment"
+            app:destination="@id/editSupplierFragment" />
+    </fragment>
+</navigation>

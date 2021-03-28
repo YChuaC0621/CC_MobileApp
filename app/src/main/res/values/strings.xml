@@ -20,12 +20,13 @@
     <string name="delete_confirmation">Are you sure you want to delete?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="delete">Delete</string>
     <!-- all page title name -->
     <string name="add_client"><b>Add Client</b></string>
 
     <!-- sign up & login-->
     <string name="username">User Name</string>
-    <string name="hpNum">Phone Number</string>
+    <string name="hpNum">Contact Number</string>
     <string name="psw">Password</string>
     <string name="repeatPsw">Repeat Password</string>
     <string name="loginMsg"><u>Already have an account? <b>Login</b></u></string>
@@ -38,6 +39,11 @@
     <string name="back">Back</string>
     <string name="resetPswMsg">To reset your password,enter your email,
     press continue button and check your email to follow instructions</string>
+    <string-array name="themeSpinner">
+        <item>Bright Theme</item>
+        <item>Dark Theme</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -48,5 +54,15 @@
 
     <!-- product -->
     <string name="prodAddSuccess">Product Added Successfully</string>
+
+    <!--supplier-->
+    <string name="editSupTitle">Edit Supplier</string>
+    <string name="addSupTitle">Add Supplier</string>
+    <string name="supplier_id">Supplier ID</string>
+    <string name="supplier_name">Supplier Name</string>
+    <string name="supplier_status">Collaboration Status</string>
+    <string name="supplier_added">Supplier Successfully Added</string>
+    <string name="supplier_displayed">Supplier Successfully Displayed</string>
+    <string name="supplier_edited">Supplier Successfully Edited</string>
 </resources>
 

@@ -2,7 +2,6 @@ package com.example.cc_mobileapp.user
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -18,7 +17,7 @@ class ResetPsw : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_resetpsw)
+        setContentView(R.layout.activity_resetpsw)
 
         mAuth = FirebaseAuth.getInstance()
 

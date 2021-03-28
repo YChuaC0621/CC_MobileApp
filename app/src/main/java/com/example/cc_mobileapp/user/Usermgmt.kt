@@ -5,43 +5,54 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cc_mobileapp.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_usermgmt_display.*
 
 class Usermgmt : AppCompatActivity() {
+    lateinit var mDatabase : DatabaseReference
+    var mAuth = FirebaseAuth.getInstance()
+    var user = FirebaseAuth.getInstance().currentUser
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_usermgmt_display)
 
-        val list: MutableList<String> = ArrayList()
-
-        list.add("Bright Theme");
-        list.add("Dark Theme");
-
-        val adapter: ArrayAdapter<String> = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, list)
-        val ddlTheme:Spinner = findViewById(R.id.ddlTheme)
-        ddlTheme.adapter = adapter
-        ddlTheme.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val item = list[position]
-                Toast.makeText(this@Usermgmt, "$item selected",Toast.LENGTH_SHORT).show()
+        val nameTxt = findViewById<View>(R.id.txtName) as TextView
+        val hpTxt = findViewById<View>(R.id.txthpNum) as TextView
+        val emailTxt = findViewById<View>(R.id.txtEmail) as TextView
+        var uid = user!!.uid
+        emailTxt.text =  user!!.email.toString();
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users")
+        mDatabase.child(uid).child("Name").addValueEventListener( object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                nameTxt.text =  snapshot.value.toString()
             }
-        }
-        limitDdlLength(ddlTheme)
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        mDatabase.child(uid).child("Phone").addValueEventListener( object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                hpTxt.text =  snapshot.value.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        // Create an ArrayAdapter
+        val adapter = ArrayAdapter.createFromResource(this,
+                R.array.themeSpinner, android.R.layout.simple_spinner_item)
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Apply the adapter to the spinner
+        ddlTheme.adapter = adapter
 
     }
 
-    fun limitDdlLength(ddlTheme:Spinner)
-    {
-        val popup = Spinner::class.java.getDeclaredField("Popup")
-        popup.isAccessible = true
-
-        val popupWindow = popup.get(ddlTheme) as ListPopupWindow
-        popupWindow.height = (200 * resources.displayMetrics.density).toInt()
-    }
 }

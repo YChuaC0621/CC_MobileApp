@@ -9,7 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.util.ArrayList
 
-class supplier : AppCompatActivity() {
+class supplierLV : AppCompatActivity() {
 
     class supplierCollection(
         private val supplier_name:String,

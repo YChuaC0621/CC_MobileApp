@@ -70,8 +70,9 @@ class Login : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, OnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    startActivity(Intent(this, MainActivity::class.java))
                     Toast.makeText(this, "Login Successfully:)", Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this, Usermgmt::class.java))
+
                 }else {
                     Toast.makeText(this, "Error Login, try again later :(", Toast.LENGTH_LONG).show()
                 }

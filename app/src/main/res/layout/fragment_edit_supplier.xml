@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#FFFF"
+    tools:context=".supplier.AddSupplierDialogFragment">
+
+        <TextView
+            android:id="@+id/txtView_editSupplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            android:text="@string/editSupTitle"
+            android:textSize="@dimen/form_titleSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputLayout_supName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_editSupplier"
+            android:hint="@string/supplier_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTxt_supName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputLayout_supEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_supName"
+            android:hint="@string/email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTxt_supEmail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputLayout_supHpNum"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_supEmail"
+            android:hint="@string/hpNum">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTxt_supHpNum"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputLayout_supCmpName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_supHpNum"
+            android:hint="@string/company_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTxt_supCmpName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputLayout_supCmpLot"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editTxt_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_supCmpName"
+            android:hint="@string/location">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTxt_supCmpLot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtDelete"
+        android:layout_width="90dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="28dp"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_delete"
+        android:layout_gravity="center"
+        android:text="@string/delete"
+        android:textAlignment="center"
+        android:textColor="@color/btn_supplierId_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_supCmpLot" />
+
+    <Button
+        android:id="@+id/btn_Save"
+        style="@style/circlebtn_standard"
+        android:layout_gravity="end"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/circlebtn_standard"
+        app:icon="@drawable/ic_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProdPage" />
+
+</LinearLayout>
