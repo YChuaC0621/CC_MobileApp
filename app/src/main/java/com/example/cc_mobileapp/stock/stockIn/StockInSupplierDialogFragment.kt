@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_stock_in_supplier_dialog.*
 class StockInSupplierDialogFragment : Fragment() {
 
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
-
+    //private var existSupplierName: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -34,10 +34,10 @@ class StockInSupplierDialogFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         btn_continueAddStockInDetails.setOnClickListener {
-            val stockInSupplierId:String = edit_text_stockIn_supplierId.text.toString().trim()
+            val stockInSupplierId:String = edit_text_stockIn_supplierName.text.toString().trim()
             when {
                 stockInSupplierId.isEmpty() -> {
-                    input_layout_stockIn_supplierId.error =
+                    input_layout_stockIn_supplierName.error =
                         getString(R.string.error_field_required)
                     return@setOnClickListener
                 }
@@ -56,6 +56,32 @@ class StockInSupplierDialogFragment : Fragment() {
         btn_cancelAddStockInDetails.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack("stockInSupplierDialogFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
+
+//        // Autocomplete for product barcode
+//        val supplierNameListener = object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                populateSearchSupplierName(snapshot)
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        }
+//        dbSupplier.addListenerForSingleValueEvent(supplierNameListener)
+//    }
+//
+//    protected fun populateSearchSupplierName(snapshot: DataSnapshot) {
+//        var supplierNames: ArrayList<String> = ArrayList<String>()
+//        if(snapshot.exists()){
+//            snapshot.children.forEach{
+//                var supplierName: String = it.child("supplierName").value.toString()
+//                supplierNames.add(supplierName)
+//            }
+//            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, supplierNames)
+//            edit_text_stockIn_supplierName.setAdapter(adapter)
+//        }else{
+//            Log.d("checkAuto", "No match found")
+//        }
     }
 
 }

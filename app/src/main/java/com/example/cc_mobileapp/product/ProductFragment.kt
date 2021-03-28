@@ -33,7 +33,7 @@ class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
         savedInstanceState: Bundle?
     ): View? {
          //Inflate the layout for this fragment
-        viewModel = ViewModelProvider(requireActivity()).get(ProductViewModel::class.java)
+        viewModel = ViewModelProvider(this@ProductFragment).get(ProductViewModel::class.java)
         return inflater.inflate(R.layout.fragment_product, container, false)
 
 //        val fragmentBinding = ProductFragment.inflate(inflater, container, false)

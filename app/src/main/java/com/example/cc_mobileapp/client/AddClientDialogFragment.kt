@@ -14,8 +14,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.viewModelScope
+import com.example.cc_mobileapp.Constant.NODE_CLIENT
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Client
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 
 class AddClientDialogFragment : Fragment() {
@@ -67,14 +69,32 @@ class AddClientDialogFragment : Fragment() {
                     return@setOnClickListener
                 }
                 else -> {
-                    val client = Client()
-                    client.clientCoName = clientCoName
-                    client.clientEmail = clientEmail
-                    client.clientHpNum = clientHp
-                    client.clientLocation = clientLocation
-                    Log.d("Check", "client data $client")
-                    viewModel.addClient(client)
-                    requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    Log.d("Check Query", "else Part")
+                    var clientNameQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_CLIENT).orderByChild("clientCoName").equalTo(clientCoName)
+                    Log.d("Check Query", "Go in")
+                    clientNameQuery.addListenerForSingleValueEvent(object: ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if(snapshot.childrenCount > 0){
+                                Toast.makeText(requireActivity(), "Client Company Name Exist", Toast.LENGTH_SHORT).show()
+                                input_layout_clientCoName.error = "Client Company Name Exist"
+                            }
+                            else{
+                                val client = Client()
+                                client.clientCoName = clientCoName
+                                client.clientEmail = clientEmail
+                                client.clientHpNum = clientHp
+                                client.clientLocation = clientLocation
+                                Log.d("Check", "client data $client")
+                                viewModel.addClient(client)
+                                requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
                 }
             }
         }

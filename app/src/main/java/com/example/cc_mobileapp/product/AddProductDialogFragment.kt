@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
@@ -13,14 +14,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
+import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.product_display_item.*
 
 class AddProductDialogFragment : Fragment() {
 
     private lateinit var viewModel: ProductViewModel
     private val sharedBarcodeViewModel: ProductBarcodeViewModel by activityViewModels()
+//    private val dbSupplier = FirebaseDatabase.getInstance().getReference(Constant.NODE_SUPPLIER)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +56,7 @@ class AddProductDialogFragment : Fragment() {
 
         btn_addProdInDialog.setOnClickListener {
             val prodName = edit_text_prodName.text.toString().trim()
-            val supplierId = edit_text_prodSupplierId.text.toString().trim()
+            val supplierId = edit_text_prodSupplierName.text.toString().trim()
             val prodDesc = edit_text_prodDesc.text.toString().trim()
             val prodPrice = edit_text_prodPrice.text.toString().trim()
             val prodBarcode = edit_text_prodBarcode.text.toString().trim()
@@ -59,7 +66,7 @@ class AddProductDialogFragment : Fragment() {
                     return@setOnClickListener
                 }
                 supplierId.isEmpty() -> {
-                    input_layout_prodSupplierId.error = getString(R.string.error_field_required)
+                    input_layout_prodSupplierName.error = getString(R.string.error_field_required)
                     return@setOnClickListener
                 }
                 prodDesc.isEmpty() -> {
@@ -97,6 +104,32 @@ class AddProductDialogFragment : Fragment() {
             transaction.addToBackStack("addBarcodeFragment")
             transaction.commit()
         }
+
+//        // Autocomplete for product barcode
+//        val supplierNameListener = object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                populateSearchSupplierName(snapshot)
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        }
+//        dbSupplier.addListenerForSingleValueEvent(supplierNameListener)
+//    }
+//
+//    protected fun populateSearchSupplierName(snapshot: DataSnapshot) {
+//        var supplierNames: ArrayList<String> = ArrayList<String>()
+//        if(snapshot.exists()){
+//            snapshot.children.forEach{
+//                var supplierName: String = it.child("supplierName").value.toString()
+//                supplierNames.add(supplierName)
+//            }
+//            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, supplierNames)
+//            edit_text_prodSupplierName.setAdapter(adapter)
+//        }else{
+//            Log.d("checkAuto", "No match found")
+//        }
 
 
     }

@@ -41,7 +41,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         edit_text_editProductName.setText(product.prodName)
-        edit_text_editSupplierId.setText(product.supplierId)
+        edit_text_editSupplierName.setText(product.supplierId)
         edit_text_editProdDesc.setText(product.prodDesc)
         edit_text_editProdPrice.setText(product.prodPrice.toString())
         edit_text_editProdBarcode.setText(product.prodBarcode.toString())
@@ -63,7 +63,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
 
         btn_productConfirmEdit.setOnClickListener {
             val prodName = edit_text_editProductName.text.toString().trim()
-            val supplierId = edit_text_editSupplierId.text.toString().trim()
+            val supplierId = edit_text_editSupplierName.text.toString().trim()
             val prodDesc = edit_text_editProdDesc.text.toString().trim()
             val prodPrice = edit_text_editProdPrice.text.toString().trim()
             val prodBarcode = edit_text_editProdBarcode.text.toString().trim()
@@ -115,6 +115,32 @@ class EditProductFragment(private val product: Product) : Fragment() {
             transaction.addToBackStack("editBarcodeFragment")
             transaction.commit()
         }
+
+//        // Autocomplete for product barcode
+//        val supplierNameListener = object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                populateSearchSupplierName(snapshot)
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        }
+//        dbSupplier.addListenerForSingleValueEvent(supplierNameListener)
+//    }
+//
+//    protected fun populateSearchSupplierName(snapshot: DataSnapshot) {
+//        var supplierNames: ArrayList<String> = ArrayList<String>()
+//        if(snapshot.exists()){
+//            snapshot.children.forEach{
+//                var supplierName: String = it.child("supplierName").value.toString()
+//                supplierNames.add(supplierName)
+//            }
+//            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, supplierNames)
+//            edit_text_editSupplierName.setAdapter(adapter)
+//        }else{
+//            Log.d("checkAuto", "No match found")
+//        }
     }
 
     override fun onResume() {

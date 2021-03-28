@@ -136,10 +136,8 @@ class StockViewModel : ViewModel() {
     fun storedIntoStockInDB() {
 
         val numbers = mutableListOf(stocksDetail)
-        val totalCount: Int =  (listOf(numbers).indexOf(numbers))
         var count: Int = 0
-        var number = numbers.count()
-        var oneStockDetail : Unit = numbers.listIterator().forEach {
+        numbers.listIterator().forEach {
             it.value?.forEach {
                 dbStockInDetail.push().setValue(it)
                 count+=1

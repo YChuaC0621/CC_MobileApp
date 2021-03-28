@@ -16,18 +16,17 @@
         android:textSize="24sp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_stockIn_supplierId"
+        android:id="@+id/input_layout_stockIn_supplierName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:hint="Supplier Name">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_stockIn_supplierId"
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            style="@style/Widget.MaterialComponents.AutoCompleteTextView.FilledBox"
+            android:id="@+id/edit_text_stockIn_supplierName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
+            android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
