@@ -45,13 +45,13 @@ class SupplierViewModel(): ViewModel() {
             Log.d("Check", "childListener$snapshot")
             val sup = snapshot.getValue(Supplier::class.java)
             sup?.supId = snapshot.key
-            _supplier.value = sup
+            _supplier.value = sup!!
         }
 
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
             val sup = snapshot.getValue(Supplier::class.java)
             sup?.supId = snapshot.key
-            _supplier.value = sup
+            _supplier.value = sup!!
         }
 
         override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -60,7 +60,7 @@ class SupplierViewModel(): ViewModel() {
             val sup = snapshot.getValue(Supplier::class.java)
             sup?.supId = snapshot.key
             sup?.supStatus = false
-            _supplier.value = sup
+            _supplier.value = sup!!
         }
 
         override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {

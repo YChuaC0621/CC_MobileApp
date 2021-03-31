@@ -13,7 +13,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Supplier
+import kotlinx.android.synthetic.main.fragment_add_supplier.*
 import kotlinx.android.synthetic.main.fragment_edit_supplier.*
+import kotlinx.android.synthetic.main.fragment_edit_supplier.btn_Save
+import kotlinx.android.synthetic.main.fragment_edit_supplier.editTxt_supCmpLot
+import kotlinx.android.synthetic.main.fragment_edit_supplier.editTxt_supCmpName
+import kotlinx.android.synthetic.main.fragment_edit_supplier.editTxt_supEmail
+import kotlinx.android.synthetic.main.fragment_edit_supplier.editTxt_supHpNum
+import kotlinx.android.synthetic.main.fragment_edit_supplier.editTxt_supName
+import kotlinx.android.synthetic.main.fragment_edit_supplier.txtInputLayout_supCmpLot
+import kotlinx.android.synthetic.main.fragment_edit_supplier.txtInputLayout_supCmpName
+import kotlinx.android.synthetic.main.fragment_edit_supplier.txtInputLayout_supEmail
+import kotlinx.android.synthetic.main.fragment_edit_supplier.txtInputLayout_supHpNum
+import kotlinx.android.synthetic.main.fragment_edit_supplier.txtInputLayout_supName
 
 class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
 
@@ -62,8 +74,16 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
                     txtInputLayout_supEmail.error = getString(R.string.error_field_required)
                     return@setOnClickListener
                 }
+                !android.util.Patterns.EMAIL_ADDRESS.matcher(supEmail).matches() -> {
+                    txtInputLayout_supEmail.error = getString(R.string.errorEmail)
+                    return@setOnClickListener
+                }
                 supHpNum.isEmpty() -> {
                     txtInputLayout_supHpNum.error = getString(R.string.error_field_required)
+                    return@setOnClickListener
+                }
+                !android.util.Patterns.PHONE.matcher(supHpNum).matches() -> {
+                    txtInputLayout_supEmail.error = getString(R.string.errorPhoneNum)
                     return@setOnClickListener
                 }
                 supCmpName.isEmpty() -> {

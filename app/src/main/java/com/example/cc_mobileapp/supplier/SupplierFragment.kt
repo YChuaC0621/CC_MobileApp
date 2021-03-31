@@ -61,6 +61,8 @@ class SupplierFragment: Fragment(), SupplierRecycleViewClickListener {
             transaction.addToBackStack("fragmentA")
             transaction.commit()
         }
+
+
     }
 
     override fun onRecycleViewItemClicked(view: View, supplier: Supplier) {

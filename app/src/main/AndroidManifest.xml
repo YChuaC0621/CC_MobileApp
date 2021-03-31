@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CC_MobileApp">
-        <activity android:name=".stock.stockOut.StockOutActivity"></activity>
+        <activity android:name=".stock.stockOut.StockOutActivity" />
         <activity android:name=".stock.stockIn.StockInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".supplier.Supplier_Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,7 +55,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".rack.SiteMap">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".user.Registration">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,7 +69,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".user.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,7 +76,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".user.ResetPsw">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -80,7 +83,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".user.Usermgmt">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -88,8 +90,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

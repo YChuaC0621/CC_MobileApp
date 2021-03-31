@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/addClientFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFF"
+    android:orientation="vertical"
+    tools:context=".client.AddClientDialogFragment">
+
+    <TextView
+        android:id="@+id/txtView_displayRack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        android:text="@string/displayRackTitle"
+        android:textSize="@dimen/form_titleSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/txtRackName"
+        android:background="@drawable/rackborder"
+        android:layout_width="@dimen/editTxt_width"
+        android:layout_height="46dp"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        android:hint="@string/rack_name"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtView_displayRack"/>
+
+
+    <TextView
+        android:id="@+id/txtStartLot"
+        android:background="@drawable/rackborder"
+        android:layout_width="@dimen/editTxt_width"
+        android:layout_height="46dp"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        android:hint="@string/rack_startLot"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRackName"/>
+
+    <TextView
+        android:id="@+id/txtEndLot"
+        android:background="@drawable/rackborder"
+        android:layout_width="@dimen/editTxt_width"
+        android:layout_height="46dp"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        android:hint="@string/rack_endLot"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtStartLot"/>
+
+    <TextView
+        android:id="@+id/txtRowNum"
+        android:background="@drawable/rackborder"
+        android:layout_width="@dimen/editTxt_width"
+        android:layout_height="46dp"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        android:hint="@string/rack_rowNum"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtEndLot"/>
+
+    <TextView
+        android:id="@+id/txtView_rowTitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        android:text="@string/rack_rowNum1"
+        android:textSize="@dimen/form_titleSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtRow1Prod"
+            android:layout_width="225dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            android:background="@drawable/rackborder"
+            android:hint="@string/product"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_rowTitle1" />
+
+        <TextView
+            android:id="@+id/txtRow1ProdQty"
+            android:layout_width="100dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            android:background="@drawable/rackborder"
+            android:hint="@string/quantity"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRow1Prod" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtView_rowTitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        android:text="@string/rack_rowNum2"
+        android:textSize="@dimen/form_titleSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtRow2Prod"
+            android:layout_width="225dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            android:background="@drawable/rackborder"
+            android:hint="@string/product"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_rowTitle2" />
+
+        <TextView
+            android:id="@+id/txtRow2ProdQty"
+            android:layout_width="100dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            android:background="@drawable/rackborder"
+            android:hint="@string/quantity"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRow2Prod" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtView_rowTitle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        android:text="@string/rack_rowNum3"
+        android:textSize="@dimen/form_titleSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtRow3Prod"
+            android:layout_width="225dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            android:background="@drawable/rackborder"
+            android:hint="@string/product"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtView_rowTitle3" />
+
+        <TextView
+            android:id="@+id/txtRow3ProdQty"
+            android:layout_width="100dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/editTxt_marginStart"
+            android:layout_marginTop="@dimen/editTxt_marginTop"
+            android:background="@drawable/rackborder"
+            android:hint="@string/quantity"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRow3Prod" />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/rack_C"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/rack_C"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/rack_B"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rack_1"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_1"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rack_2"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_2"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_1" />
+
+    <TextView
+        android:id="@+id/rack_3"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_3"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_2" />
+
+    <TextView
+        android:id="@+id/rack_4"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_4"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_3" />
+
+    <TextView
+        android:id="@+id/rack_A13"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_A"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_4" />
+
+    <TextView
+        android:id="@+id/rack_5"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_5"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_4" />
+
+    <TextView
+        android:id="@+id/rack_6"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_6"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_A13" />
+
+    <TextView
+        android:id="@+id/rack_7"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_7"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_6" />
+
+    <TextView
+        android:id="@+id/rack_8"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_8"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_7" />
+
+    <TextView
+        android:id="@+id/rack_10"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_10"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_9" />
+
+    <TextView
+        android:id="@+id/rack_9"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_9"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_8" />
+
+    <TextView
+        android:id="@+id/rack_11"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_11"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_10" />
+
+    <TextView
+        android:id="@+id/rack_12"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_12"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_11" />
+
+    <TextView
+        android:id="@+id/rack_13"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_13"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_12" />
+
+    <TextView
+        android:id="@+id/rack_14"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_14"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_13" />
+
+    <TextView
+        android:id="@+id/rack_15"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/rack_15"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rack_14" />
+
+    <TextView
+        android:id="@+id/rack_B"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/rack_B"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/rack_A"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_rack1"
+        style="@style/rectRack1_standard"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/rackName1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_rack2"
+        style="@style/rectRack1_standard"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rackborder"
+        android:text="@string/rackName2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack1" />
+
+    <Button
+        android:id="@+id/btn_rack3"
+        style="@style/rectRack1_standard"
+        android:layout_width="37dp"
+        android:layout_height="185dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/rackName3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack2"
+        app:layout_constraintVertical_bias="0.108" />
+
+
+    <Button
+        android:id="@+id/btn_rack20"
+        style="@style/rectRack3_standard"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="46dp"
+        android:text="@string/rackName20"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack3"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack18" />
+
+    <Button
+        android:id="@+id/btn_rack21"
+        style="@style/rectRack3_standard"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="46dp"
+        android:text="@string/rackName21"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack20"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack19" />
+
+    <Button
+        android:id="@+id/btn_rack8"
+        style="@style/rectRack3_standard"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/rackName8"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack6" />
+
+    <Button
+        android:id="@+id/btn_rack9"
+        style="@style/rectRack3_standard"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/rackName9"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack8"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack7" />
+
+    <Button
+        android:id="@+id/btn_rack10"
+        style="@style/rectRack3_standard"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName10"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack2"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack8" />
+
+    <Button
+        android:id="@+id/btn_rack11"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName11"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack10"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack9" />
+
+    <Button
+        android:id="@+id/btn_rack13"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/rackName13"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack12"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack11" />
+
+    <Button
+        android:id="@+id/btn_rack12"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/rackName12"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack2"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack10" />
+
+    <Button
+        android:id="@+id/btn_rack4"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="17dp"
+        android:text="@string/rackName4"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack1"
+        app:layout_constraintTop_toBottomOf="@+id/rack_E" />
+
+    <Button
+        android:id="@+id/btn_rack6"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName6"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack4" />
+
+    <Button
+        android:id="@+id/btn_rack22"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName22"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack3"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack20" />
+
+    <Button
+        android:id="@+id/btn_rack23"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName23"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack22"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack21" />
+
+    <Button
+        android:id="@+id/btn_rack5"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="17dp"
+        android:text="@string/rackName5"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack4"
+        app:layout_constraintTop_toBottomOf="@+id/rack_B" />
+
+    <Button
+        android:id="@+id/btn_rack7"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName7"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack6"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack5" />
+
+    <Button
+        android:id="@+id/btn_rack14"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName14"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack2"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack12" />
+
+    <Button
+        android:id="@+id/btn_rack15"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName15"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack14"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack13" />
+
+    <Button
+        android:id="@+id/btn_rack17"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/rackName17"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack16"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack15" />
+
+    <Button
+        android:id="@+id/btn_rack18"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName18"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack3"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack16" />
+
+    <Button
+        android:id="@+id/btn_rack19"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/rackName19"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack18"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack17" />
+
+    <Button
+        android:id="@+id/btn_rack16"
+        style="@style/rectRack3_standard"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/rackName16"
+        app:layout_constraintStart_toEndOf="@+id/btn_rack3"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack14" />
+
+    <TextView
+        android:id="@+id/rack_A"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/rack_A"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rack_D"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/rack_D"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/rack_C"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rack_E"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/rack_E"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/rack_D"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rack_F"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/rack_F"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/rack_E"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rack_G"
+        style="@style/rackLbl_standard"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/rack_G"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/rack_F"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="12dp"
+        app:backgroundTint="@color/circleBtnStdColor"
+        app:fabSize="normal"
+        app:layout_constraintEnd_toStartOf="@+id/rack_15"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rack23"
+        app:srcCompat="@drawable/ic_add_icon" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

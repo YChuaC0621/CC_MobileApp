@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/sitemap_navigation_graph"
+    app:startDestination="@id/siteMapFragment">
+    <fragment
+        android:id="@+id/addRackDialogFragment"
+        android:name="com.example.cc_mobileapp.rack.AddRackDialogFragment"
+        android:label="AddRackDialogFragment" />
+    <fragment
+        android:id="@+id/siteMapFragment"
+        android:name="com.example.cc_mobileapp.rack.SiteMapFragment"
+        android:label="SiteMapFragment" >
+        <action
+            android:id="@+id/action_siteMapFragment_to_addRackDialogFragment"
+            app:destination="@id/addRackDialogFragment" />
+        <action
+            android:id="@+id/action_siteMapFragment_to_displayRackDetailsFragment"
+            app:destination="@id/displayRackDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayRackDetailsFragment"
+        android:name="com.example.cc_mobileapp.rack.DisplayRackDetailsFragment"
+        android:label="DisplayRackDetailsFragment" />
+</navigation>

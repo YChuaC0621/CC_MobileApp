@@ -13,7 +13,23 @@ class Supplier (
     var supHpNum: String? = null,
     var supCmpName: String? = null,
     var supCmpLot: String? = null,
+    @get:Exclude
     var supStatus: Boolean = true
     )
 {
+    override fun equals(other: Any?): Boolean {
+        return if(other is Supplier){
+            other.supId == supId
+        }else false
+    }
+
+    override fun hashCode(): Int {
+        var result = supId?.hashCode() ?: 0
+        result = 31 * result + (supName?.hashCode() ?: 0)
+        result = 31 * result + (supEmail?.hashCode() ?: 0)
+        result = 31 * result + (supHpNum?.hashCode() ?: 0)
+        result = 31 * result + (supCmpName?.hashCode() ?: 0)
+        result = 31 * result + (supCmpLot?.hashCode() ?: 0)
+        return result
+    }
 }

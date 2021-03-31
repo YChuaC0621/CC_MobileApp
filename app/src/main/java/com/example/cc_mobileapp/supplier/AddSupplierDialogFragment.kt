@@ -55,8 +55,16 @@ class AddSupplierDialogFragment  : Fragment() {
                     txtInputLayout_supEmail.error = getString(R.string.error_field_required)
                     return@setOnClickListener
                 }
+                !android.util.Patterns.EMAIL_ADDRESS.matcher(supEmail).matches() -> {
+                    txtInputLayout_supEmail.error = getString(R.string.errorEmail)
+                    return@setOnClickListener
+                }
                 supHpNum.isEmpty() -> {
                     txtInputLayout_supHpNum.error = getString(R.string.error_field_required)
+                    return@setOnClickListener
+                }
+                !android.util.Patterns.PHONE.matcher(supHpNum).matches() -> {
+                    txtInputLayout_supEmail.error = getString(R.string.errorPhoneNum)
                     return@setOnClickListener
                 }
                 supCmpName.isEmpty() -> {

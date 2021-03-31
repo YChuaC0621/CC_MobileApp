@@ -59,4 +59,29 @@
     <dimen name="continue_btnMarginEnd">70dp</dimen>
     <dimen name="continue_btnRadius">25dp</dimen>
 
+    <!--Map-->
+    <!--Vertical Rack Pattern-->
+    <dimen name="rectRack1_width">40dp</dimen>
+    <dimen name="rectRack1_height">186dp</dimen>
+    <dimen name="rectRack1_radius">5dp</dimen>
+
+    <!--Horizontal Rack Pattern-->
+    <dimen name="rectRack2_width">118dp</dimen>
+    <dimen name="rectRack2_height">30dp</dimen>
+    <dimen name="rectRack2_radius">5dp</dimen>
+
+    <!--Entrance Pattern-->
+    <dimen name="entrance_width">47dp</dimen>
+    <dimen name="entrance_height">61dp</dimen>
+    <dimen name="entrance_radius">5dp</dimen>
+
+    <!--Horizontal Small Rack Pattern-->
+    <dimen name="rectRack3_width">100dp</dimen>
+    <dimen name="rectRack3_height">31dp</dimen>
+    <dimen name="rectRack3_radius">5dp</dimen>
+
+    <!--Rack Location-->
+    <dimen name="rackLbl_width">29dp</dimen>
+    <dimen name="rackLbl_height">25dp</dimen>
+
 </resources>

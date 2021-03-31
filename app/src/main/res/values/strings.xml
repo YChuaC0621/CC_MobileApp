@@ -21,6 +21,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="delete">Delete</string>
+    <string name="errorEmail">Invalid Email Address</string>
+    <string name="errorPhoneNum">Invalid Phone Number</string>
     <!-- all page title name -->
     <string name="add_client"><b>Add Client</b></string>
 
@@ -54,7 +56,7 @@
 
     <!-- product -->
     <string name="prodAddSuccess">Product Added Successfully</string>
-
+    <string name="quantity">Quantity</string>
     <!--supplier-->
     <string name="editSupTitle">Edit Supplier</string>
     <string name="addSupTitle">Add Supplier</string>
@@ -64,5 +66,80 @@
     <string name="supplier_added">Supplier Successfully Added</string>
     <string name="supplier_displayed">Supplier Successfully Displayed</string>
     <string name="supplier_edited">Supplier Successfully Edited</string>
+
+    <!--Product Name-->
+    <string name="rackName1">Rack1</string>
+    <string name="rackName2">Rack2</string>
+    <string name="rackName3">Rack3</string>
+    <string name="rackName4">Rack4</string>
+    <string name="rackName5">Rack5</string>
+
+    <string name="rackName6">Rack6</string>
+    <string name="rackName7">Rack7</string>
+    <string name="rackName8">Rack8</string>
+    <string name="rackName9">Rack9</string>
+    <string name="rackName10">Rack10</string>
+
+    <string name="rackName11">Rack11</string>
+    <string name="rackName12">Rack12</string>
+    <string name="rackName13">Rack13</string>
+    <string name="rackName14">Rack14</string>
+    <string name="rackName15">Rack15</string>
+
+    <string name="rackName16">Rack16</string>
+    <string name="rackName17">Rack17</string>
+    <string name="rackName18">Rack18</string>
+    <string name="rackName19">Rack19</string>
+    <string name="rackName20">Rack20</string>
+
+    <string name="rackName21">Rack21</string>
+    <string name="rackName22">Rack22</string>
+    <string name="rackName23">Rack23</string>
+
+    <!--Map Rack Location-->
+    <string name="rack_A">A</string>
+    <string name="rack_B">B</string>
+    <string name="rack_C">C</string>
+    <string name="rack_D">D</string>
+    <string name="rack_E">E</string>
+    <string name="rack_F">F</string>
+    <string name="rack_G">G</string>
+
+    <string name="rack_1">1</string>
+    <string name="rack_2">2</string>
+    <string name="rack_3">3</string>
+    <string name="rack_4">4</string>
+    <string name="rack_5">5</string>
+    <string name="rack_6">6</string>
+    <string name="rack_7">7</string>
+    <string name="rack_8">8</string>
+    <string name="rack_9">9</string>
+    <string name="rack_10">10</string>
+    <string name="rack_11">11</string>
+    <string name="rack_12">12</string>
+    <string name="rack_13">13</string>
+    <string name="rack_14">14</string>
+    <string name="rack_15">15</string>
+
+    <!--Rack String-->
+    <string name="addRackTitle">Add Rack</string>
+    <string name="displayRackTitle">Display Rack</string>
+    <string name="rack_id">Rack ID</string>
+    <string name="rack_name">Rack Name</string>
+    <string name="rack_startLot">Start Location</string>
+    <string name="rack_endLot">End Location</string>
+    <string name="rack_rowNum">Row Number</string>
+    <string name="rack_rowNum1">Row 1</string>
+    <string name="rack_rowNum2">Row 2</string>
+    <string name="rack_rowNum3">Row 3</string>
+    <string name="rack_added">Rack Successfully Added</string>
+    <string name="rack_displayed">Rack Successfully Displayed</string>
+    <string name="rack_edited">Rack Successfully Edited</string>
+
+
+    <string name="entrance">Entrance</string>
+    <string name="title_activity_rackdetails_display">rackdetails_display</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>
 
