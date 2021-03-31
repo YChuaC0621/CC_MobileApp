@@ -67,7 +67,7 @@ class DisplayRackDetailsFragment(private val rack_name : String) : Fragment() {
                                             if (it.exists()) {
                                                 for(prod in it.children){
                                                     var product: Product? = prod.getValue(Product::class.java)
-                                                    if (product?.prodBarcode.toString() == stockDetail?.stockDetailProdBarcode) {
+                                                    if (product?.prodBarcode.toString().equals(stockDetail?.stockDetailProdBarcode)) {
                                                         txtRow1Prod.setText(product?.prodName.toString())
                                                         txtRow1ProdQty.setText(product?.prodQty.toString())
                                                         Log.d("Check", "fetch product ${product?.prodName.toString()}")
@@ -82,7 +82,7 @@ class DisplayRackDetailsFragment(private val rack_name : String) : Fragment() {
                                             if (it.exists()) {
                                                 it.children.forEach {
                                                     var product: Product? = it.getValue(Product::class.java)
-                                                    if (product?.prodBarcode.toString() == stockDetail?.stockDetailProdBarcode) {
+                                                    if (product?.prodBarcode.toString().equals(stockDetail?.stockDetailProdBarcode)) {
                                                         txtRow2Prod.setText(product?.prodName.toString())
                                                         txtRow2ProdQty.setText(product?.prodQty.toString())
                                                         Log.d("Check", "fetch product ${product?.prodName.toString()}")
@@ -97,7 +97,7 @@ class DisplayRackDetailsFragment(private val rack_name : String) : Fragment() {
                                             if (it.exists()) {
                                                 it.children.forEach { it ->
                                                     var product: Product? = it.getValue(Product::class.java)
-                                                    if (product?.prodBarcode.toString() == stockDetail?.stockDetailProdBarcode) {
+                                                    if (product?.prodBarcode.toString().equals(stockDetail?.stockDetailProdBarcode)) {
                                                         txtRow3Prod.setText(product?.prodName.toString())
                                                         txtRow3ProdQty.setText(product?.prodQty.toString())
                                                         Log.d("Check", "fetch product ${product?.prodName.toString()}")
