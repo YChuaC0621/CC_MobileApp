@@ -1,19 +1,18 @@
 package com.example.cc_mobileapp.model
 
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.Exclude
 
 data class Product(
-    @get:Exclude
-    var prodId: String? = null,
-    var prodName: String? = null,
-    var supplierId: String? = null,
-    var prodDesc: String? = null,
-    var prodBarcode: Int? = null,
-    var prodQty: Int? = null,
-    var prodPrice: Float? = null,
-    @get:Exclude
-    var isDeleted: Boolean = false
+        @get:Exclude
+        var prodId: String? = null,
+        var prodName: String? = null,
+        var supplierId: String? = null,
+        var prodDesc: String? = null,
+        var prodBarcode: Int? = null,
+        var prodQty: Int? = 0,
+        var prodPrice: Double? = 0.00,
+        @get:Exclude
+        var isDeleted: Boolean = false
 ){
     override fun equals(other: Any?): Boolean {
         return if(other is Product){
@@ -30,5 +29,18 @@ data class Product(
         result = 31 * result + (prodQty ?: 0)
         result = 31 * result + (prodPrice?.hashCode() ?: 0)
         return result
+    }
+
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+                "prodId" to prodId,
+                "prodName" to prodName,
+                "supplierId" to supplierId,
+                "prodDesc" to prodDesc,
+                "prodBarcode" to prodBarcode,
+                "prodQty" to prodQty,
+                "prodPrice" to prodPrice
+        )
     }
 }

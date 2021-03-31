@@ -9,10 +9,10 @@ import java.util.*
 data class StockDetail(
     @get:Exclude
     var stockDetailId: String? = null,
-    var stockDetailProdBarcode: String? = null,
+    var stockDetailProdBarcode: Int? = null,
     var stockDetailRackId: String? = null,
     var stockDetailRowNum: String? = null,
-    var stockDetailQty: String? = null,
+    var stockDetailQty: Int? = null,
     var stockTypeId: String? = null,
     @get:Exclude
     var isDeleted: Boolean = false

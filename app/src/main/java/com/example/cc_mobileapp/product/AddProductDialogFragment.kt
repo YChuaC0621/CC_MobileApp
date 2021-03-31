@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
@@ -14,9 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
@@ -88,8 +84,9 @@ class AddProductDialogFragment : Fragment() {
                     product.prodName = prodName
                     product.supplierId = supplierId
                     product.prodDesc = prodDesc
-                    product.prodPrice = prodPrice.toFloat()
+                    product.prodPrice = prodPrice.toDouble()
                     product.prodBarcode = prodBarcode.toInt()
+                    product.prodQty = 0
                     Log.d("Check", "client data $product")
                     viewModel.addProduct(product)
                     requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);

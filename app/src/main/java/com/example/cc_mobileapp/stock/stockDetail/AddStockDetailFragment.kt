@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.StockDetail
+import com.example.cc_mobileapp.product.ProductViewModel
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -31,7 +32,7 @@ class AddStockDetailFragment : Fragment() {
     private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     private val dbProd = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
-
+    private lateinit var prodViewModel: ProductViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -39,13 +40,12 @@ class AddStockDetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         stockViewModel = ViewModelProvider(this@AddStockDetailFragment).get(StockViewModel::class.java)
+        prodViewModel =  ViewModelProvider(this@AddStockDetailFragment).get(ProductViewModel::class.java)
         return inflater.inflate(R.layout.fragment_add_stock_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        Log.e("StockIN", "access add stock detail fragment on activity created ")
 
         stockViewModel.result.observe(viewLifecycleOwner, Observer {
             val message = if (it == null) {
@@ -79,16 +79,14 @@ class AddStockDetailFragment : Fragment() {
                     return@setOnClickListener
                 }
                 else -> {
-                    Log.d("Check", "before val product")
                     val stockDetail = StockDetail()
-                    Log.d("Check", "after val product")
-                    stockDetail.stockDetailProdBarcode = prodBarcode
+                    stockDetail.stockDetailProdBarcode = prodBarcode.toInt()
                     stockDetail.stockDetailRackId = rackId
                     stockDetail.stockDetailRowNum = rowNo
-                    stockDetail.stockDetailQty = stockQty
+                    stockDetail.stockDetailQty = stockQty.toInt()
+                    //prodViewModel.stockUpdateProduct(prodBarcode, stockQty.toInt())
                     stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
                     // TODO add in the stockType Id
-                    Log.d("Check", "client data $stockDetail")
                     stockViewModel.addStockDetail(stockDetail)
                     requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 }
@@ -125,18 +123,21 @@ class AddStockDetailFragment : Fragment() {
 
     }
 
-    protected fun populateSearchProdBarcode(snapshot: DataSnapshot) {
+        protected fun populateSearchProdBarcode(snapshot: DataSnapshot) {
         var prodBarcodes: ArrayList<String> = ArrayList<String>()
         if(snapshot.exists()){
             snapshot.children.forEach{
-                var barcodeStored: String = it.child("prodBarcode").value.toString()
-                prodBarcodes.add(barcodeStored)
+                var prodBarcode: String = it.child("prodBarcode").value.toString()
+                prodBarcodes.add(prodBarcode)
             }
             var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, prodBarcodes)
             edit_text_stockDetail_ProdBarcode.setAdapter(adapter)
         }else{
             Log.d("checkAuto", "No match found")
         }
+
+
+
 
 //        // Validation for product barcode
 //        val rackIdListener = object : ValueEventListener {
@@ -163,7 +164,56 @@ class AddStockDetailFragment : Fragment() {
 //        }else{
 //            Log.d("checkAuto", "No match found")
 //        }
+
+        // Add to product qty
+//        val qtyListener = object : ValueEventListener {
 //
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                Log.d("check", "go into listener")
+//                populateUpdateQty(snapshot)
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.d("check", "error")
+//                TODO("Not yet implemented")
+//            }
+//        }
+//        dbProd.addListenerForSingleValueEvent(qtyListener)
+//    }
+//
+//
+//    protected fun populateUpdateQty(snapshot: DataSnapshot) {
+//        Log.d("check", "go into populate")
+//        if(snapshot.exists()){
+//            snapshot.children.forEach{
+//                var barcodeStored: String = it.child("prodBarcode").value.toString()
+//                var prodBarcode = edit_text_stockDetail_ProdBarcode.text.toString().trim()
+//                if(barcodeStored == prodBarcode){
+//                    Log.d("check same", "barcodeStored$barcodeStored")
+//                    Log.d("check same", "prodBarcode$prodBarcode")
+//                    var product = Product()
+//                    product.prodQty = edit_text_stockDetail_qty.text.toString().toInt()
+//                    product.prodId = snapshot.key
+//                    dbProd.child(snapshot.key!!).setValue(product)
+//                            .addOnCompleteListener {
+//                                if (it.isSuccessful) {
+//                                    Log.d("check","successful add in - prod update ")
+//                                } else {
+//                                    Log.d("check","fail add in - prod update")
+//                                }
+//                            }
+//                }
+//                else{
+//                    Log.d("check Diff", "barcodeStored$barcodeStored")
+//                    Log.d("check Diff", "prodBarcode$prodBarcode")
+//                }
+//            }
+//        }else{
+//            Log.d("checkAuto", "No match found")
+//        }
+
+
+
     }
 
     override fun onResume() {

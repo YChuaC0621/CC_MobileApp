@@ -92,7 +92,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
                     product.prodName = prodName
                     product.supplierId = supplierId
                     product.prodDesc = prodDesc
-                    product.prodPrice = prodPrice.toFloat()
+                    product.prodPrice = prodPrice.toDouble()
                     product.prodBarcode = prodBarcode.toInt()
                     Log.d("Check", "Update client data $product")
                     viewModel.updateProduct(product)

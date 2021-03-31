@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.Constant.NODE_PRODUCT
-import com.example.cc_mobileapp.model.Client
 import com.example.cc_mobileapp.model.Product
 import com.google.firebase.database.*
 
@@ -22,7 +20,7 @@ class ProductViewModel: ViewModel() {
     val products: LiveData<List<Product>>
         get() = _products
 
-    private val _product = MutableLiveData<Product>()
+    private var _product = MutableLiveData<Product>()
     val product: LiveData<Product>
         get() = _product
 
@@ -127,4 +125,7 @@ class ProductViewModel: ViewModel() {
         dbProduct.removeEventListener(childEventListener)
     }
 
+
+
 }
+

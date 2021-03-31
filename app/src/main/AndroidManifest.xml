@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CC_MobileApp">
-        <activity android:name=".stock.stockOut.StockOutActivity" />
+        <activity android:name=".stock.stockOut.StockOutActivity"></activity>
         <activity android:name=".stock.stockIn.StockInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

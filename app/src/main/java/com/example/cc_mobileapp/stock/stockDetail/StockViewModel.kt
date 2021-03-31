@@ -1,19 +1,22 @@
 package com.example.cc_mobileapp.stock.stockDetail
 
 import android.util.Log
-import androidx.core.graphics.component1
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
+import com.example.cc_mobileapp.product.ProductViewModel
 import com.google.firebase.database.*
 
 class StockViewModel : ViewModel() {
     private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
+    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+
 
     private val _result = MutableLiveData<Exception?>()
     val result: LiveData<Exception?>
@@ -32,7 +35,6 @@ class StockViewModel : ViewModel() {
         get() = _stockTypeKey
 
     fun addStockDetail(stockDetail: StockDetail) {
-        Log.d("Check", "view model add prod $stockDetail")
         //create unique key
         // TODO if stock in then another push key
         stockDetail.stockDetailId = dbTemp.push().key
@@ -78,16 +80,13 @@ class StockViewModel : ViewModel() {
     }
 
     fun getRealtimeUpdates() {
-        Log.d("Check", "testgetRealtimeupdate")
         dbTemp.addChildEventListener(childEventListener)
     }
 
     fun fetchStockDetail() {
         dbTemp.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("Check", "fetch stock details")
                 if (snapshot.exists()) {
-                    Log.d("Check", "has snapshot $snapshot")
                     val stocksDetail = mutableListOf<StockDetail>()
                     for (stockDetailSnapshot in snapshot.children) {
                         val stockDetail = stockDetailSnapshot.getValue(StockDetail::class.java)
@@ -111,7 +110,6 @@ class StockViewModel : ViewModel() {
     }
 
     fun updateStockDetail(stockDetail: StockDetail) {
-        Log.e("Error", "Updte Stock $stockDetail")
         dbTemp.child(stockDetail.stockDetailId!!).setValue(stockDetail)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
@@ -133,16 +131,61 @@ class StockViewModel : ViewModel() {
                 }
     }
 
-    fun storedIntoStockInDB() {
-
+    fun storedIntoStockInDB(): Double? {
         val numbers = mutableListOf(stocksDetail)
         var count: Int = 0
+        var totalPrice: Double = 0.00
         numbers.listIterator().forEach {
+            var product: Product?
             it.value?.forEach {
                 dbStockInDetail.push().setValue(it)
                 count+=1
+                product = stockUpdateProduct(it.stockDetailProdBarcode.toString(), it.stockDetailQty)
+                if(product?.prodPrice != null && it?.stockDetailQty != null){
+                    var price: Double = product?.prodPrice.toString().toDouble()
+                    var qty : Double = it?.stockDetailQty.toString().toDouble()
+                    var subtotal:Double = price.times(qty)
+                    totalPrice = totalPrice.plus(subtotal.toDouble())
+                }
             }
         }
+        return totalPrice
         dbTemp.removeValue()
     }
+
+    fun stockUpdateProduct(productBarcode: String, prodQty: Int?): Product? {
+        dbProduct.get().addOnSuccessListener{
+            Log.d("check", "success Query")
+            //var subtotal: Double
+            if(it.exists()){
+                it.children.forEach{ it ->
+                    var product: Product? = it.getValue(Product::class.java)
+                    //subtotal = 0.00
+                    if(product?.prodBarcode.toString() == productBarcode)
+                    {
+                        product?.prodQty = prodQty
+                        dbProduct.child(it.key!!).setValue(product)
+                                .addOnCompleteListener { it ->
+                                    if (it.isSuccessful) {
+                                        Log.d("check", "update successfully")
+                                    } else {
+                                        Log.d("check", "update successfully")
+                                    }
+                                }
+                        //subtotal = (prodQty!! * product?.prodPrice!!).toDouble()
+                        return@forEach
+                    }
+                }
+            }
+            else{
+                Log.d("check", "query does not contain any")
+            }
+        }.addOnCanceledListener {
+            Log.d("check", "cancelled")
+        }.addOnFailureListener {
+            Log.d("check", "fail")
+        }
+        return null
+    }
+
 }

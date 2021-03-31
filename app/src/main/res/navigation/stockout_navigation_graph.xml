@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/stockOut_Fragment_Main"
-        android:name="com.example.cc_mobileapp.stock.stockOut.StockOut_Fragment_Main"
+        android:name="com.example.cc_mobileapp.stock.stockOut.StockOutActivity"
         android:label="StockOut_Fragment_Main" >
         <action
             android:id="@+id/action_stockOut_Fragment_Main_to_stockdetail_navigation_graph"

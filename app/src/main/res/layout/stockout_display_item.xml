@@ -46,7 +46,7 @@
         android:id="@+id/stockOut_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_stockIn"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_stockOut"
         app:layout_constraintStart_toEndOf="@+id/btn_stockOutClientId"
         app:layout_constraintTop_toTopOf="@+id/list_item_stockOut"
         app:srcCompat="@drawable/ic_stockout_icon" />

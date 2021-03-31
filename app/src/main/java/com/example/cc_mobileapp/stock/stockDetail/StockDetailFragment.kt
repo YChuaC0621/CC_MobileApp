@@ -56,7 +56,6 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         })
 
         btn_stockDetailAdd.setOnClickListener {
-            Log.e("StockIN", "access btn stock detail add")
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, AddStockDetailFragment())
@@ -65,11 +64,11 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         }
 
         btn_stockDetailSave.setOnClickListener {
-            stockViewModel.storedIntoStockInDB()
+            var totalPrice = stockViewModel.storedIntoStockInDB()
             val stockIn = StockIn()
             stockIn.stockInDateTime = Calendar.getInstance().time.toString()
             stockIn.stockInSupplierId = sharedStockInViewModel.stockInSupplierId.value
-            stockIn.totalProdPrice = 10
+            stockIn.totalProdPrice = totalPrice
             sharedStockInViewModel.addStockIn(stockIn)
             viewModelStore.clear()
             requireActivity().supportFragmentManager.popBackStack(getCallerFragment(), FragmentManager.POP_BACK_STACK_INCLUSIVE)
