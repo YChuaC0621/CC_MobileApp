@@ -15,24 +15,35 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.model.StockIn
+import com.example.cc_mobileapp.product.ProductViewModel
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import java.util.*
 
 class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
+    private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
+    private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
+    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
     private val adapter = StockDetailAdapter()
     private lateinit var stockViewModel: StockViewModel
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
+    private  lateinit var productViewModel: ProductViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        productViewModel = ViewModelProvider(this@StockDetailFragment).get(ProductViewModel::class.java)
         stockViewModel = ViewModelProvider(this@StockDetailFragment).get(StockViewModel::class.java)
         return inflater.inflate(R.layout.fragment_stock_detail, container, false)
     }
@@ -63,17 +74,109 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
             transaction.commit()
         }
 
+
         btn_stockDetailSave.setOnClickListener {
-            var totalPrice = stockViewModel.storedIntoStockInDB()
-            val stockIn = StockIn()
-            stockIn.stockInDateTime = Calendar.getInstance().time.toString()
-            stockIn.stockInSupplierId = sharedStockInViewModel.stockInSupplierId.value
-            stockIn.totalProdPrice = totalPrice
-            sharedStockInViewModel.addStockIn(stockIn)
-            viewModelStore.clear()
-            requireActivity().supportFragmentManager.popBackStack(getCallerFragment(), FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            getProdsDetail()
         }
     }
+
+    private lateinit var productSnapshot: DataSnapshot
+    private var totalPrice: Double = 0.0
+    private var product: Product? = null
+
+    fun getProdsDetail(){
+        readData(object : FirebaseCallback{
+            override fun onCallBack(snapshot: DataSnapshot) {
+                productSnapshot = snapshot
+                Log.d("inside the on call back", snapshot.toString())
+                val numbers = mutableListOf(stockViewModel.stocksDetail)
+                var count: Int = 0
+                numbers.listIterator().forEach {
+                    it.value?.forEach {
+                        dbStockInDetail.push().setValue(it)
+                        count+=1
+                        stockUpdateProduct(it.stockDetailProdBarcode!!, it.stockDetailQty)
+                        if(!(product?.prodPrice == null || it?.stockDetailQty == null)){
+                            var price: Double = product?.prodPrice.toString().toDouble()
+                            var qty : Double = it?.stockDetailQty.toString().toDouble()
+                            var subtotal:Double = price.times(qty)
+                            totalPrice = totalPrice.plus(subtotal)
+                        }
+                    }
+                }
+                dbTemp.removeValue()
+                updateStockInDetail()
+            }
+
+        })
+    }
+
+    private fun updateStockInDetail() {
+        val stockIn = StockIn()
+        stockIn.stockInDateTime = Calendar.getInstance().time.toString()
+        stockIn.stockInSupplierId = sharedStockInViewModel.stockInSupplierId.value
+        stockIn.totalProdPrice = totalPrice
+        sharedStockInViewModel.addStockIn(stockIn)
+        viewModelStore.clear()
+        requireActivity().supportFragmentManager.popBackStack(getCallerFragment(), FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
+
+    private fun stockUpdateProduct(stockDetailBarcode: Int, stockDetailQty: Int?){
+        productSnapshot.children.forEach {
+            product = it.getValue(Product::class.java)
+            var prodDBBarcode: Int
+            prodDBBarcode = product?.prodBarcode!!
+            if(prodDBBarcode == stockDetailBarcode){
+                product?.prodQty = stockDetailQty
+                dbProduct.child(it.key!!).setValue(product)
+                        .addOnCompleteListener { it ->
+                            if (it.isSuccessful) {
+                                Log.d("check", "update successfully")
+                            } else {
+                                Log.d("check", "update successfully")
+                            }
+                        }
+                //subtotal = (prodQty!! * product?.prodPrice!!).toDouble()
+            }
+        }
+    }
+
+
+    var productfromDB: Product? = null
+
+    private fun getData(snapshot: DataSnapshot, prodBarcode: Int) {
+        snapshot.children.forEach {
+            var product = it.getValue(Product::class.java)!!
+            if(product.prodBarcode == prodBarcode){
+                Log.d("checkStoreprodBarcode", product.prodBarcode.toString())
+                productfromDB = it.getValue(Product::class.java)
+                Log.d("checkStoreafterStore", it.value.toString())
+            }
+            Log.d("checkStoreForEach", product.toString())
+        }
+    }
+
+    private fun readData(firebaseCallback: FirebaseCallback){
+        dbProduct.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //getData(snapshot, 8888)
+                firebaseCallback.onCallBack(snapshot)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    private interface FirebaseCallback{
+        fun onCallBack(snapshot: DataSnapshot);
+    }
+
+//    var totalPrice = stockViewModel.storedIntoStockInDB()
+//
 
     fun getCallerFragment(): String? {
         val fm: FragmentManager = requireActivity().supportFragmentManager

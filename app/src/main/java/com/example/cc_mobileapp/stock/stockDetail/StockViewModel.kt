@@ -188,4 +188,28 @@ class StockViewModel : ViewModel() {
         return null
     }
 
+    fun getProdsDetail(){
+        dbProduct.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                getData(snapshot)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    lateinit var productsFromDb: ArrayList<Product>
+
+    private fun getData(snapshot: DataSnapshot) {
+        snapshot.children.forEach {
+            var product: Product = it.getValue(Product::class.java)!!
+            productsFromDb.add(product!!)
+            Log.d("checkStoreForEach", product.toString())
+        }
+        Log.d("checkStoreAll", productsFromDb.toString())
+    }
+
 }

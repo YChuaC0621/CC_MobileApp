@@ -1,6 +1,7 @@
 package com.example.cc_mobileapp.product
 
 import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,6 +24,10 @@ class ProductViewModel: ViewModel() {
     private var _product = MutableLiveData<Product>()
     val product: LiveData<Product>
         get() = _product
+
+//    private var _productFromDB = MutableLiveData<Product>()
+//    val productFromDB: LiveData<Product>
+//        get() = _productFromDB
 
     fun addProduct(product: Product) {
         Log.d("Check", "view model add prod $product")
@@ -126,6 +131,4 @@ class ProductViewModel: ViewModel() {
     }
 
 
-
 }
-
