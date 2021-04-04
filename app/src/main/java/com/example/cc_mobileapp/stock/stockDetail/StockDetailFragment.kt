@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import java.util.*
+import kotlin.time.times
 
 class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
@@ -82,7 +83,6 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
     private lateinit var productSnapshot: DataSnapshot
     private var totalPrice: Double = 0.0
-    private var product: Product? = null
 
     fun getProdsDetail(){
         readData(object : FirebaseCallback{
@@ -96,10 +96,10 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                         dbStockInDetail.push().setValue(it)
                         count+=1
                         stockUpdateProduct(it.stockDetailProdBarcode!!, it.stockDetailQty)
-                        if(!(product?.prodPrice == null || it?.stockDetailQty == null)){
-                            var price: Double = product?.prodPrice.toString().toDouble()
-                            var qty : Double = it?.stockDetailQty.toString().toDouble()
-                            var subtotal:Double = price.times(qty)
+                        if(!(productfromDB?.prodPrice == null || it?.stockDetailQty == null)){
+                            var price: Double = productfromDB?.prodPrice!!
+                            var qty : Int? = it?.stockDetailQty
+                            var subtotal:Double = price.times(qty!!)
                             totalPrice = totalPrice.plus(subtotal)
                         }
                     }
@@ -124,14 +124,16 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
     private fun stockUpdateProduct(stockDetailBarcode: Int, stockDetailQty: Int?){
         productSnapshot.children.forEach {
-            product = it.getValue(Product::class.java)
+            var tempProd: Product? = null
+            tempProd = it.getValue(Product::class.java)
             var prodDBBarcode: Int
-            prodDBBarcode = product?.prodBarcode!!
+            prodDBBarcode = tempProd?.prodBarcode!!
             if(prodDBBarcode == stockDetailBarcode){
-                product?.prodQty = stockDetailQty
-                dbProduct.child(it.key!!).setValue(product)
+                productfromDB = it.getValue(Product::class.java)
+                productfromDB?.prodQty = stockDetailQty
+                dbProduct.child(it.key!!).setValue(productfromDB)
                         .addOnCompleteListener { it ->
-                            if (it.isSuccessful) {
+                             if (it.isSuccessful) {
                                 Log.d("check", "update successfully")
                             } else {
                                 Log.d("check", "update successfully")
@@ -144,6 +146,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
 
     var productfromDB: Product? = null
+    var callBackCount: Int = 0
 
     private fun getData(snapshot: DataSnapshot, prodBarcode: Int) {
         snapshot.children.forEach {
@@ -161,7 +164,11 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         dbProduct.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 //getData(snapshot, 8888)
-                firebaseCallback.onCallBack(snapshot)
+                if(callBackCount ==0){
+                    firebaseCallback.onCallBack(snapshot)
+                    callBackCount+=1
+                }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
