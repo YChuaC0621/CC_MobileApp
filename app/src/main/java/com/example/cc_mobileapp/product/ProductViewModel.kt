@@ -16,7 +16,6 @@ class ProductViewModel: ViewModel() {
     val result: LiveData<Exception?>
         get() = _result
 
-
     private val _products = MutableLiveData<List<Product>>()
     val products: LiveData<List<Product>>
         get() = _products
@@ -50,13 +49,13 @@ class ProductViewModel: ViewModel() {
             Log.d("Check", "productListener$snapshot")
             val product = snapshot.getValue(Product::class.java)
             product?.prodId = snapshot.key
-            _product.value = product
+            _product.value = product!!
         }
 
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
             val product = snapshot.getValue(Product::class.java)
             product?.prodId = snapshot.key
-            _product.value = product
+            _product.value = product!!
         }
 
         override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -65,7 +64,7 @@ class ProductViewModel: ViewModel() {
             val product = snapshot.getValue(Product::class.java)
             product?.prodId = snapshot.key
             product?.isDeleted = true
-            _product.value = product
+            _product.value = product!!
         }
 
         override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {

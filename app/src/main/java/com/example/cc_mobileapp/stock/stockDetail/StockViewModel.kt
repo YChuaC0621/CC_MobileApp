@@ -55,20 +55,20 @@ class StockViewModel : ViewModel() {
             Log.d("Check", "StockDetailListener$snapshot")
             val stockDetail = snapshot.getValue(StockDetail::class.java)
             stockDetail?.stockDetailId = snapshot.key
-            _stockDetail.value = stockDetail
+            _stockDetail.value = stockDetail!!
         }
 
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
             val stockDetail = snapshot.getValue(StockDetail::class.java)
             stockDetail?.stockDetailId = snapshot.key
-            _stockDetail.value = stockDetail
+            _stockDetail.value = stockDetail!!
         }
 
         override fun onChildRemoved(snapshot: DataSnapshot) {
             val stockDetail = snapshot.getValue(StockDetail::class.java)
             stockDetail?.stockDetailId = snapshot.key
             stockDetail?.isDeleted = true
-            _stockDetail.value = stockDetail
+            _stockDetail.value = stockDetail!!
         }
 
         override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
