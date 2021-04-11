@@ -89,7 +89,7 @@ class AddProductDialogFragment : Fragment() {
                     product.prodQty = 0
                     Log.d("Check", "client data $product")
                     viewModel.addProduct(product)
-                    requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    requireActivity().supportFragmentManager.popBackStack("addBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
             }
         }
@@ -98,7 +98,7 @@ class AddProductDialogFragment : Fragment() {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, ScanBarcodeFragment())
-            transaction.addToBackStack("addBarcodeFragment")
+            transaction.addToBackStack("addBarcode")
             transaction.commit()
         }
 

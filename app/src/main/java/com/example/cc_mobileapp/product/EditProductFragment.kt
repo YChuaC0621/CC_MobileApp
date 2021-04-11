@@ -55,7 +55,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 message = getString(R.string.error, it.message)
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show().toString()
-            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             //dismiss()
         })
@@ -112,7 +112,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, ScanBarcodeFragment())
-            transaction.addToBackStack("editBarcodeFragment")
+            transaction.addToBackStack("editBarcode")
             transaction.commit()
         }
 
