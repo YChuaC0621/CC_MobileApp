@@ -40,7 +40,7 @@ class ScanBarcodeFragment : Fragment() {
             if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty())
             {
                 Toast.makeText(requireContext(), getCallerFragment(), Toast.LENGTH_SHORT).show()
-                if(getCallerFragment().equals("addBarcodeFragment")){
+                if(getCallerFragment().equals("addProductFragment")){
                     requireActivity().supportFragmentManager.popBackStack("addBarcode", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }else{
                     requireActivity().supportFragmentManager.popBackStack("editBarcode", FragmentManager.POP_BACK_STACK_INCLUSIVE);

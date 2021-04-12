@@ -64,7 +64,7 @@ class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, AddProductDialogFragment())
-            transaction.addToBackStack("addBarcodeFragment")
+            transaction.addToBackStack("addProductFragment")
             transaction.commit()
         }
     }
@@ -73,7 +73,7 @@ class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
         val currentView = (requireView().parent as ViewGroup).id
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(currentView, EditProductFragment(product))
-        transaction.addToBackStack("editBarcodeFragment")
+        transaction.addToBackStack("editProductFragment")
         transaction.commit()
     }
 

@@ -6,7 +6,7 @@ data class Product(
         @get:Exclude
         var prodId: String? = null,
         var prodName: String? = null,
-        var supplierId: String? = null,
+        var supplierName: String? = null,
         var prodDesc: String? = null,
         var prodBarcode: Int? = null,
         var prodQty: Int? = 0,
@@ -23,7 +23,7 @@ data class Product(
     override fun hashCode(): Int {
         var result = prodId?.hashCode() ?: 0
         result = 31 * result + (prodName?.hashCode() ?: 0)
-        result = 31 * result + (supplierId?.hashCode() ?: 0)
+        result = 31 * result + (supplierName?.hashCode() ?: 0)
         result = 31 * result + (prodDesc?.hashCode() ?: 0)
         result = 31 * result + (prodBarcode ?: 0)
         result = 31 * result + (prodQty ?: 0)
@@ -36,7 +36,7 @@ data class Product(
         return mapOf(
                 "prodId" to prodId,
                 "prodName" to prodName,
-                "supplierId" to supplierId,
+                "supplierId" to supplierName,
                 "prodDesc" to prodDesc,
                 "prodBarcode" to prodBarcode,
                 "prodQty" to prodQty,

@@ -135,21 +135,4 @@ class ProductViewModel: ViewModel() {
         dbProduct.removeEventListener(childEventListener)
     }
 
-    fun checkSupplierExist(supplierName: String): Boolean {
-        _validInput.value = false
-        var supplierNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_SUPPLIER).orderByChild("supCmpName").equalTo(supplierName)
-        supplierNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                _validInput.value = snapshot.exists()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
-
-        return _validInput.value!!
-    }
-
 }

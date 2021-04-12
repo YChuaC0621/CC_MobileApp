@@ -34,7 +34,6 @@ class EditClientFragment(private val client: Client) : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        oriClientName = client.clientCoName.toString()
         edit_text_editClientCoName.setText(client.clientCoName)
         edit_text_editClientEmail.setText(client.clientEmail)
         edit_text_editClientHp.setText(client.clientHpNum)
@@ -48,7 +47,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
                 message = getString(R.string.error, it.message)
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show().toString()
-            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             //dismiss()
         })
@@ -105,23 +104,29 @@ class EditClientFragment(private val client: Client) : Fragment() {
             }
 
             if(valid) {
+                val newClient = Client()
+                newClient.clientId = client.clientId
+                newClient.clientCoName = clientCoName
+                newClient.clientEmail = clientEmail
+                newClient.clientHpNum = clientHp
+                newClient.clientLocation = clientLocation
                 var clientNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_CLIENT).orderByChild("clientCoName").equalTo(clientCoName)
                 clientNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        if (oriClientName != clientCoName) {
-                            if(snapshot.childrenCount > 1){
+                        if (snapshot.childrenCount > 0) {
+                            if(client.clientCoName != clientCoName){
                                 Toast.makeText(requireActivity(), "Client Company Name Exist", Toast.LENGTH_SHORT).show()
                                 input_layout_editClientCoName.error = "Client Company Name Exist"
+                            }else{
+                                if(client.clientEmail != newClient.clientEmail || client.clientHpNum != newClient.clientHpNum || client.clientLocation != newClient.clientLocation ){
+                                    viewModel.updateClient(newClient)
+                                }else{
+                                    Toast.makeText(requireContext(), "Client information remain unchanged", Toast.LENGTH_SHORT).show()
+                                }
+                                requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                             }
-
                         } else {
-                            val client = Client()
-                            client.clientCoName = clientCoName
-                            client.clientEmail = clientEmail
-                            client.clientHpNum = clientHp
-                            client.clientLocation = clientLocation
-                            Log.d("Check", "client data $client")
-                            viewModel.updateClient(client)
+                            viewModel.updateClient(newClient)
                             requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                         }
                     }
