@@ -158,6 +158,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 it.setTitle(getString(R.string.delete_confirmation))
                 it.setPositiveButton(getString(R.string.yes)){ dialog, which -> viewModel.deleteProduct(product)
                 }
+                it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()
         }
 

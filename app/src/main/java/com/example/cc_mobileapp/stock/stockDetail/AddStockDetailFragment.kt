@@ -14,13 +14,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.product.ProductViewModel
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
@@ -44,6 +42,9 @@ class AddStockDetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_add_stock_detail, container, false)
     }
 
+    var prodBarcode: Int? = null
+    var stockQty: Int? = null
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -57,41 +58,77 @@ class AddStockDetailFragment : Fragment() {
         })
 
         btn_stockDetail_add.setOnClickListener {
-            val prodBarcode = edit_text_stockDetail_ProdBarcode.text.toString().trim()
+            prodBarcode = edit_text_stockDetail_ProdBarcode.text.toString().toIntOrNull()
             val rackId = edit_text_stockDetail_rackId.text.toString().trim()
             val rowNo = edit_text_stockDetail_rowNum.text.toString().trim()
-            val stockQty = edit_text_stockDetail_qty.text.toString().trim()
-            when {
-                prodBarcode.isEmpty() -> {
-                    input_layout_prodName.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                rackId.isEmpty() -> {
-                    input_layout_prodSupplierName.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                rowNo.isEmpty() -> {
-                    input_layout_prodDesc.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                stockQty.isEmpty() -> {
-                    input_layout_prodPrice.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                else -> {
-                    val stockDetail = StockDetail()
-                    stockDetail.stockDetailProdBarcode = prodBarcode.toInt()
-                    stockDetail.stockDetailRackId = rackId
-                    stockDetail.stockDetailRowNum = rowNo
-                    stockDetail.stockDetailQty = stockQty.toInt()
-                    //prodViewModel.stockUpdateProduct(prodBarcode, stockQty.toInt())
-                    stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
-                    // TODO add in the stockType Id
-                    stockViewModel.addStockDetail(stockDetail)
-                    requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                }
+            stockQty = edit_text_stockDetail_qty.text.toString().toIntOrNull()
+            var valid: Boolean = true
+
+            if(prodBarcode == null){
+                input_layout_stockDetail_ProdBarcode.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                input_layout_stockDetail_ProdBarcode.error = null
+            }
+
+            if(stockQty == null){
+                input_layout_stockDetail_qty.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                input_layout_stockDetail_qty.error = null
+            }
+
+            if(valid){
+                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
+                prodBarcodeQuery.addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(!snapshot.exists()){
+                            valid = false
+                            input_layout_prodSupplierName.error = "Invalid product barcode"
+                        }else{
+                            val stockDetail = StockDetail()
+                            stockDetail.stockDetailProdBarcode = prodBarcode
+                            stockDetail.stockDetailRackId = rackId
+                            stockDetail.stockDetailRowNum = rowNo
+                            stockDetail.stockDetailQty = stockQty
+                            stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
+                            stockViewModel.addStockDetail(stockDetail)
+                            requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
             }
         }
+
+//            when {
+//                rackId.isEmpty() -> {
+//                    input_layout_prodSupplierName.error = getString(R.string.error_field_required)
+//                    return@setOnClickListener
+//                }
+//                rowNo.isEmpty() -> {
+//                    input_layout_prodDesc.error = getString(R.string.error_field_required)
+//                    return@setOnClickListener
+//                }
+//                else -> {
+//                    val stockDetail = StockDetail()
+//                    stockDetail.stockDetailProdBarcode = prodBarcode.toInt()
+//                    stockDetail.stockDetailRackId = rackId
+//                    stockDetail.stockDetailRowNum = rowNo
+//                    stockDetail.stockDetailQty = stockQty.toInt()
+//                    //prodViewModel.stockUpdateProduct(prodBarcode, stockQty.toInt())
+//                    stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
+//                    // TODO add in the stockType Id
+//                    stockViewModel.addStockDetail(stockDetail)
+//                    requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//                }
+//            }
 
         btn_stockDetail_scanBarcode.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
@@ -160,34 +197,37 @@ class AddStockDetailFragment : Fragment() {
 //                rackBarcodes.add(rackCodeStored)
 //            }
 //            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, rackBarcodes)
-//            edit_text_stockDetail_ProdBarcode.setAdapter(adapter)
+//            edit_text_stockDetail_RackBarcode.setAdapter(adapter)
 //        }else{
 //            Log.d("checkAuto", "No match found")
 //        }
 
         // Add to product qty
-//        val qtyListener = object : ValueEventListener {
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                Log.d("check", "go into listener")
-//                populateUpdateQty(snapshot)
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.d("check", "error")
-//                TODO("Not yet implemented")
-//            }
-//        }
-//        dbProd.addListenerForSingleValueEvent(qtyListener)
-//    }
-//
-//
-//    protected fun populateUpdateQty(snapshot: DataSnapshot) {
-//        Log.d("check", "go into populate")
-//        if(snapshot.exists()){
-//            snapshot.children.forEach{
-//                var barcodeStored: String = it.child("prodBarcode").value.toString()
-//                var prodBarcode = edit_text_stockDetail_ProdBarcode.text.toString().trim()
+        val prodBarcodeListener = object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("check", "go into listener")
+                populateUpdateProdBarcode(snapshot)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("check", "error")
+                TODO("Not yet implemented")
+            }
+        }
+        dbProd.addListenerForSingleValueEvent(prodBarcodeListener)
+    }
+
+
+    protected fun populateUpdateProdBarcode(snapshot: DataSnapshot) {
+        var prodBarcodes: ArrayList<String> = ArrayList<String>()
+        if(snapshot.exists()){
+            snapshot.children.forEach {
+                var barcodeStored: String = it.child("prodBarcode").value.toString()
+                prodBarcodes.add(barcodeStored)
+            }
+            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, prodBarcodes)
+            edit_text_stockDetail_ProdBarcode.setAdapter(adapter)
 //                if(barcodeStored == prodBarcode){
 //                    Log.d("check same", "barcodeStored$barcodeStored")
 //                    Log.d("check same", "prodBarcode$prodBarcode")
@@ -208,12 +248,9 @@ class AddStockDetailFragment : Fragment() {
 //                    Log.d("check Diff", "prodBarcode$prodBarcode")
 //                }
 //            }
-//        }else{
-//            Log.d("checkAuto", "No match found")
-//        }
-
-
-
+        }else{
+            Log.d("checkAuto", "No match found")
+        }
     }
 
     override fun onResume() {
