@@ -56,22 +56,19 @@ class ClientFragment : Fragment(), ClientRecyclerViewClickListener {
         })
 
         button_add.setOnClickListener{
-//            AddClientDialogFragment()
-//                .show(childFragmentManager, "")
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, AddClientDialogFragment())
-            transaction.addToBackStack("fragmentA")
+            transaction.addToBackStack("addClientFragment")
             transaction.commit()
         }
     }
 
     override fun onRecycleViewItemClicked(view: View, client: Client) {
-//        EditClientFragment(client).show(childFragmentManager, "")
         val currentView = (requireView().parent as ViewGroup).id
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(currentView, EditClientFragment(client))
-        transaction.addToBackStack("fragmentA")
+        transaction.addToBackStack("editClientFragment")
         transaction.commit()
     }
 }

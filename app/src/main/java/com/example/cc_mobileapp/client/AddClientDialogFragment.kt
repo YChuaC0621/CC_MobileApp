@@ -17,8 +17,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.cc_mobileapp.Constant.NODE_CLIENT
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Client
+import com.google.android.gms.common.internal.FallbackServiceBroker
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
+import java.util.regex.Pattern
 
 class AddClientDialogFragment : Fragment() {
 
@@ -45,58 +47,84 @@ class AddClientDialogFragment : Fragment() {
             Toast.makeText(requireContext(), message,Toast.LENGTH_SHORT).show()
         })
 
-        btn_add.setOnClickListener{
+        btn_addClient.setOnClickListener{
             val clientCoName = edit_text_clientCoName.text.toString().trim()
             val clientEmail = edit_text_clientEmail.text.toString().trim()
             val clientHp = edit_text_clientHp.text.toString().trim()
             val clientLocation = edit_text_clientLocation.text.toString().trim()
-
-            when {
-                clientCoName.isEmpty() -> {
-                    input_layout_clientCoName.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                clientEmail.isEmpty() -> {
-                    input_layout_clientEmail.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                clientHp.isEmpty() -> {
-                    input_layout_clientHp.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                clientLocation.isEmpty() -> {
-                    input_layout_clientLocation.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                else -> {
-                    Log.d("Check Query", "else Part")
-                    var clientNameQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_CLIENT).orderByChild("clientCoName").equalTo(clientCoName)
-                    Log.d("Check Query", "Go in")
-                    clientNameQuery.addListenerForSingleValueEvent(object: ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            if(snapshot.childrenCount > 0){
-                                Toast.makeText(requireActivity(), "Client Company Name Exist", Toast.LENGTH_SHORT).show()
-                                input_layout_clientCoName.error = "Client Company Name Exist"
-                            }
-                            else{
-                                val client = Client()
-                                client.clientCoName = clientCoName
-                                client.clientEmail = clientEmail
-                                client.clientHpNum = clientHp
-                                client.clientLocation = clientLocation
-                                Log.d("Check", "client data $client")
-                                viewModel.addClient(client)
-                                requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                            }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-
-                    })
-                }
+            var valid: Boolean = true
+            if(clientCoName.isEmpty()){
+                input_layout_clientCoName.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
             }
+            else{
+                input_layout_clientCoName.error = null
+            }
+
+            if(clientEmail.isEmpty()){
+                input_layout_clientEmail.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(clientEmail).matches()){
+                input_layout_clientEmail.error = "Invalid Input"
+                return@setOnClickListener
+            }
+            else{
+                input_layout_clientEmail.error = null
+            }
+
+            if(clientHp.isEmpty()){
+                input_layout_clientHp.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else if (!android.util.Patterns.PHONE.matcher(clientHp).matches()){
+                input_layout_clientHp.error = "Invalid Input"
+                return@setOnClickListener
+            }
+            else{
+                input_layout_clientHp.error = null
+            }
+
+            if(clientLocation.isEmpty()){
+                input_layout_clientLocation.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                input_layout_clientLocation.error = null
+            }
+
+            if(valid){
+                var clientNameQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_CLIENT).orderByChild("clientCoName").equalTo(clientCoName)
+                clientNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.childrenCount > 0) {
+                            Toast.makeText(requireActivity(), "Client Company Name Exist", Toast.LENGTH_SHORT).show()
+                            input_layout_clientCoName.error = "Client Company Name Exist"
+                        } else {
+                            val client = Client()
+                            client.clientCoName = clientCoName
+                            client.clientEmail = clientEmail
+                            client.clientHpNum = clientHp
+                            client.clientLocation = clientLocation
+                            Log.d("Check", "client data $client")
+                            viewModel.addClient(client)
+                            requireActivity().supportFragmentManager.popBackStack("addClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+            }
+        }
+
+        btn_clientAddBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack("addClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 

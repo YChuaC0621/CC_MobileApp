@@ -5,8 +5,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.Constant.NODE_PRODUCT
 import com.example.cc_mobileapp.model.Product
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.database.*
 
 class ProductViewModel: ViewModel() {
@@ -23,6 +25,10 @@ class ProductViewModel: ViewModel() {
     private var _product = MutableLiveData<Product>()
     val product: LiveData<Product>
         get() = _product
+
+    private val _validInput = MutableLiveData<Boolean>()
+    val validInput: LiveData<Boolean>
+        get() = _validInput
 
 //    private var _productFromDB = MutableLiveData<Product>()
 //    val productFromDB: LiveData<Product>
@@ -129,5 +135,21 @@ class ProductViewModel: ViewModel() {
         dbProduct.removeEventListener(childEventListener)
     }
 
+    fun checkSupplierExist(supplierName: String): Boolean {
+        _validInput.value = false
+        var supplierNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_SUPPLIER).orderByChild("supCmpName").equalTo(supplierName)
+        supplierNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                _validInput.value = snapshot.exists()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        return _validInput.value!!
+    }
 
 }

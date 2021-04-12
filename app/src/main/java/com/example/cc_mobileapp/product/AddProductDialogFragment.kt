@@ -7,12 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.Client
 import com.example.cc_mobileapp.model.Product
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.android.gms.tasks.Tasks.await
+import com.google.firebase.database.*
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
@@ -38,6 +46,12 @@ class AddProductDialogFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_add_product_dialog, container, false)
     }
 
+    var prodName: String = ""
+    var supplierName: String = ""
+    var prodDesc: String = ""
+    var prodPrice: Double = 0.0
+    var prodBarcode: Int = 0
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -51,46 +65,78 @@ class AddProductDialogFragment : Fragment() {
         })
 
         btn_addProdInDialog.setOnClickListener {
-            val prodName = edit_text_prodName.text.toString().trim()
-            val supplierId = edit_text_prodSupplierName.text.toString().trim()
-            val prodDesc = edit_text_prodDesc.text.toString().trim()
-            val prodPrice = edit_text_prodPrice.text.toString().trim()
-            val prodBarcode = edit_text_prodBarcode.text.toString().trim()
-            when {
-                prodName.isEmpty() -> {
-                    input_layout_prodName.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                supplierId.isEmpty() -> {
-                    input_layout_prodSupplierName.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                prodDesc.isEmpty() -> {
-                    input_layout_prodDesc.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                prodPrice.isEmpty() -> {
-                    input_layout_prodPrice.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                prodBarcode.isEmpty() -> {
-                    input_layout_prodBarcode.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                else -> {
-                    Log.d("Check", "before val product")
-                    val product = Product()
-                    Log.d("Check", "after val product")
-                    product.prodName = prodName
-                    product.supplierId = supplierId
-                    product.prodDesc = prodDesc
-                    product.prodPrice = prodPrice.toDouble()
-                    product.prodBarcode = prodBarcode.toInt()
-                    product.prodQty = 0
-                    Log.d("Check", "client data $product")
-                    viewModel.addProduct(product)
-                    requireActivity().supportFragmentManager.popBackStack("addBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                }
+            prodName = edit_text_prodName.text.toString().trim()
+            supplierName = edit_text_prodSupplierName.text.toString().trim()
+            prodDesc = edit_text_prodDesc.text.toString().trim()
+            prodPrice = edit_text_prodPrice.text.toString().trim().toDouble()
+            prodBarcode = edit_text_prodBarcode.text.toString().trim().toInt()
+            var valid: Boolean = true
+
+            if(prodName.isEmpty()){
+                input_layout_prodName.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                input_layout_prodName.error = null
+            }
+
+            // TODO check exists
+            if(supplierName.isEmpty()){
+                input_layout_prodSupplierName.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else if(!viewModel.checkSupplierExist(supplierName)){
+                input_layout_prodSupplierName.error = "Supplier does not exists"
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                input_layout_prodSupplierName.error = null
+            }
+
+            if(prodDesc.isEmpty()){
+                input_layout_prodDesc.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                input_layout_prodDesc.error = null
+            }
+
+            if(prodPrice == 0.0){
+                input_layout_prodPrice.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                input_layout_prodPrice.error = null
+            }
+
+            // TODO cannot exits
+            if(prodBarcode == 0){
+                input_layout_prodBarcode.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                input_layout_prodBarcode.error = null
+            }
+
+            if(valid){
+                Log.d("Check", "before val product")
+                val product = Product()
+                Log.d("Check", "after val product")
+                product.prodName = prodName
+                product.supplierId = supplierName
+                product.prodDesc = prodDesc
+                product.prodPrice = prodPrice.toDouble()
+                product.prodBarcode = prodBarcode.toInt()
+                product.prodQty = 0
+                Log.d("Check", "client data $product")
+                viewModel.addProduct(product)
+                requireActivity().supportFragmentManager.popBackStack("addBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         }
 
@@ -100,6 +146,10 @@ class AddProductDialogFragment : Fragment() {
             transaction.replace(currentView, ScanBarcodeFragment())
             transaction.addToBackStack("addBarcode")
             transaction.commit()
+        }
+
+        btn_addProdBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack("addBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
 //        // Autocomplete for product barcode
@@ -131,6 +181,8 @@ class AddProductDialogFragment : Fragment() {
 
     }
 
+
+
     override fun onResume() {
         super.onResume()
         if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty()){
@@ -141,4 +193,5 @@ class AddProductDialogFragment : Fragment() {
             Toast.makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()
         }
     }
+
 }
