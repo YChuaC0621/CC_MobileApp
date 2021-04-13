@@ -20,16 +20,17 @@ import kotlinx.android.synthetic.main.fragment_sitemap.*
 class DisplayRackDetailsFragment(private val rack_num : String) : Fragment() {
     private lateinit var viewModel: RackViewModel
     private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
-    private val dbStockDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
+    private val dbStockDetail =
+        FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         viewModel =
-                ViewModelProvider(this@DisplayRackDetailsFragment).get(RackViewModel::class.java)
+            ViewModelProvider(this@DisplayRackDetailsFragment).get(RackViewModel::class.java)
         return inflater.inflate(R.layout.fragment_display_rackdetails, container, false)
     }
 
@@ -50,44 +51,94 @@ class DisplayRackDetailsFragment(private val rack_num : String) : Fragment() {
                         txtEndLot.setText(rack?.endLot.toString())
                         txtRowNum.setText("2")
                         counterRack = 1
-                        if(rack?.row_num == 1)
-                        {
+                        if (rack?.row_num == 1) {
+                            if (rack?.prodId.equals("0")) {
+                                txtRow1Prod.text = null
+                                txtRow1ProdQty.text = null
+                                Toast.makeText(
+                                    requireContext(),
+                                    "No product is stored under this " + rack?.rackName,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                dbProduct.get().addOnSuccessListener {
+                                    if (it.exists()) {
+                                        for (prod in it.children) {
+                                            var product: Product? =
+                                                prod.getValue(Product::class.java)
+                                            if (product?.prodBarcode!!.equals(rack?.prodId)) {
+                                                txtRow1Prod.setText(product?.prodName.toString())
+                                                txtRow1ProdQty.setText(rack?.currentQty.toString())
+                                                Log.d(
+                                                    "Check",
+                                                    "fetch product ${product?.prodName.toString()}"
+                                                )
+                                                Log.d(
+                                                    "Check",
+                                                    "fetch product ${rack?.currentQty.toString()}"
+                                                )
 
-                        }
-                        else
-                        {
-                            dbProduct.get().addOnSuccessListener {
-                                if (it.exists()) {
-                                    for(prod in it.children){
-                                        var product: Product? = prod.getValue(Product::class.java)
-                                        if (product?.prodBarcode!!.equals(rack?.prodId)) {
-                                            txtRow1Prod.setText(product?.prodName.toString())
-                                            txtRow1ProdQty.setText(rack?.currentQty.toString())
-                                            Log.d("Check", "fetch product ${product?.prodName.toString()}")
-                                            Log.d("Check", "fetch product ${rack?.currentQty.toString()}")
+                                            }
+                                        }
+                                    }
+                                }
 
+                            }
+
+                        } else {
+                            if (rack?.prodId.equals("0")) {
+                                txtRow2Prod.text = null
+                                txtRow2ProdQty.text = null
+                                Toast.makeText(
+                                    requireContext(),
+                                    "No product is stored under this " + rack?.rackName,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                dbProduct.get().addOnSuccessListener {
+                                    if (it.exists()) {
+                                        for (prod in it.children) {
+                                            var product: Product? =
+                                                prod.getValue(Product::class.java)
+                                            if (product?.prodBarcode!!.equals(rack?.prodId)) {
+                                                txtRow2Prod.setText(product?.prodName.toString())
+                                                txtRow2ProdQty.setText(rack?.currentQty.toString())
+                                                Log.d(
+                                                    "Check",
+                                                    "fetch product ${product?.prodName.toString()}"
+                                                )
+                                                Log.d(
+                                                    "Check",
+                                                    "fetch product ${rack?.currentQty.toString()}"
+                                                )
+
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
+
+                        }
                     }
                 }
             }
-        }
-        if(counterRack == 0)
-        {
-            txtRackNum.text = null
-            txtStartLot.text = null
-            txtEndLot.text = null
-            txtRowNum.text = null
-            txtRow1Prod.text = null
-            txtRow1ProdQty.text = null
-            txtRow2Prod.text = null
-            txtRow2ProdQty.text = null
-            Toast.makeText(requireContext(), "No information is placed under this " + rack_num, Toast.LENGTH_SHORT).show()
-        }
+            if (counterRack == 0) {
+                txtRackNum.text = null
+                txtStartLot.text = null
+                txtEndLot.text = null
+                txtRowNum.text = null
+                txtRow1Prod.text = null
+                txtRow1ProdQty.text = null
+                txtRow2Prod.text = null
+                txtRow2ProdQty.text = null
+                Toast.makeText(
+                    requireContext(),
+                    "No information is placed under this " + rack_num,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
+        }
     }
 }
