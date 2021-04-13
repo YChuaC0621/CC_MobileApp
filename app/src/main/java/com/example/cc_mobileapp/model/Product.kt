@@ -8,7 +8,7 @@ data class Product(
         var prodName: String? = null,
         var supplierName: String? = null,
         var prodDesc: String? = null,
-        var prodBarcode: Int? = null,
+        var prodBarcode: String? = null,
         var prodQty: Int? = 0,
         var prodPrice: Double? = 0.00,
         @get:Exclude
@@ -25,7 +25,7 @@ data class Product(
         result = 31 * result + (prodName?.hashCode() ?: 0)
         result = 31 * result + (supplierName?.hashCode() ?: 0)
         result = 31 * result + (prodDesc?.hashCode() ?: 0)
-        result = 31 * result + (prodBarcode ?: 0)
+        result = 31 * result + (prodBarcode .hashCode() ?: 0)
         result = 31 * result + (prodQty ?: 0)
         result = 31 * result + (prodPrice?.hashCode() ?: 0)
         return result

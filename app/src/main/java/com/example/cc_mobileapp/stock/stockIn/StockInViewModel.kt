@@ -64,7 +64,7 @@ class StockInViewModel: ViewModel() {
             Log.d("Check", "StockInListener$snapshot")
             val stockIn = snapshot.getValue(StockIn::class.java)
             stockIn?.stockInId = snapshot.key
-            _stockIn.value = stockIn
+            _stockIn.value = stockIn!!
         }
 
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {

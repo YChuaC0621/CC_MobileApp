@@ -13,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
+import com.example.cc_mobileapp.Constant.NODE_PRODUCT
+import com.example.cc_mobileapp.Constant.NODE_RACK
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
@@ -43,8 +45,7 @@ class AddStockDetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_add_stock_detail, container, false)
     }
 
-    var prodBarcode: Int? = null
-    var stockQty: Int? = null
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -59,17 +60,31 @@ class AddStockDetailFragment : Fragment() {
         })
 
         btn_stockDetail_add.setOnClickListener {
-            prodBarcode = edit_text_stockDetail_ProdBarcode.text.toString().toIntOrNull()
+            var stockQty: Int? = null
+            var prodBarcode: String = edit_text_stockDetail_ProdBarcode.text.toString()
             val rackId = edit_text_stockDetail_rackId.text.toString().trim()
             stockQty = edit_text_stockDetail_qty.text.toString().toIntOrNull()
             var valid: Boolean = true
 
-            if (prodBarcode == null) {
+            if (prodBarcode.isNullOrEmpty()) {
                 input_layout_stockDetail_ProdBarcode.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
-            } else {
+            }else if(!checkRegexBarcode(prodBarcode)){
+                input_layout_stockDetail_ProdBarcode.error = "Only integer are allowed"
+                valid = false
+                return@setOnClickListener
+            }
+            else {
                 input_layout_stockDetail_ProdBarcode.error = null
+            }
+
+            if (rackId.isNullOrEmpty()) {
+                input_layout_stockDetail_rackId.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            } else {
+                input_layout_stockDetail_rackId.error = null
             }
 
             if (stockQty == null) {
@@ -81,20 +96,34 @@ class AddStockDetailFragment : Fragment() {
             }
 
             if (valid) {
-                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
+                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
                 prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (!snapshot.exists()) {
                             valid = false
-                            input_layout_prodSupplierName.error = "Invalid product barcode"
+                            input_layout_stockDetail_ProdBarcode.error = "Invalid product barcode"
                         } else {
-                            val stockDetail = StockDetail()
-                            stockDetail.stockDetailProdBarcode = prodBarcode
-                            stockDetail.stockDetailRackId = rackId
-                            stockDetail.stockDetailQty = stockQty
-                            stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
-                            stockViewModel.addStockDetail(stockDetail)
-                            requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                            var rackBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_RACK).orderByChild("rackName").equalTo(rackId.toString())
+                            rackBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    if (!snapshot.exists()) {
+                                        valid = false
+                                        input_layout_stockDetail_rackId.error = "Invalid rack id"
+                                    } else {
+                                        val stockDetail = StockDetail()
+                                        stockDetail.stockDetailProdBarcode = prodBarcode
+                                        stockDetail.stockDetailRackId = rackId
+                                        stockDetail.stockDetailQty = stockQty
+                                        stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
+                                        stockViewModel.addStockDetail(stockDetail)
+                                        requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
                         }
                     }
 
@@ -104,7 +133,6 @@ class AddStockDetailFragment : Fragment() {
                 })
             }
         }
-
 //            when {
 //                rackId.isEmpty() -> {
 //                    input_layout_prodSupplierName.error = getString(R.string.error_field_required)
@@ -171,6 +199,12 @@ class AddStockDetailFragment : Fragment() {
 
     }
 
+    private fun checkRegexBarcode(prodBarcode: String): Boolean {
+        var prodBarcode: String = prodBarcode
+        var regex:Regex = Regex(pattern="""\d+""")
+        return regex.matches(input = prodBarcode)
+    }
+
 
     protected fun populateSearchProdBarcode(snapshot: DataSnapshot) {
         var prodBarcodes: ArrayList<String> = ArrayList<String>()
@@ -198,6 +232,7 @@ class AddStockDetailFragment : Fragment() {
         } else {
             Log.d("checkAuto", "No match found")
         }
+
     }
 
 

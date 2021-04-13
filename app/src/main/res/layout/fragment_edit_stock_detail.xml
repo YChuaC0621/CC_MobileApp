@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Add New Stock Detail"
+            android:text="Edit Stock Detail"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
@@ -61,28 +61,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btn_editStockDetail_scanRackId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:text="Scan Rack Barcode" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_editStockDetail_rowNum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:hint="Row Num">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_editStockDetail_rowNum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_editStockDetail_qty"
             android:layout_width="match_parent"
@@ -103,7 +81,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
-            android:text="Add" />
+            android:text="Edit" />
 
         <Button
             android:id="@+id/btn_editSotckDetail_cancel"

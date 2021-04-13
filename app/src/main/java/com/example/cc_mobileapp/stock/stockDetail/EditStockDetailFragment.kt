@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -16,10 +17,7 @@ import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockDetail_ProdBarcode
@@ -27,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockD
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockDetail_rackId
 import kotlinx.android.synthetic.main.fragment_edit_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
+import kotlinx.coroutines.currentCoroutineContext
 
 class EditStockDetailFragment(
         private val stockDetail: StockDetail
@@ -36,10 +35,11 @@ class EditStockDetailFragment(
     private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     private val dbProd = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+    private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         stockViewModel = ViewModelProvider(this@EditStockDetailFragment).get(StockViewModel::class.java)
@@ -57,10 +57,10 @@ class EditStockDetailFragment(
         Log.e("Error", "check 1st stock detail$stockDetail")
 
 
-        stockViewModel.result.observe(viewLifecycleOwner, Observer{
-            val message = if(it==null){
-                getString(R.string.prodAddSuccess)
-            }else{
+        stockViewModel.result.observe(viewLifecycleOwner, Observer {
+            val message = if (it == null) {
+                "Stock Detail Update Successful"
+            } else {
                 getString(R.string.error, it.message)
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
@@ -70,38 +70,88 @@ class EditStockDetailFragment(
         btn_editStockDetail_edit.setOnClickListener {
             val prodBarcode = edit_text_editStockDetail_ProdBarcode.text.toString().trim()
             val rackId = edit_text_editStockDetail_rackId.text.toString().trim()
-            val rowNo = edit_text_editStockDetail_rowNum.text.toString().trim()
-            val stockQty = edit_text_editStockDetail_qty.text.toString().trim()
-            when {
-                prodBarcode.isEmpty() -> {
-                    input_layout_editStockDetail_ProdBarcode.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                rackId.isEmpty() -> {
-                    input_layout_editStockDetail_rackId.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                rowNo.isEmpty() -> {
-                    input_layout_editStockDetail_rowNum.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                stockQty.isEmpty() -> {
-                    input_layout_editStockDetail_qty.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                else -> {
-                    Log.d("Check", "before val product")
-                    val stockDetailEdit = StockDetail()
-                    Log.d("Check", "after val product")
-                    stockDetailEdit.stockDetailProdBarcode = prodBarcode.toInt()
-                    stockDetailEdit.stockDetailRackId = rackId
-                    stockDetailEdit.stockDetailQty = stockQty.toInt()
-                    stockDetailEdit.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
-                    stockDetailEdit.stockDetailId = stockDetail.stockDetailId
-                    Log.e("Error", stockDetailEdit.toString())
+            val stockQty: Int? = edit_text_editStockDetail_qty.text.toString().toIntOrNull()
+            var valid: Boolean = true
 
-                    stockViewModel.updateStockDetail(stockDetailEdit)
-                }
+            if (prodBarcode.isNullOrEmpty()) {
+                input_layout_editStockDetail_ProdBarcode.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            } else if (!checkRegexBarcode(prodBarcode)) {
+                input_layout_editStockDetail_ProdBarcode.error = "Only integer are allowed"
+                valid = false
+                return@setOnClickListener
+            } else {
+                input_layout_editStockDetail_ProdBarcode.error = null
+            }
+
+            if (rackId.isNullOrEmpty()) {
+                input_layout_editStockDetail_rackId.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            } else {
+                input_layout_editStockDetail_rackId.error = null
+            }
+
+            if (stockQty == null) {
+                input_layout_editStockDetail_qty.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            } else {
+                input_layout_editStockDetail_qty.error = null
+            }
+
+            if (valid) {
+
+                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
+                prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (!snapshot.exists()) {
+                            valid = false
+                            input_layout_editStockDetail_ProdBarcode.error = "Invalid product barcode"
+                        } else {
+                            var rackBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_RACK).orderByChild("rackName").equalTo(rackId.toString())
+                            rackBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    if (!snapshot.exists()) {
+                                        valid = false
+                                        input_layout_editStockDetail_rackId.error = "Invalid rack id"
+                                    } else {
+                                        val stockDetailEdit = StockDetail()
+                                        stockDetailEdit.stockDetailProdBarcode = prodBarcode
+                                        stockDetailEdit.stockDetailRackId = rackId
+                                        stockDetailEdit.stockDetailQty = stockQty.toInt()
+                                        stockDetailEdit.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
+                                        stockDetailEdit.stockDetailId = stockDetail.stockDetailId
+
+                                        if(stockDetailEdit.stockDetailProdBarcode != stockDetail.stockDetailProdBarcode || stockDetailEdit.stockDetailQty != stockDetail.stockDetailQty || stockDetailEdit.stockDetailRackId != stockDetail.stockDetailRackId){
+                                            stockViewModel.updateStockDetail(stockDetailEdit)
+                                        }else{
+                                            makeText(requireContext(), "Stock Detail Remain Unchanged",Toast.LENGTH_SHORT).show()
+                                        }
+                                        requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+
+
+
+
+
+
+
+
             }
         }
 
@@ -113,15 +163,7 @@ class EditStockDetailFragment(
             transaction.commit()
         }
 
-        btn_editStockDetail_scanRackId.setOnClickListener {
-            val currentView = (requireView().parent as ViewGroup).id
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(currentView, ScanBarcodeFragment("rack"))
-            transaction.addToBackStack("rackBarcode")
-            transaction.commit()
-        }
-
-        // Validation for product barcode
+        // Autocomplete for product barcode
         val barcodeListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchProdBarcode(snapshot)
@@ -132,6 +174,23 @@ class EditStockDetailFragment(
             }
         }
         dbProd.addListenerForSingleValueEvent(barcodeListener)
+
+        val rackListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                populateSearchRack(snapshot)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        }
+        dbRack.addListenerForSingleValueEvent(rackListener)
+    }
+
+    private fun checkRegexBarcode(prodBarcode: String): Boolean {
+        var prodBarcode: String = prodBarcode
+        var regex:Regex = Regex(pattern="""\d+""")
+        return regex.matches(input = prodBarcode)
     }
 
     protected fun populateSearchProdBarcode(snapshot: DataSnapshot) {
@@ -149,6 +208,21 @@ class EditStockDetailFragment(
 
     }
 
+    protected fun populateSearchRack(snapshot: DataSnapshot) {
+        var racks: ArrayList<String> = ArrayList<String>()
+        if(snapshot.exists()){
+            snapshot.children.forEach{
+                var currentRack: String = it.child("rackName").value.toString()
+                racks.add(currentRack)
+            }
+            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, racks)
+            edit_text_editStockDetail_rackId.setAdapter(adapter)
+        }else{
+            Log.d("checkAuto", "No match found")
+        }
+
+    }
+
     override fun onResume() {
         super.onResume()
         if(!sharedStockBarcodeViewModel.scannedProductCode.value.isNullOrEmpty()){
@@ -160,7 +234,7 @@ class EditStockDetailFragment(
             sharedStockBarcodeViewModel.clearBarcode()
         }
         else{
-            Toast.makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()
+            makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()
         }
     }
 }

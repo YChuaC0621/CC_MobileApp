@@ -45,7 +45,7 @@ class AddProductDialogFragment : Fragment() {
     lateinit var supplierName: String
     lateinit var prodDesc: String
     var prodPrice: Double? = null
-    var prodBarcode: Int? = null
+    lateinit var prodBarcode: String
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -64,7 +64,7 @@ class AddProductDialogFragment : Fragment() {
             supplierName = edit_text_prodSupplierName.text.toString().trim()
             prodDesc = edit_text_prodDesc.text.toString().trim()
             prodPrice = edit_text_prodPrice.text.toString().toDoubleOrNull()
-            prodBarcode = edit_text_prodBarcode.text.toString().toIntOrNull()
+            prodBarcode = edit_text_prodBarcode.text.toString().trim()
             var valid: Boolean = true
             if(prodName.isNullOrEmpty()){
                 input_layout_prodName.error = getString(R.string.error_field_required)
@@ -95,7 +95,7 @@ class AddProductDialogFragment : Fragment() {
             }
 
             if(prodPrice == null){
-                input_layout_prodPrice.error = getString(R.string.error_field_required)
+                input_layout_prodPrice.error = "The field is empty or null"
                 valid = false
                 return@setOnClickListener
             }
@@ -104,8 +104,13 @@ class AddProductDialogFragment : Fragment() {
             }
 
             // TODO cannot exits
-            if(prodBarcode == null){
+            if(prodBarcode.isNullOrEmpty()){
                 input_layout_prodBarcode.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else if(!checkRegexBarcode(prodBarcode)){
+                input_layout_prodBarcode.error = "Only integer are allowed"
                 valid = false
                 return@setOnClickListener
             }
@@ -127,11 +132,11 @@ class AddProductDialogFragment : Fragment() {
                             product.supplierName = supplierName
                             product.prodDesc = prodDesc
                             product.prodPrice = prodPrice!!.toDouble()
-                            product.prodBarcode = prodBarcode!!.toInt()
+                            product.prodBarcode = prodBarcode
                             product.prodQty = 0
                             Log.d("Check", "client data $product")
                             viewModel.addProduct(product)
-                            requireActivity().supportFragmentManager.popBackStack("addBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            requireActivity().supportFragmentManager.popBackStack("addProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {
@@ -164,6 +169,12 @@ class AddProductDialogFragment : Fragment() {
             }
         }
         dbSupplier.addListenerForSingleValueEvent(supplierNameListener)
+    }
+
+    private fun checkRegexBarcode(prodBarcode: String): Boolean {
+        var prodBarcode: String = prodBarcode
+        var regex:Regex = Regex(pattern="""\d+""")
+        return regex.matches(input = prodBarcode)
     }
 
     protected fun populateSearchSupplierName(snapshot: DataSnapshot) {

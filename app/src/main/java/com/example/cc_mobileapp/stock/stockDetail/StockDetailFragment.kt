@@ -1,7 +1,6 @@
 package com.example.cc_mobileapp.stock.stockDetail
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,12 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.AlertDialogLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
@@ -29,7 +26,6 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import java.util.*
-import kotlin.time.times
 
 class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
@@ -95,7 +91,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                     it.value?.forEach {
                         dbStockInDetail.push().setValue(it)
                         count+=1
-                        stockUpdateProduct(it.stockDetailProdBarcode!!, it.stockDetailQty)
+                        stockUpdateProduct(it.stockDetailProdBarcode, it.stockDetailQty)
                         if(!(productfromDB?.prodPrice == null || it?.stockDetailQty == null)){
                             var price: Double = productfromDB?.prodPrice!!
                             var qty : Int? = it?.stockDetailQty
@@ -122,13 +118,12 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
     }
 
 
-    private fun stockUpdateProduct(stockDetailBarcode: Int, stockDetailQty: Int?){
+    private fun stockUpdateProduct(stockDetailBarcode: String?, stockDetailQty: Int?){
         productSnapshot.children.forEach {
             var tempProd: Product? = null
             tempProd = it.getValue(Product::class.java)
-            var prodDBBarcode: Int
-            prodDBBarcode = tempProd?.prodBarcode!!
-            if(prodDBBarcode == stockDetailBarcode){
+            var prodDBBarcode: String = tempProd?.prodBarcode.toString()
+            if(prodDBBarcode.equals(stockDetailBarcode)){
                 productfromDB = it.getValue(Product::class.java)
                 productfromDB?.prodQty = stockDetailQty
                 dbProduct.child(it.key!!).setValue(productfromDB)
@@ -151,7 +146,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
     private fun getData(snapshot: DataSnapshot, prodBarcode: Int) {
         snapshot.children.forEach {
             var product = it.getValue(Product::class.java)!!
-            if(product.prodBarcode == prodBarcode){
+            if(product.prodBarcode!!.equals(prodBarcode)){
                 Log.d("checkStoreprodBarcode", product.prodBarcode.toString())
                 productfromDB = it.getValue(Product::class.java)
                 Log.d("checkStoreafterStore", it.value.toString())

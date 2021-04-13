@@ -60,7 +60,7 @@ class DisplayRackDetailsFragment(private val rack_num : String) : Fragment() {
                                 if (it.exists()) {
                                     for(prod in it.children){
                                         var product: Product? = prod.getValue(Product::class.java)
-                                        if (product?.prodBarcode == rack?.prodId) {
+                                        if (product?.prodBarcode!!.equals(rack?.prodId)) {
                                             txtRow1Prod.setText(product?.prodName.toString())
                                             txtRow1ProdQty.setText(rack?.currentQty.toString())
                                             Log.d("Check", "fetch product ${product?.prodName.toString()}")

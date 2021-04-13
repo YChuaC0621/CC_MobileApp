@@ -46,7 +46,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
         edit_text_editSupplierName.setText(product.supplierName)
         edit_text_editProdDesc.setText(product.prodDesc)
         edit_text_editProdPrice.setText(product.prodPrice.toString())
-        edit_text_editProdBarcode.setText(product.prodBarcode.toString())
+        edit_text_editProdBarcode.setText(product.prodBarcode)
 
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val message:String
@@ -66,13 +66,13 @@ class EditProductFragment(private val product: Product) : Fragment() {
         lateinit var supplierName: String
         lateinit var prodDesc: String
         var prodPrice: Double? = null
-        var prodBarcode: Int? = null
+        lateinit var prodBarcode: String
         btn_productConfirmEdit.setOnClickListener {
             prodName = edit_text_editProductName.text.toString().trim()
             supplierName = edit_text_editSupplierName.text.toString().trim()
             prodDesc = edit_text_editProdDesc.text.toString().trim()
             prodPrice = edit_text_editProdPrice.text.toString().toDoubleOrNull()
-            prodBarcode = edit_text_editProdBarcode.text.toString().toIntOrNull()
+            prodBarcode = edit_text_editProdBarcode.text.toString()
             var valid: Boolean = true
 
             if(prodName.isNullOrEmpty()){
@@ -111,8 +111,13 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 input_layout_editProdPrice.error = null
             }
 
-            if(prodBarcode == null){
+            if(prodBarcode.isNullOrEmpty()){
                 input_layout_editProdBarcode.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else if(!checkRegexBarcode(prodBarcode)){
+                input_layout_editProdBarcode.error = "Only integer are allowed"
                 valid = false
                 return@setOnClickListener
             }
@@ -135,7 +140,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
                             newProduct.supplierName = supplierName
                             newProduct.prodDesc = prodDesc
                             newProduct.prodPrice = prodPrice!!.toDouble()
-                            newProduct.prodBarcode = prodBarcode!!.toInt()
+                            newProduct.prodBarcode = prodBarcode
 
                             if(newProduct.prodPrice!! != product.prodPrice || newProduct.prodBarcode!! != product.prodBarcode || newProduct.prodName!! != product.prodName || newProduct.prodDesc!! != product.prodDesc || newProduct.supplierName!! != product.supplierName){
                                 viewModel.updateProduct(newProduct)
@@ -181,6 +186,12 @@ class EditProductFragment(private val product: Product) : Fragment() {
             }
         }
         dbSupplier.addListenerForSingleValueEvent(supplierNameListener)
+    }
+
+    private fun checkRegexBarcode(prodBarcode: String): Boolean {
+        var prodBarcode: String = prodBarcode
+        var regex:Regex = Regex(pattern="""\d+""")
+        return regex.matches(input = prodBarcode)
     }
 
     protected fun populateSearchSupplierName(snapshot: DataSnapshot) {

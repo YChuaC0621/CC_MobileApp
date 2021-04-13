@@ -30,10 +30,11 @@ class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewMode
         holder.view.stockDetail_prodBarcode.text = stocksDetail[position].stockDetailProdBarcode.toString()
         holder.view.stockDetail_rackId.text = stocksDetail[position].stockDetailRackId
         holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty.toString()
-        // TODO require to calculate total price [Query]
-        holder.view.stockDetail_totalPrice.text = "20.00"
         holder.view.btn_edit_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
         holder.view.btn_delete_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
+    // TODO require to calculate total price [Query]
+
+
     }
 
     fun setStocksDetail(stocksDetail: List<StockDetail>){

@@ -11,8 +11,6 @@ import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.client.ClientAdapter
 import com.example.cc_mobileapp.client.ClientViewModel
 import com.example.cc_mobileapp.client.EditClientFragment
-import com.example.cc_mobileapp.databinding.ActivityClientAddBinding.inflate
-import com.example.cc_mobileapp.databinding.ActivityClientUpdateBinding.inflate
 import com.example.cc_mobileapp.model.Product
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_client.*
