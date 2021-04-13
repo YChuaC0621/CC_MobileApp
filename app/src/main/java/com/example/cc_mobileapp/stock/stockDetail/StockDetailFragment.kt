@@ -163,7 +163,6 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
     private fun readData(firebaseCallback: FirebaseCallback){
         dbProduct.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                //getData(snapshot, 8888)
                 if(callBackCount ==0){
                     firebaseCallback.onCallBack(snapshot)
                     callBackCount+=1

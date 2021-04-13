@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockDetail_ProdBarcode
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockDetail_qty
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockDetail_rackId
-import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockDetail_rowNum
 import kotlinx.android.synthetic.main.fragment_edit_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 
@@ -53,7 +52,6 @@ class EditStockDetailFragment(
 
         edit_text_editStockDetail_ProdBarcode.setText(stockDetail.stockDetailProdBarcode.toString())
         edit_text_editStockDetail_rackId.setText(stockDetail.stockDetailRackId)
-        edit_text_editStockDetail_rowNum.setText(stockDetail.stockDetailRowNum)
         edit_text_editStockDetail_qty.setText(stockDetail.stockDetailQty.toString())
 
         Log.e("Error", "check 1st stock detail$stockDetail")
@@ -97,7 +95,6 @@ class EditStockDetailFragment(
                     Log.d("Check", "after val product")
                     stockDetailEdit.stockDetailProdBarcode = prodBarcode.toInt()
                     stockDetailEdit.stockDetailRackId = rackId
-                    stockDetailEdit.stockDetailRowNum = rowNo
                     stockDetailEdit.stockDetailQty = stockQty.toInt()
                     stockDetailEdit.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
                     stockDetailEdit.stockDetailId = stockDetail.stockDetailId

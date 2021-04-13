@@ -29,7 +29,6 @@ class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewMode
     override fun onBindViewHolder(holder: StockViewModel, position: Int) {
         holder.view.stockDetail_prodBarcode.text = stocksDetail[position].stockDetailProdBarcode.toString()
         holder.view.stockDetail_rackId.text = stocksDetail[position].stockDetailRackId
-        holder.view.stockDetail_rowNum.text = stocksDetail[position].stockDetailRowNum
         holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty.toString()
         // TODO require to calculate total price [Query]
         holder.view.stockDetail_totalPrice.text = "20.00"

@@ -37,12 +37,12 @@ class ScanBarcodeFragment( btnName:String) : Fragment() {
         setupPermission()
         codeScanner()
 
-        sharedStockBarcodeViewModel.scannedRackCode.observe(viewLifecycleOwner, Observer {
-            if(!sharedStockBarcodeViewModel.scannedRackCode.value.isNullOrEmpty())
-            {
-                requireActivity().supportFragmentManager.popBackStack("rackBarcode", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            }
-        })
+//        sharedStockBarcodeViewModel.scannedRackCode.observe(viewLifecycleOwner, Observer {
+//            if(!sharedStockBarcodeViewModel.scannedRackCode.value.isNullOrEmpty())
+//            {
+//                requireActivity().supportFragmentManager.popBackStack("rackBarcode", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//            }
+//        })
 
         sharedStockBarcodeViewModel.scannedProductCode.observe(viewLifecycleOwner, Observer {
             if(!sharedStockBarcodeViewModel.scannedProductCode.value.isNullOrEmpty())
@@ -79,11 +79,11 @@ class ScanBarcodeFragment( btnName:String) : Fragment() {
                     requireActivity().runOnUiThread {   // it = result
                         Log.e("Main", "require context successful $it")
 
-                        if(calledBtnName == "rack"){
-                            sharedStockBarcodeViewModel.rackBarcode(it.text)
-                        }else{
+//                        if(calledBtnName == "rack"){
+//                            sharedStockBarcodeViewModel.rackBarcode(it.text)
+//                        }else{
                             sharedStockBarcodeViewModel.productBarcode(it.text)
-                        }
+//                        }
                     }
                 }catch (e: Exception){
                     Toast.makeText(requireContext(), "Error on decode call back", Toast.LENGTH_SHORT).show()

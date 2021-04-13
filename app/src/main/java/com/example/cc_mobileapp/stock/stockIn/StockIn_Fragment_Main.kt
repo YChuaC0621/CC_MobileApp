@@ -35,6 +35,7 @@ class StockIn_Fragment_Main : Fragment() {
         return inflater.inflate(R.layout.fragment_stock_in___main, container, false)
 
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

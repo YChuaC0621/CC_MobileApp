@@ -11,7 +11,6 @@ data class StockDetail(
     var stockDetailId: String? = null,
     var stockDetailProdBarcode: Int? = null,
     var stockDetailRackId: String? = null,
-    var stockDetailRowNum: String? = null,
     var stockDetailQty: Int? = null,
     var stockTypeId: String? = null,
     @get:Exclude
@@ -30,7 +29,6 @@ data class StockDetail(
         var result = stockDetailId?.hashCode() ?: 0
         result = 31 * result + (stockDetailProdBarcode?.hashCode() ?: 0)
         result = 31 * result + (stockDetailRackId?.hashCode() ?: 0)
-        result = 31 * result + (stockDetailRowNum?.hashCode() ?: 0)
         result = 31 * result + (stockDetailQty?.hashCode() ?: 0)
         result = 31 * result + (stockTypeId?.hashCode() ?: 0)
         result = 31 * result + isDeleted.hashCode()
