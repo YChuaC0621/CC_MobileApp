@@ -29,10 +29,10 @@
         android:layout_marginTop="@dimen/editTxt_marginTop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtView_addRack"
-        android:hint="@string/rack_name">
+        android:hint="@string/rack_number">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTxt_rackName"
+            android:id="@+id/editTxt_rackNum"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="text" />

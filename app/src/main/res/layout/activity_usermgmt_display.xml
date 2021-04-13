@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/circle_background2"
-        android:layout_width="801dp"
-        android:layout_height="218dp"
-        android:layout_marginBottom="520dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="473dp"
+        android:layout_height="235dp"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_hpNum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/circle_gradientbackground" />
@@ -20,63 +20,97 @@
         android:id="@+id/imageView"
         android:layout_width="65dp"
         android:layout_height="51dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_user_icon" />
 
-    <EditText
-        android:id="@+id/txtName"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputLayout_userName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="113dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="143dp"
+        android:layout_marginEnd="143dp"
+        android:hint="@string/username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTxt_userName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:textAlignment="center" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/btn_hpNum"
         style="@style/transparentbtn2_standard"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="80dp"
         android:clickable="false"
         android:drawableTop="@drawable/ic_phone_icon"
-        app:layout_constraintEnd_toStartOf="@+id/txthpNum"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_userName" />
 
-    <EditText
-        android:id="@+id/txthpNum"
-        style="@style/txtUserfield_standard"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="76dp"
-        android:background="@drawable/borderbottom_txtfield"
-        android:clickable="true"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputLayout_userHpNum"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:hint="@string/hpNum"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_hpNum"
-        app:layout_constraintTop_toBottomOf="@+id/txtName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_userName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTxt_userHpNum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_email"
         style="@style/transparentbtn2_standard"
-        android:drawableTop="@drawable/ic_email_icon"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:clickable="false"
-        app:layout_constraintEnd_toStartOf="@+id/txtEmail"
+        android:drawableTop="@drawable/ic_email_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_hpNum" />
 
-    <EditText
-        android:id="@+id/txtEmail"
-        style="@style/txtUserfield_standard"
-        android:clickable="true"
-        android:background="@drawable/borderbottom_txtfield"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputLayout_userEmail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/email"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_email"
-        app:layout_constraintTop_toBottomOf="@+id/txthpNum" />
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_userHpNum">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTxt_userEmail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_setting"
         style="@style/transparentbtn2_standard"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
         android:clickable="false"
         android:drawableTop="@drawable/ic_setting_icon"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,21 +118,22 @@
 
     <Spinner
         android:id="@+id/ddlTheme"
-        style="@style/txtUserfield_standard"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="250dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/dropdown_bckgrd"
+        android:entries="@array/themeSpinner"
         app:layout_constraintStart_toEndOf="@+id/btn_setting"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
-        android:entries="@array/themeSpinner"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_userEmail" />
 
     <Button
-        android:id="@+id/btn_clientAdd"
+        android:id="@+id/btn_Save"
         style="@style/circlebtn_standard"
-        app:icon="@drawable/ic_edit_icon"
+        app:icon="@drawable/ic_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/circlebtn_standard"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

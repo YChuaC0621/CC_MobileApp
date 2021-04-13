@@ -23,6 +23,7 @@
     <string name="delete">Delete</string>
     <string name="errorEmail">Invalid Email Address</string>
     <string name="errorPhoneNum">Invalid Phone Number</string>
+    <string name="search">Search Product Name</string>
     <!-- all page title name -->
     <string name="add_client"><b>Add Client</b></string>
 
@@ -125,6 +126,7 @@
     <string name="addRackTitle">Add Rack</string>
     <string name="displayRackTitle">Display Rack</string>
     <string name="rack_id">Rack ID</string>
+    <string name="rack_number">Rack Number</string>
     <string name="rack_name">Rack Name</string>
     <string name="rack_startLot">Start Location</string>
     <string name="rack_endLot">End Location</string>

@@ -39,13 +39,13 @@ class AddRackDialogFragment  : Fragment() {
         })
 
         btn_Save.setOnClickListener{
-            val rackName = editTxt_rackName.text.toString().trim()
+            val rackNum = editTxt_rackNum.text.toString().trim()
             val startLot = editTxt_startLot.text.toString().trim()
             val endLot = editTxt_endLot.text.toString().trim()
             val row_num = editTxt_rowNum.text.toString().trim()
 
             when {
-                rackName.isEmpty() -> {
+                rackNum.isEmpty() -> {
                     txtInputLayout_rackName.error = getString(R.string.error_field_required)
                     return@setOnClickListener
                 }
@@ -62,11 +62,15 @@ class AddRackDialogFragment  : Fragment() {
                     return@setOnClickListener
                 }
                 else -> {
+                    val rackName = rackNum + "_Row" + row_num.toInt()
                     val rack = Rack()
                     rack.rackName = rackName
+                    rack.rackNum = rackNum
                     rack.startLot = startLot
                     rack.endLot = endLot
                     rack.row_num = row_num.toInt()
+                    rack.prodId = 0
+                    rack.currentQty = 0
                     Log.d("Check", "rack data $rack")
                     viewModel.addRack(rack)
                     requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);

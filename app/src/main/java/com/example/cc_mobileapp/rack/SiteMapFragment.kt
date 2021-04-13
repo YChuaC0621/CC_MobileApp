@@ -37,7 +37,6 @@ class SiteMapFragment: Fragment() {
 
         super.onActivityCreated(savedInstanceState)
 
-
         button_add.setOnClickListener{
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -74,6 +73,126 @@ class SiteMapFragment: Fragment() {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack4.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack5.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack5.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack6.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack6.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack7.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack7.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack8.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack8.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack9.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack9.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack10.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack10.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack11.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack11.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack12.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack12.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack13.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack13.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack14.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack14.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack15.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack15.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack16.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack16.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack17.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack17.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack18.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack18.text.toString()))
+            transaction.addToBackStack("fragmentA")
+            transaction.commit()
+        }
+
+        btn_rack19.setOnClickListener{
+            val currentView = (requireView().parent as ViewGroup).id
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack19.text.toString()))
             transaction.addToBackStack("fragmentA")
             transaction.commit()
         }

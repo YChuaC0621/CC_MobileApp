@@ -83,7 +83,7 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
                     return@setOnClickListener
                 }
                 !android.util.Patterns.PHONE.matcher(supHpNum).matches() -> {
-                    txtInputLayout_supEmail.error = getString(R.string.errorPhoneNum)
+                    txtInputLayout_supHpNum.error = getString(R.string.errorPhoneNum)
                     return@setOnClickListener
                 }
                 supCmpName.isEmpty() -> {

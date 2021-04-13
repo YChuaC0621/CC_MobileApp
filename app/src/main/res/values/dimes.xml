@@ -62,7 +62,7 @@
     <!--Map-->
     <!--Vertical Rack Pattern-->
     <dimen name="rectRack1_width">40dp</dimen>
-    <dimen name="rectRack1_height">186dp</dimen>
+    <dimen name="rectRack1_height">120dp</dimen>
     <dimen name="rectRack1_radius">5dp</dimen>
 
     <!--Horizontal Rack Pattern-->

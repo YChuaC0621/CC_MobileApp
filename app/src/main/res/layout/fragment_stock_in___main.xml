@@ -20,7 +20,7 @@
         android:layout_margin="16dp"
         app:backgroundTint="@color/supplierColor2"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_save"
+        app:srcCompat="@drawable/ic_add_icon"
         />
 
 </FrameLayout>
