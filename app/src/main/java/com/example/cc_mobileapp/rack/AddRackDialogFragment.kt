@@ -69,7 +69,7 @@ class AddRackDialogFragment  : Fragment() {
                     rack.startLot = startLot
                     rack.endLot = endLot
                     rack.row_num = row_num.toInt()
-                    rack.prodId = 0
+                    rack.prodId = "0"
                     rack.currentQty = 0
                     Log.d("Check", "rack data $rack")
                     viewModel.addRack(rack)

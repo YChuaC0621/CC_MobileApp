@@ -13,7 +13,7 @@ public class Rack (
     var startLot: String? = null,
     var endLot: String? = null,
     var row_num: Int? = null,
-    var prodId: Int? = null,
+    var prodId: String? = null,
     var currentQty: Int? = null
 )
 {
