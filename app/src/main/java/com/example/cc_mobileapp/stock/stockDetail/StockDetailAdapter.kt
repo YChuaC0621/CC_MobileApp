@@ -11,6 +11,7 @@ import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
 import com.google.firebase.database.*
 import com.squareup.okhttp.Dispatcher
+import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import kotlinx.android.synthetic.main.stockdetail_display_item.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
@@ -74,22 +75,5 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
                 }
             }
         }
-
-//        runBlocking {
-//            val job:Job = launch(context = Dispatchers.Default){
-//                dbProduct.get().addOnSuccessListener {
-//                    if(it.exists()){
-//                        it.children.forEach {
-//                            var prod: Product? = it.getValue(Product::class.java)
-//                            if(prod?.prodBarcode ==  stocksDetail[position].stockDetailProdBarcode){
-//                                price = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
-//                            }
-//                        }
-//                    }
-//                }
-//                holder.view.stockDetail_totalPrice.text = price.toString()
-//            }
-//            job.join()
-//        }
     }
 }

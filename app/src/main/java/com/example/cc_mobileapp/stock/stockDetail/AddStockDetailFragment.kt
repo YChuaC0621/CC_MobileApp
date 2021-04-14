@@ -177,28 +177,6 @@ class AddStockDetailFragment : Fragment() {
                 })
             }
         }
-//            when {
-//                rackId.isEmpty() -> {
-//                    input_layout_prodSupplierName.error = getString(R.string.error_field_required)
-//                    return@setOnClickListener
-//                }
-//                rowNo.isEmpty() -> {
-//                    input_layout_prodDesc.error = getString(R.string.error_field_required)
-//                    return@setOnClickListener
-//                }
-//                else -> {
-//                    val stockDetail = StockDetail()
-//                    stockDetail.stockDetailProdBarcode = prodBarcode.toInt()
-//                    stockDetail.stockDetailRackId = rackId
-//                    stockDetail.stockDetailRowNum = rowNo
-//                    stockDetail.stockDetailQty = stockQty.toInt()
-//                    //prodViewModel.stockUpdateProduct(prodBarcode, stockQty.toInt())
-//                    stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
-//                    // TODO add in the stockType Id
-//                    stockViewModel.addStockDetail(stockDetail)
-//                    requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-//                }
-//            }
 
         btn_stockDetail_scanBarcode.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
@@ -207,14 +185,6 @@ class AddStockDetailFragment : Fragment() {
             transaction.addToBackStack("productBarcode")
             transaction.commit()
         }
-
-//        btn_stockDetail_scanRackId.setOnClickListener {
-//            val currentView = (requireView().parent as ViewGroup).id
-//            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-//            transaction.replace(currentView, ScanBarcodeFragment("rack"))
-//            transaction.addToBackStack("rackBarcode")
-//            transaction.commit()
-//        }
 
         // Autocomplete for product barcode
         val barcodeListener = object : ValueEventListener {
@@ -278,33 +248,6 @@ class AddStockDetailFragment : Fragment() {
         }
 
     }
-
-
-
-
-
-
-//                if(barcodeStored == prodBarcode){
-//                    Log.d("check same", "barcodeStored$barcodeStored")
-//                    Log.d("check same", "prodBarcode$prodBarcode")
-//                    var product = Product()
-//                    product.prodQty = edit_text_stockDetail_qty.text.toString().toInt()
-//                    product.prodId = snapshot.key
-//                    dbProd.child(snapshot.key!!).setValue(product)
-//                            .addOnCompleteListener {
-//                                if (it.isSuccessful) {
-//                                    Log.d("check","successful add in - prod update ")
-//                                } else {
-//                                    Log.d("check","fail add in - prod update")
-//                                }
-//                            }
-//                }
-//                else{
-//                    Log.d("check Diff", "barcodeStored$barcodeStored")
-//                    Log.d("check Diff", "prodBarcode$prodBarcode")
-//                }
-//            }
-
 
     override fun onResume() {
         super.onResume()

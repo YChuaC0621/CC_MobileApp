@@ -37,12 +37,6 @@ class ScanBarcodeFragment( btnName:String) : Fragment() {
         setupPermission()
         codeScanner()
 
-//        sharedStockBarcodeViewModel.scannedRackCode.observe(viewLifecycleOwner, Observer {
-//            if(!sharedStockBarcodeViewModel.scannedRackCode.value.isNullOrEmpty())
-//            {
-//                requireActivity().supportFragmentManager.popBackStack("rackBarcode", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//            }
-//        })
 
         sharedStockBarcodeViewModel.scannedProductCode.observe(viewLifecycleOwner, Observer {
             if(!sharedStockBarcodeViewModel.scannedProductCode.value.isNullOrEmpty())

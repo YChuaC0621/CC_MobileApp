@@ -8,8 +8,6 @@ import com.google.firebase.database.FirebaseDatabase
 
 class StockBarcodeViewModel: ViewModel() {
 
-    private val dbStockDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
-
     private val _scannedProductCode = MutableLiveData<String?>()
     val scannedProductCode: LiveData<String?>
         get() = _scannedProductCode

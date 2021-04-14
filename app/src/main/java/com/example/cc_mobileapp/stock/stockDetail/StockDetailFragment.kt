@@ -93,10 +93,12 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
         stockViewModel.stocksDetail.observe(viewLifecycleOwner, Observer{
             adapter.setStocksDetail(it)
+            btn_stockDetailSave.isEnabled = adapter.itemCount > 0
         })
 
         stockViewModel.stockDetail.observe(viewLifecycleOwner, Observer{
             adapter.addStockDetail(it)
+            btn_stockDetailSave.isEnabled = adapter.itemCount > 0
         })
 
         btn_stockDetailAdd.setOnClickListener {
