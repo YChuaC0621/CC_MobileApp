@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/circle_background3"
+        android:layout_width="866dp"
+        android:layout_height="267dp"
+        android:layout_marginBottom="477dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/circle_gradientbackground" />
+
+    <TextView
+        android:id="@+id/reportTitle"
+        android:layout_width="247dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="161dp"
+        android:text="@string/report_type"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:typeface="serif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_product"
+        style="@style/homepage_btn"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="108dp"
+        android:background="@drawable/homepg_btn"
+        android:drawableTop="@drawable/ic_product_icon"
+        android:text="@string/product"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circle_background3" />
+
+    <Button
+        android:id="@+id/btn_stocks"
+        style="@style/homepage_btn"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="@dimen/homepg_btnMarginEndOrStart"
+        android:background="@drawable/homepg_btn"
+        android:drawableTop="@drawable/ic_stock_icon"
+        android:text="@string/stocks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.983"
+        app:layout_constraintStart_toEndOf="@+id/btn_product"
+        app:layout_constraintTop_toBottomOf="@+id/circle_background3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

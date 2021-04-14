@@ -93,10 +93,6 @@
     <string name="rackName19">Rack19</string>
     <string name="rackName20">Rack20</string>
 
-    <string name="rackName21">Rack21</string>
-    <string name="rackName22">Rack22</string>
-    <string name="rackName23">Rack23</string>
-
     <!--Map Rack Location-->
     <string name="rack_A">A</string>
     <string name="rack_B">B</string>
@@ -116,11 +112,6 @@
     <string name="rack_8">8</string>
     <string name="rack_9">9</string>
     <string name="rack_10">10</string>
-    <string name="rack_11">11</string>
-    <string name="rack_12">12</string>
-    <string name="rack_13">13</string>
-    <string name="rack_14">14</string>
-    <string name="rack_15">15</string>
 
     <!--Rack String-->
     <string name="addRackTitle">Add Rack</string>
@@ -143,5 +134,10 @@
     <string name="title_activity_rackdetails_display">rackdetails_display</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+
+    <!--Report String-->
+    <string name="report_type">Report Type</string>
+    <string name="prod_name">Product Name</string>
+    <string name="prod_barcode">Barcode</string>
 </resources>
 

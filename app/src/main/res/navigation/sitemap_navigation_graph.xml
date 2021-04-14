@@ -20,5 +20,9 @@
     <fragment
         android:id="@+id/displayRackDetailsFragment"
         android:name="com.example.cc_mobileapp.rack.DisplayRackDetailsFragment"
-        android:label="DisplayRackDetailsFragment" />
+        android:label="DisplayRackDetailsFragment" >
+        <action
+            android:id="@+id/action_displayRackDetailsFragment_to_siteMapFragment"
+            app:destination="@id/siteMapFragment" />
+    </fragment>
 </navigation>

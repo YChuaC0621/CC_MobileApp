@@ -7,16 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.Product
+import com.example.cc_mobileapp.model.Rack
 import com.example.cc_mobileapp.rack.RackViewModel
 import com.example.cc_mobileapp.supplier.AddSupplierDialogFragment
 import com.example.cc_mobileapp.supplier.SupplierViewModel
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_display_rackdetails.*
 import kotlinx.android.synthetic.main.fragment_sitemap.*
 import kotlinx.android.synthetic.main.fragment_supplier.*
 import kotlinx.android.synthetic.main.fragment_supplier.button_add
 
 class SiteMapFragment: Fragment() {
     private lateinit var viewModel: RackViewModel
+    private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
+    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -203,6 +210,34 @@ class SiteMapFragment: Fragment() {
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack20.text.toString()))
             transaction.addToBackStack("fragmentA")
             transaction.commit()
+        }
+
+        if(!search_editText.text.equals("")) {
+            var result = "Searching Results : \n"
+            dbProduct.get().addOnSuccessListener {
+                if (it.exists()) {
+                    for (prod in it.children) {
+                        var product: Product? =
+                            prod.getValue(Product::class.java)
+                        if (product?.prodName!!.equals(search_editText.text.toString())) {
+                            val prodId = product?.prodBarcode.toString()
+                            dbRack.get().addOnSuccessListener {
+                                Log.d("Check", "fetch racks")
+                                if (it.exists()) {
+                                    it.children.forEach { it ->
+                                        val rack: Rack? = it.getValue(Rack::class.java)
+                                        if (rack?.prodId == prodId) {
+                                            result += (rack?.rackName.toString() + " : " + rack?.currentQty.toString() + "\n")
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            search_results.setText(result)
         }
 
     }
