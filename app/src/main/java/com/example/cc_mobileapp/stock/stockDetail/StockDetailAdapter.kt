@@ -1,18 +1,25 @@
 package com.example.cc_mobileapp.stock.stockDetail
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
+import com.google.firebase.database.*
+import com.squareup.okhttp.Dispatcher
 import kotlinx.android.synthetic.main.stockdetail_display_item.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 
-class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewModel>(){
-
+class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewModel>(){
     private var stocksDetail = mutableListOf<StockDetail>()
     var listener: StockDetailRecyclerViewClickListener? = null
 
@@ -26,16 +33,7 @@ class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewMode
 
     override fun getItemCount() = stocksDetail.size
 
-    override fun onBindViewHolder(holder: StockViewModel, position: Int) {
-        holder.view.stockDetail_prodBarcode.text = stocksDetail[position].stockDetailProdBarcode.toString()
-        holder.view.stockDetail_rackId.text = stocksDetail[position].stockDetailRackId
-        holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty.toString()
-        holder.view.btn_edit_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
-        holder.view.btn_delete_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
-    // TODO require to calculate total price [Query]
-
-
-    }
+    private lateinit var productSnapshot: DataSnapshot
 
     fun setStocksDetail(stocksDetail: List<StockDetail>){
         this.stocksDetail = stocksDetail as MutableList<StockDetail>
@@ -57,4 +55,28 @@ class StockDetailAdapter : RecyclerView.Adapter<StockDetailAdapter.StockViewMode
     }
 
     class StockViewModel(val view: View) : RecyclerView.ViewHolder(view)
+
+    override fun onBindViewHolder(holder: StockViewModel, position: Int) {
+        holder.view.stockDetail_prodBarcode.text = stocksDetail[position].stockDetailProdBarcode.toString()
+        holder.view.stockDetail_rackId.text = stocksDetail[position].stockDetailRackId
+        holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty.toString()
+        holder.view.btn_edit_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
+        holder.view.btn_delete_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
+        val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+        var price:Double? = 0.0
+        GlobalScope.launch(Dispatchers.IO){
+            dbProduct.get().addOnSuccessListener {
+                if(it.exists()){
+                    it.children.forEach {
+                        var prod: Product? = it.getValue(Product::class.java)
+
+                        if(prod?.prodBarcode ==  stocksDetail[position].stockDetailProdBarcode){
+                            var price: Double? = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
+                            holder.view.stockDetail_totalPrice.text = price.toString()
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.cc_mobileapp.product
 
 import android.util.Log
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,7 @@ import com.example.cc_mobileapp.Constant.NODE_PRODUCT
 import com.example.cc_mobileapp.model.Product
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 
 class ProductViewModel: ViewModel() {
     private val dbProduct = FirebaseDatabase.getInstance().getReference(NODE_PRODUCT)
@@ -134,5 +136,6 @@ class ProductViewModel: ViewModel() {
         super.onCleared()
         dbProduct.removeEventListener(childEventListener)
     }
+
 
 }
