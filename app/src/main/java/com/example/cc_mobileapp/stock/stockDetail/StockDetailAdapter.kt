@@ -12,11 +12,8 @@ import com.example.cc_mobileapp.model.StockDetail
 import com.google.firebase.database.*
 import com.squareup.okhttp.Dispatcher
 import kotlinx.android.synthetic.main.stockdetail_display_item.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 
 class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewModel>(){
@@ -64,13 +61,12 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
         holder.view.btn_delete_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
         val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
         var price:Double? = 0.0
-        GlobalScope.launch(Dispatchers.IO){
+        GlobalScope.launch(Dispatchers.IO) {
             dbProduct.get().addOnSuccessListener {
-                if(it.exists()){
+                if (it.exists()) {
                     it.children.forEach {
                         var prod: Product? = it.getValue(Product::class.java)
-
-                        if(prod?.prodBarcode ==  stocksDetail[position].stockDetailProdBarcode){
+                        if (prod?.prodBarcode == stocksDetail[position].stockDetailProdBarcode) {
                             var price: Double? = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
                             holder.view.stockDetail_totalPrice.text = price.toString()
                         }
@@ -78,5 +74,22 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
                 }
             }
         }
+
+//        runBlocking {
+//            val job:Job = launch(context = Dispatchers.Default){
+//                dbProduct.get().addOnSuccessListener {
+//                    if(it.exists()){
+//                        it.children.forEach {
+//                            var prod: Product? = it.getValue(Product::class.java)
+//                            if(prod?.prodBarcode ==  stocksDetail[position].stockDetailProdBarcode){
+//                                price = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
+//                            }
+//                        }
+//                    }
+//                }
+//                holder.view.stockDetail_totalPrice.text = price.toString()
+//            }
+//            job.join()
+//        }
     }
 }

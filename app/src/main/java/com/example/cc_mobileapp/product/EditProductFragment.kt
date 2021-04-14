@@ -19,6 +19,7 @@ import com.example.cc_mobileapp.model.Product
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_edit_product.*
+import kotlinx.android.synthetic.main.fragment_edit_stock_detail.*
 
 class EditProductFragment(private val product: Product) : Fragment() {
 
@@ -106,6 +107,10 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 input_layout_editProdPrice.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
+            }else if (prodPrice!!.equals(0.0)){
+                input_layout_editProdPrice.error = "This field required"
+                valid = false
+                return@setOnClickListener
             }
             else{
                 input_layout_editProdPrice.error = null
@@ -165,6 +170,8 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 }
                 it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()
+            requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
         }
 
         btn_editScanBarcode.setOnClickListener {

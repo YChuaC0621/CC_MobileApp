@@ -13,6 +13,7 @@ data class StockDetail(
     var stockDetailRackId: String? = null,
     var stockDetailQty: Int? = null,
     var stockTypeId: String? = null,
+    var stockStatus: Boolean? = false,
     @get:Exclude
     var isDeleted: Boolean = false
 )
@@ -29,8 +30,9 @@ data class StockDetail(
         var result = stockDetailId?.hashCode() ?: 0
         result = 31 * result + (stockDetailProdBarcode?.hashCode() ?: 0)
         result = 31 * result + (stockDetailRackId?.hashCode() ?: 0)
-        result = 31 * result + (stockDetailQty?.hashCode() ?: 0)
+        result = 31 * result + (stockDetailQty ?: 0)
         result = 31 * result + (stockTypeId?.hashCode() ?: 0)
+        result = 31 * result + (stockStatus?.hashCode() ?: 0)
         result = 31 * result + isDeleted.hashCode()
         return result
     }

@@ -98,6 +98,10 @@ class AddProductDialogFragment : Fragment() {
                 input_layout_prodPrice.error = "The field is empty or null"
                 valid = false
                 return@setOnClickListener
+            }else if (prodPrice!!.equals(0.0)){
+                input_layout_prodPrice.error = "Product Price cannot be zero"
+                valid = false
+                return@setOnClickListener
             }
             else{
                 input_layout_prodPrice.error = null

@@ -18,13 +18,16 @@ import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.model.StockIn
 import com.example.cc_mobileapp.product.ProductViewModel
+import com.example.cc_mobileapp.rack.RackViewModel
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import java.util.*
+import java.util.Calendar.getInstance
 import kotlin.collections.ArrayList
+import kotlin.time.times
 
 class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
@@ -35,6 +38,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
     private val adapter = StockDetailAdapter()
     private lateinit var stockViewModel: StockViewModel
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
+    private lateinit var rackViewModel: RackViewModel
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +46,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         // Inflate the layout for this fragment
         productViewModel = ViewModelProvider(this@StockDetailFragment).get(ProductViewModel::class.java)
         stockViewModel = ViewModelProvider(this@StockDetailFragment).get(StockViewModel::class.java)
+        rackViewModel = ViewModelProvider(this@StockDetailFragment).get(RackViewModel::class.java)
         return inflater.inflate(R.layout.fragment_stock_detail, container, false)
     }
 
@@ -76,7 +81,8 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        adapter.listener
+
+        adapter.listener = this
         recycler_view_stockDetail.adapter = adapter
 
         productViewModel.fetchProduct()
@@ -119,6 +125,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                 var count: Int = 0
                 numbers.listIterator().forEach {
                     it.value?.forEach {
+                        it.stockStatus = true
                         dbStockInDetail.push().setValue(it)
                         count+=1
                         stockUpdateProduct(it.stockDetailProdBarcode, it.stockDetailQty)
@@ -139,7 +146,9 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
     private fun updateStockInDetail() {
         val stockIn = StockIn()
-        stockIn.stockInDateTime = Calendar.getInstance().time.toString()
+        var today = Calendar.getInstance()
+        today.add(Calendar.HOUR,8)
+        stockIn.stockInDateTime = today.time.toString()
         stockIn.stockInSupplierId = sharedStockInViewModel.stockInSupplierId.value
         stockIn.totalProdPrice = totalPrice
         sharedStockInViewModel.addStockIn(stockIn)
@@ -155,7 +164,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
             var prodDBBarcode: String = tempProd?.prodBarcode.toString()
             if(prodDBBarcode.equals(stockDetailBarcode)){
                 productfromDB = it.getValue(Product::class.java)
-                productfromDB?.prodQty = stockDetailQty
+                productfromDB?.prodQty = productfromDB?.prodQty?.plus(stockDetailQty!!)
                 dbProduct.child(it.key!!).setValue(productfromDB)
                         .addOnCompleteListener { it ->
                              if (it.isSuccessful) {
