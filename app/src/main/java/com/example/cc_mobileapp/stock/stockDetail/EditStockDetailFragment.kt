@@ -1,5 +1,6 @@
 package com.example.cc_mobileapp.stock.stockDetail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.Rack
 import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
 import com.google.firebase.database.*
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockDetail_ProdBarcode
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockDetail_qty
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.edit_text_stockDetail_rackId
+import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_edit_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import kotlinx.coroutines.currentCoroutineContext
@@ -117,22 +120,38 @@ class EditStockDetailFragment(
                                         valid = false
                                         input_layout_editStockDetail_rackId.error = "Invalid rack id"
                                     } else {
-                                        val stockDetailEdit = StockDetail()
-                                        stockDetailEdit.stockDetailProdBarcode = prodBarcode
-                                        stockDetailEdit.stockDetailRackId = rackId
-                                        stockDetailEdit.stockDetailQty = stockQty.toInt()
-                                        stockDetailEdit.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
-                                        stockDetailEdit.stockDetailId = stockDetail.stockDetailId
+                                        var currentRack: Rack? = snapshot.getValue(Rack::class.java)
+                                        if (currentRack?.currentQty == null || currentRack?.currentQty == 0) {
+                                            var tempRackQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_TEMP).orderByChild("stockDetailRackId").equalTo(rackId.toString())
+                                            tempRackQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                override fun onDataChange(snapshot: DataSnapshot) {
+                                                    if (snapshot.exists()) {
+                                                        valid = false
+                                                        input_layout_editStockDetail_rackId.error = "Occupied rack id in your stock detail"
+                                                    } else {
+                                                        val stockDetailEdit = StockDetail()
+                                                        stockDetailEdit.stockDetailProdBarcode = prodBarcode
+                                                        stockDetailEdit.stockDetailRackId = rackId
+                                                        stockDetailEdit.stockDetailQty = stockQty.toInt()
+                                                        stockDetailEdit.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
+                                                        stockDetailEdit.stockDetailId = stockDetail.stockDetailId
 
-                                        if(stockDetailEdit.stockDetailProdBarcode != stockDetail.stockDetailProdBarcode || stockDetailEdit.stockDetailQty != stockDetail.stockDetailQty || stockDetailEdit.stockDetailRackId != stockDetail.stockDetailRackId){
-                                            stockViewModel.updateStockDetail(stockDetailEdit)
-                                        }else{
-                                            makeText(requireContext(), "Stock Detail Remain Unchanged",Toast.LENGTH_SHORT).show()
+                                                        if(stockDetailEdit.stockDetailProdBarcode != stockDetail.stockDetailProdBarcode || stockDetailEdit.stockDetailQty != stockDetail.stockDetailQty || stockDetailEdit.stockDetailRackId != stockDetail.stockDetailRackId){
+                                                            stockViewModel.updateStockDetail(stockDetailEdit)
+                                                            makeText(requireContext(), "Stock Detail Update Successfully",Toast.LENGTH_SHORT).show()
+                                                        }else{
+                                                            makeText(requireContext(), "Stock Detail Remain Unchanged",Toast.LENGTH_SHORT).show()
+                                                        }
+                                                        requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                                    }
+                                                }
+                                                override fun onCancelled(error: DatabaseError) {
+                                                    TODO("Not yet implemented")
+                                                }
+                                            })
                                         }
-                                        requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                                     }
                                 }
-
                                 override fun onCancelled(error: DatabaseError) {
                                     TODO("Not yet implemented")
                                 }

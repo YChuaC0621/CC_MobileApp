@@ -19,23 +19,23 @@ import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.model.StockIn
 import com.example.cc_mobileapp.product.ProductViewModel
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
+import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
     private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
     private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+    private lateinit var productViewModel: ProductViewModel
     private val adapter = StockDetailAdapter()
     private lateinit var stockViewModel: StockViewModel
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
-    private  lateinit var productViewModel: ProductViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,11 +45,41 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         return inflater.inflate(R.layout.fragment_stock_detail, container, false)
     }
 
+    lateinit var prodList: ArrayList<Product>
+
+    private fun retrieveProdDB(firebaseCallback: FirebaseCallback) {
+        var prodPriceQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_SUPPLIER)
+        prodPriceQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var prod: Product? = snapshot.getValue(Product::class.java)
+                prodList.add(prod!!)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+        getProd()
+    }
+
+    private fun getProd(){
+        retrieveProdDB(object:FirebaseCallback{
+            override fun onCallBack(snapshot: DataSnapshot) {
+                returnProd()
+            }
+        })
+    }
+
+    private fun returnProd(): ArrayList<Product>{
+        return prodList
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        adapter.listener = this
+        adapter.listener
         recycler_view_stockDetail.adapter = adapter
+
+        productViewModel.fetchProduct()
 
         stockViewModel.fetchStockDetail()
 
@@ -201,6 +231,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                     it.setPositiveButton(getString(R.string.yes)){ dialog, which ->
                         stockViewModel.deleteStockDetail(stockDetail)
                     }
+                    it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
                 }.create().show()
             }
         }

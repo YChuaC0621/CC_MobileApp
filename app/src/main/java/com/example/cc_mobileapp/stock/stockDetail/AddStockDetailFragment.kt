@@ -15,8 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.Constant.NODE_PRODUCT
 import com.example.cc_mobileapp.Constant.NODE_RACK
+import com.example.cc_mobileapp.Constant.NODE_TEMP
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
+import com.example.cc_mobileapp.model.Rack
 import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.product.ProductViewModel
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
@@ -110,23 +112,37 @@ class AddStockDetailFragment : Fragment() {
                                         valid = false
                                         input_layout_stockDetail_rackId.error = "Invalid rack id"
                                     } else {
-                                        val stockDetail = StockDetail()
-                                        stockDetail.stockDetailProdBarcode = prodBarcode
-                                        stockDetail.stockDetailRackId = rackId
-                                        stockDetail.stockDetailQty = stockQty
-                                        stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
-                                        stockViewModel.addStockDetail(stockDetail)
-                                        requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                        var currentRack: Rack? = snapshot.getValue(Rack::class.java)
+                                        if (currentRack?.currentQty == null || currentRack?.currentQty == 0) {
+                                            var tempRackQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP).orderByChild("stockDetailRackId").equalTo(rackId.toString())
+                                            tempRackQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                override fun onDataChange(snapshot: DataSnapshot) {
+                                                    if (snapshot.exists()) {
+                                                        valid = false
+                                                        input_layout_stockDetail_rackId.error = "Occupied rack id in your stock detail"
+                                                    } else {
+                                                        val stockDetail = StockDetail()
+                                                        stockDetail.stockDetailProdBarcode = prodBarcode
+                                                        stockDetail.stockDetailRackId = rackId
+                                                        stockDetail.stockDetailQty = stockQty
+                                                        stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
+                                                        stockViewModel.addStockDetail(stockDetail)
+                                                        requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                                    }
+                                                }
+                                                override fun onCancelled(error: DatabaseError) {
+                                                    TODO("Not yet implemented")
+                                                }
+                                            })
+                                        }
                                     }
                                 }
-
                                 override fun onCancelled(error: DatabaseError) {
                                     TODO("Not yet implemented")
                                 }
                             })
                         }
                     }
-
                     override fun onCancelled(error: DatabaseError) {
                         TODO("Not yet implemented")
                     }
