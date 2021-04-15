@@ -37,6 +37,7 @@ class ReportFragment: Fragment() {
 
         super.onActivityCreated(savedInstanceState)
 
+
         btn_product.setOnClickListener{
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()

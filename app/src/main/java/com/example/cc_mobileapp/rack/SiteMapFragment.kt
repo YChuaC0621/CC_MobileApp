@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
@@ -19,6 +20,9 @@ import kotlinx.android.synthetic.main.fragment_display_rackdetails.*
 import kotlinx.android.synthetic.main.fragment_sitemap.*
 import kotlinx.android.synthetic.main.fragment_supplier.*
 import kotlinx.android.synthetic.main.fragment_supplier.button_add
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SiteMapFragment: Fragment() {
     private lateinit var viewModel: RackViewModel
@@ -44,7 +48,7 @@ class SiteMapFragment: Fragment() {
 
         super.onActivityCreated(savedInstanceState)
 
-        button_add.setOnClickListener{
+        button_add.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, AddRackDialogFragment())
@@ -52,7 +56,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack1.setOnClickListener{
+        btn_rack1.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack1.text.toString()))
@@ -60,7 +64,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack2.setOnClickListener{
+        btn_rack2.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack2.text.toString()))
@@ -68,7 +72,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack3.setOnClickListener{
+        btn_rack3.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack3.text.toString()))
@@ -76,7 +80,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack4.setOnClickListener{
+        btn_rack4.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack4.text.toString()))
@@ -84,7 +88,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack5.setOnClickListener{
+        btn_rack5.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack5.text.toString()))
@@ -92,7 +96,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack6.setOnClickListener{
+        btn_rack6.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack6.text.toString()))
@@ -100,7 +104,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack7.setOnClickListener{
+        btn_rack7.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack7.text.toString()))
@@ -108,7 +112,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack8.setOnClickListener{
+        btn_rack8.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack8.text.toString()))
@@ -116,7 +120,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack9.setOnClickListener{
+        btn_rack9.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack9.text.toString()))
@@ -124,7 +128,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack10.setOnClickListener{
+        btn_rack10.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack10.text.toString()))
@@ -132,7 +136,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack11.setOnClickListener{
+        btn_rack11.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack11.text.toString()))
@@ -140,7 +144,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack12.setOnClickListener{
+        btn_rack12.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack12.text.toString()))
@@ -148,7 +152,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack13.setOnClickListener{
+        btn_rack13.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack13.text.toString()))
@@ -156,7 +160,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack14.setOnClickListener{
+        btn_rack14.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack14.text.toString()))
@@ -164,7 +168,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack15.setOnClickListener{
+        btn_rack15.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack15.text.toString()))
@@ -172,7 +176,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack16.setOnClickListener{
+        btn_rack16.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack16.text.toString()))
@@ -180,7 +184,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack17.setOnClickListener{
+        btn_rack17.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack17.text.toString()))
@@ -188,7 +192,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack18.setOnClickListener{
+        btn_rack18.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack18.text.toString()))
@@ -196,7 +200,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack19.setOnClickListener{
+        btn_rack19.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack19.text.toString()))
@@ -204,7 +208,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        btn_rack20.setOnClickListener{
+        btn_rack20.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, DisplayRackDetailsFragment(btn_rack20.text.toString()))
@@ -212,33 +216,58 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
-        if(!search_editText.text.equals("")) {
-            var result = "Searching Results : \n"
-            dbProduct.get().addOnSuccessListener {
-                if (it.exists()) {
-                    for (prod in it.children) {
-                        var product: Product? =
-                            prod.getValue(Product::class.java)
-                        if (product?.prodName!!.equals(search_editText.text.toString())) {
-                            val prodId = product?.prodBarcode.toString()
-                            dbRack.get().addOnSuccessListener {
-                                Log.d("Check", "fetch racks")
-                                if (it.exists()) {
-                                    it.children.forEach { it ->
-                                        val rack: Rack? = it.getValue(Rack::class.java)
-                                        if (rack?.prodId == prodId) {
-                                            result += (rack?.rackName.toString() + " : " + rack?.currentQty.toString() + "\n")
-                                        }
+        button_search.setOnClickListener {
+            if (!search_editText.text.equals("")) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    searchResult()
+                }
 
+            }
+
+
+        }
+    }
+
+    suspend fun searchResult() {
+        dbProduct.get().addOnSuccessListener {
+            if (it.exists()) {
+                var result = "Searching Results : \n"
+                var counter = 0
+                for (prod in it.children) {
+                    var product: Product? =
+                        prod.getValue(Product::class.java)
+                    if (product?.prodName!!.equals(search_editText.text.toString())) {
+                        val prodId = product?.prodBarcode.toString()
+                        dbRack.get().addOnSuccessListener {
+                            Log.d("Check", "fetch racks")
+                            if (it.exists()) {
+                                it.children.forEach { it ->
+                                    val rack: Rack? = it.getValue(Rack::class.java)
+                                    if (rack?.prodId == prodId) {
+                                        result += (rack?.rackName.toString() + " : " + rack?.currentQty.toString() + "Quantity \n")
+                                        counter = 1
+                                        search_results.setText(result)
                                     }
+
                                 }
                             }
                         }
                     }
                 }
+                if(counter == 0)
+                {
+                    Toast.makeText(
+                        requireContext(),
+                        "No result is found ",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+
             }
-            search_results.setText(result)
+
         }
+
 
     }
 }

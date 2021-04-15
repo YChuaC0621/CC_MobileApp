@@ -24,6 +24,7 @@
     <string name="errorEmail">Invalid Email Address</string>
     <string name="errorPhoneNum">Invalid Phone Number</string>
     <string name="search">Search Product Name</string>
+    <string name="searchbtn">Search</string>
     <!-- all page title name -->
     <string name="add_client"><b>Add Client</b></string>
 
@@ -137,7 +138,10 @@
 
     <!--Report String-->
     <string name="report_type">Report Type</string>
-    <string name="prod_name">Product Name</string>
+    <string name="prod_name">Product</string>
     <string name="prod_barcode">Barcode</string>
+    <string name="current_qty">Current Quantity :</string>
+    <string name="qty_num">Qty</string>
+    <string name="prod_report">Product Report</string>
 </resources>
 
