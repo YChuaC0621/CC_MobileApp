@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/report_navigation_graph.xml">
+    android:id="@+id/report_navigation_graph.xml"
+    app:startDestination="@id/reportFragment">
 
+    <fragment
+        android:id="@+id/productReportFragment"
+        android:name="com.example.cc_mobileapp.report.ProductReportFragment"
+        android:label="ProductReportFragment" />
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.cc_mobileapp.report.ReportFragment"
+        android:label="ReportFragment" >
+        <action
+            android:id="@+id/action_reportFragment_to_productReportFragment"
+            app:destination="@id/productReportFragment" />
+    </fragment>
 </navigation>

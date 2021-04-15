@@ -1,40 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:textAlignment="viewStart">
 
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="72dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtProdName"
-        app:srcCompat="@drawable/separator_line" />
 
     <TextView
         android:id="@+id/txtProdName"
-        android:layout_width="176dp"
-        android:layout_height="40dp"
+        android:layout_width="178dp"
+        android:layout_height="39dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:paddingStart="10dp"
         android:text="@string/prod_name"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
         android:textColor="#171717"
         android:textColorHighlight="#FFFFFF"
         android:textSize="24sp"
-        android:typeface="sans"
+        android:typeface="serif"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/txtProdBarcodeTitle" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtProdBarcodeTitle"
         android:layout_width="77dp"
         android:layout_height="26dp"
         android:layout_marginStart="16dp"
@@ -45,15 +35,44 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txtProdBarcode"
+        android:layout_width="77dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/prod_barcode"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtProdSupName"
         android:layout_width="179dp"
         android:layout_height="27dp"
         android:layout_marginStart="11dp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="35dp"
         android:paddingStart="5dp"
         android:text="@string/supplier_name"
         android:textAlignment="textStart"
         android:typeface="sans"
         app:layout_constraintStart_toEndOf="@+id/txtProdName"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtRackInfo"
+        android:layout_width="367dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:paddingStart="20dp"
+        android:textColor="#03A9F4"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProdName" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
