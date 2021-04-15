@@ -7,14 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
-import com.example.cc_mobileapp.client.ClientRecyclerViewClickListener
-import com.example.cc_mobileapp.model.Client
-import com.example.cc_mobileapp.model.StockIn
-import com.example.cc_mobileapp.product.*
-import com.example.cc_mobileapp.stock.stockDetail.StockDetailFragment
-import kotlinx.android.synthetic.main.fragment_product.*
 import kotlinx.android.synthetic.main.fragment_stock_in___main.*
 
 class StockIn_Fragment_Main : Fragment() {

@@ -19,13 +19,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Add New Stock Detail"
+        android:text="Add New Stock Out Detail"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_stockDetail_ProdBarcode"
+        android:id="@+id/input_layout_stockOutDetail_ProdBarcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -33,14 +33,14 @@
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             style="@style/Widget.MaterialComponents.AutoCompleteTextView.FilledBox"
-            android:id="@+id/edit_text_stockDetail_ProdBarcode"
+            android:id="@+id/edit_text_stockOutDetail_ProdBarcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_stockDetail_scanBarcode"
+        android:id="@+id/btn_stockOutDetail_scanBarcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
@@ -48,36 +48,21 @@
         android:text="Scan Product Barcode" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_stockDetail_rackId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:hint="Rack ID">
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            style="@style/Widget.MaterialComponents.AutoCompleteTextView.FilledBox"
-            android:id="@+id/edit_text_stockDetail_rackId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_stockDetail_qty"
+        android:id="@+id/input_layout_stockOutDetail_qty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:hint="Stock Quantity">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_stockDetail_qty"
+            android:id="@+id/edit_text_stockOutDetail_qty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_stockDetail_add"
+        android:id="@+id/btn_stockOutDetail_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
@@ -85,7 +70,7 @@
         android:text="Add" />
 
     <Button
-        android:id="@+id/btn_stockDetail_cancel"
+        android:id="@+id/btn_stockOutDetail_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="12dp"

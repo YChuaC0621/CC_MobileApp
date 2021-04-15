@@ -22,9 +22,9 @@ class Stock_Main : AppCompatActivity() {
             startActivity(stockInIntent)
         }
 
-//        btn_stockOut.setOnClickListener{
-//            val stockOutIntent = Intent(this, StockOutActivity::class.java)
-//            startActivity(stockOutIntent)
-//        }
+        stockOut.setOnClickListener{
+            val stockOutIntent = Intent(this, StockOutActivity::class.java)
+            startActivity(stockOutIntent)
+        }
     }
 }

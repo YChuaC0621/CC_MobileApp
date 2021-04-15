@@ -15,7 +15,6 @@ import com.google.firebase.database.*
 class StockViewModel : ViewModel() {
     private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
-    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
 
 
     private val _result = MutableLiveData<Exception?>()
@@ -122,6 +121,17 @@ class StockViewModel : ViewModel() {
 
     fun deleteStockDetail(stockDetail: StockDetail) {
         dbTemp.child(stockDetail.stockDetailId!!).setValue(null)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        _result.value = null
+                    } else {
+                        _result.value = it.exception
+                    }
+                }
+    }
+
+    fun updateStockDetailinDB(stockDetail: StockDetail) {
+        dbStockInDetail.child(stockDetail.stockDetailId!!).setValue(stockDetail)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         _result.value = null

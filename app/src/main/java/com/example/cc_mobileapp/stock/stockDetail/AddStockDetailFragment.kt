@@ -14,14 +14,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.Constant.NODE_PRODUCT
-import com.example.cc_mobileapp.Constant.NODE_RACK
 import com.example.cc_mobileapp.Constant.NODE_STOCKDETAIL
 import com.example.cc_mobileapp.Constant.NODE_TEMP
 import com.example.cc_mobileapp.R
-import com.example.cc_mobileapp.model.Product
-import com.example.cc_mobileapp.model.Rack
 import com.example.cc_mobileapp.model.StockDetail
-import com.example.cc_mobileapp.model.StockIn
 import com.example.cc_mobileapp.product.ProductViewModel
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
 import com.google.firebase.database.*
@@ -95,6 +91,10 @@ class AddStockDetailFragment : Fragment() {
                 input_layout_stockDetail_qty.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
+            }else if(!checkRegexBarcode(stockQty.toString())){
+                input_layout_stockDetail_qty.error = "Invalid quantity input"
+                valid = false
+                return@setOnClickListener
             } else if (stockQty!! == 0) {
                 input_layout_stockDetail_qty.error = "Product Quantity cannot be zero"
                 valid = false
@@ -144,7 +144,6 @@ class AddStockDetailFragment : Fragment() {
                                                                 valid = false
                                                                 input_layout_stockDetail_rackId.error = "Occupied rack id in your stock detail"
                                                             } else {
-
                                                                 stockViewModel.addStockDetail(stockDetail)
                                                                 requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                                                             }

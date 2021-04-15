@@ -25,13 +25,12 @@ import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import java.util.*
-import java.util.Calendar.getInstance
 import kotlin.collections.ArrayList
-import kotlin.time.times
 
 class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
     private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
+    private val dbPermanentStock = FirebaseDatabase.getInstance().getReference(Constant.NODE_PERM_STOCKINDETAIL)
     private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
     private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
     private lateinit var productViewModel: ProductViewModel
@@ -48,35 +47,6 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         stockViewModel = ViewModelProvider(this@StockDetailFragment).get(StockViewModel::class.java)
         rackViewModel = ViewModelProvider(this@StockDetailFragment).get(RackViewModel::class.java)
         return inflater.inflate(R.layout.fragment_stock_detail, container, false)
-    }
-
-    lateinit var prodList: ArrayList<Product>
-
-    private fun retrieveProdDB(firebaseCallback: FirebaseCallback) {
-        var prodPriceQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_SUPPLIER)
-        prodPriceQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var prod: Product? = snapshot.getValue(Product::class.java)
-                prodList.add(prod!!)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-        getProd()
-    }
-
-    private fun getProd(){
-        retrieveProdDB(object:FirebaseCallback{
-            override fun onCallBack(snapshot: DataSnapshot) {
-                returnProd()
-            }
-        })
-    }
-
-    private fun returnProd(): ArrayList<Product>{
-        return prodList
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -129,6 +99,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                     it.value?.forEach {
                         it.stockStatus = true
                         dbStockInDetail.push().setValue(it)
+                        dbPermanentStock.push().setValue(it)
                         count+=1
                         stockUpdateProduct(it.stockDetailProdBarcode, it.stockDetailQty)
                         if(!(productfromDB?.prodPrice == null || it?.stockDetailQty == null)){

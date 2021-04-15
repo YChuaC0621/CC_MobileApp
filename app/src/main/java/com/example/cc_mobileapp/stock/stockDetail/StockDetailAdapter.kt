@@ -3,18 +3,14 @@ package com.example.cc_mobileapp.stock.stockDetail
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
 import com.google.firebase.database.*
-import com.squareup.okhttp.Dispatcher
-import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import kotlinx.android.synthetic.main.stockdetail_display_item.view.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.tasks.await
 
 
 class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewModel>(){

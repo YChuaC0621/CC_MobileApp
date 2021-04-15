@@ -5,7 +5,7 @@
     app:startDestination="@id/stockDetailFragment">
     <fragment
         android:id="@+id/stockDetailFragment"
-        android:name="com.example.cc_mobileapp.stock.stockDetail.StockDetailFragment"
+        android:name="com.example.cc_mobileapp.stock.stockDetail.StockOutDetailFragment"
         android:label="StockDetailFragment" >
         <action
             android:id="@+id/action_stockDetailFragment_to_addStockDetailFragment2"
@@ -13,6 +13,6 @@
     </fragment>
     <fragment
         android:id="@+id/addStockDetailFragment2"
-        android:name="com.example.cc_mobileapp.stock.stockDetail.AddStockDetailFragment"
+        android:name="com.example.cc_mobileapp.stock.stockDetail.AddStockOutDetailFragment"
         android:label="AddStockDetailFragment" />
 </navigation>

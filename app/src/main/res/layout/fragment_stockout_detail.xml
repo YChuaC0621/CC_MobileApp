@@ -4,24 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".stock.stockOut.StockOut_Fragment_Main">
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:id="@+id/recycler_view_stockout"
+        android:id="@+id/recycler_view_stockOutDetail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/stockout_display_item"/>
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/stockoutdetail_display_item"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_stockOutDetail_add"
+        android:id="@+id/btn_stockOutDetailSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
+        android:enabled="false"
         app:backgroundTint="@color/supplierColor2"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add_icon"
-        />
+        app:srcCompat="@drawable/ic_save" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_stockOutDetailAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp"
+        app:backgroundTint="@color/supplierColor2"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </FrameLayout>

@@ -100,6 +100,10 @@ class EditStockDetailFragment(
                 input_layout_editStockDetail_qty.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
+            }else if(!checkRegexBarcode(stockQty.toString())){
+                input_layout_editStockDetail_qty.error = "Invalid quantity input"
+                valid = false
+                return@setOnClickListener
             }else if (stockQty!! == 0){
                 input_layout_editStockDetail_qty.error = "Product Quantity cannot be zero"
                 valid = false
