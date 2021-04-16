@@ -12,8 +12,6 @@
                 </shape>
 
             </item>
-                <item android:gravity="center|center_vertical" android:drawable="@drawable/ic_dropdown_icon">
-            </item>
         </layer-list>
     </item>
 </selector>

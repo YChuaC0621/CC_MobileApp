@@ -105,20 +105,31 @@ class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewMo
                     }
                 }
             }
-           /* var stockout_results = ""
-            for(child in stockOutDetail_report)
+
+        var stockout_results = ""
+        for(child in stockOutDetail_report)
+        {
+            if(child.stockOutDetailProdBarcode.equals(prod_report[position].prodBarcode))
             {
-                if(child.stockOutDetailProdBarcode.equals(prod_report[position].prodBarcode))
+                for (childStockOut in stockOut_report)
                 {
-                    for (childStockOut in stockOut_report)
+                    if(childStockOut.stockOutId.equals(child.stockTypeId))
                     {
-                        if(childStockOut.stockOutId.equals(child.stockTypeId))
-                        {
-                            stockin_results += childStockIn.stockInDateTime + " : " + child.stockDetailQty.toString() + "\n"
+                        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH)
+                        Log.d("Check", "start date: $startDate")
+                        Log.d("Check", "end date: $endDate")
+                        val date_start: LocalDate = LocalDate.parse(startDate, formatter)
+                        val date_end: LocalDate = LocalDate.parse(endDate, formatter)
+                        val strDate: LocalDate = LocalDate.parse(childStockOut.stockOutDate, formatter)
+                        Log.d("Check", "start date pattern: $strDate")
+                        if ((strDate.isAfter(date_start) || strDate.isEqual(date_start)) &&  strDate.isBefore(date_end)) {
+                            stockout_results += childStockOut.stockOutDate + " : " + child.stockOutDetailQty.toString() + "\n"
                         }
                     }
                 }
-            }*/
+            }
+        }
+
             if(stockin_results == "")
             {
                 holder.view.txtStockInInfo.setText("No result")
@@ -127,15 +138,14 @@ class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewMo
             {
                 holder.view.txtStockInInfo.setText(stockin_results)
             }
-            /*if(stockout_results == "")
+            if(stockout_results == "")
             {
-                holder.view.txtStockInInfo.setText("No result")
+                holder.view.txtStockOutInfo.setText("No result")
             }
             else
             {
-                holder.view.txtStockInInfo.setText(stockout_results)
-            }*/
-            holder.view.txtStockOutInfo.setText("No result")
+                holder.view.txtStockOutInfo.setText(stockout_results)
+            }
             holder.view.txtQtyNum.setText(prod_report[position].prodQty.toString())
             holder.view.txtProdName.text = prod_report[position].prodName
             holder.view.txtProdBarcode.text = prod_report[position].prodBarcode

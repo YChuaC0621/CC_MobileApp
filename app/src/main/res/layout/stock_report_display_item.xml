@@ -11,12 +11,12 @@
         android:id="@+id/txtProdBarcode"
         android:layout_width="77dp"
         android:layout_height="26dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
         android:text="@string/prod_barcode"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toEndOf="@+id/txtProdBarcodeTitle"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txtProdName" />
 
     <TextView
         android:id="@+id/txtQtyNum"
@@ -34,12 +34,12 @@
         android:layout_width="77dp"
         android:layout_height="26dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:paddingStart="5dp"
         android:text="@string/prod_barcode"
         android:textAlignment="textStart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txtProdName" />
 
     <EditText
         android:id="@+id/txtStockOutInfo"
@@ -100,7 +100,7 @@
         android:layout_width="3dp"
         android:layout_height="100dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintStart_toEndOf="@+id/txtStockInInfo"
         app:layout_constraintTop_toBottomOf="@+id/txtProdName"
         app:srcCompat="@drawable/separator_line" />
@@ -110,7 +110,7 @@
         android:layout_width="179dp"
         android:layout_height="37dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="15dp"
         android:paddingStart="5dp"
         android:text="@string/prod_name"
         android:textAlignment="textStart"
@@ -120,7 +120,7 @@
         android:textSize="24sp"
         android:typeface="serif"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtProdBarcodeTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txtStockInInfo"
@@ -141,14 +141,14 @@
         android:id="@+id/txtStockIn"
         android:layout_width="94dp"
         android:layout_height="22dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/rackborder"
         android:text="@string/stock_in"
         android:textAlignment="center"
         android:textAllCaps="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtProdName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtProdBarcode" />
 
     <ImageView
         android:id="@+id/imageView4"
