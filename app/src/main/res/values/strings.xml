@@ -167,5 +167,10 @@
     <string name="cancel">CANCEL</string>
     <string name="in">IN</string>
     <string name="out">OUT</string>
+    <string name="report">Repotr</string>
+    <string name="profile">Profile</string>
+    <string name="resetPsw">Reset Password</string>
+    <string name="login">Login</string>
+    <string name="registration">Registration</string>
 </resources>
 

@@ -53,7 +53,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         super.onActivityCreated(savedInstanceState)
 
         adapter.listener = this
-        recycler_view_stockDetail_display.adapter = adapter
+        recycler_view_stockDetail.adapter = adapter
 
         productViewModel.fetchProduct()
 

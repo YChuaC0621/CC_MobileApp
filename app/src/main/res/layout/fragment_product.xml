@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        app:backgroundTint="@color/supplierColor2"
+        app:backgroundTint="@color/circleBtnStdColor"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_add_icon"
          />

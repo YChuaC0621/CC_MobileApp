@@ -121,6 +121,17 @@
         app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_supCmpLot" />
 
     <Button
+        android:id="@+id/btn_editProdCancel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="@string/cancel"
+        app:cornerRadius="20dp" />
+
+    <Button
         android:id="@+id/btn_productConfirmEdit"
         style="@style/circlebtn_standard"
         android:layout_gravity="end"

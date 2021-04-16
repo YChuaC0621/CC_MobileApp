@@ -2,15 +2,28 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/stockin_navigation_graph"
     app:startDestination="@id/stockIn_Fragment_Main">
-
+    <fragment
+        android:id="@+id/stockDetailDisplayFragment"
+        android:name="com.example.cc_mobileapp.stock.stockDetail.StockDetailDisplayFragment"
+        android:label="StockDetailDisplayFragment" />
+    <fragment
+        android:id="@+id/stockInSupplierDialogFragment"
+        android:name="com.example.cc_mobileapp.stock.stockIn.StockInSupplierDialogFragment"
+        android:label="StockInSupplierDialogFragment" >
+        <action
+            android:id="@+id/action_stockInSupplierDialogFragment_to_stockdetail_navigation_graph"
+            app:destination="@id/stockdetail_navigation_graph" />
+    </fragment>
     <fragment
         android:id="@+id/stockIn_Fragment_Main"
         android:name="com.example.cc_mobileapp.stock.stockIn.StockIn_Fragment_Main"
         android:label="StockIn_Fragment_Main" >
         <action
-            android:id="@+id/action_stockIn_Fragment_Main_to_stockdetail_navigation_graph"
-            app:destination="@id/stockdetail_navigation_graph" />
+            android:id="@+id/action_stockIn_Fragment_Main_to_stockInSupplierDialogFragment"
+            app:destination="@id/stockInSupplierDialogFragment" />
+        <action
+            android:id="@+id/action_stockIn_Fragment_Main_to_stockDetailDisplayFragment"
+            app:destination="@id/stockDetailDisplayFragment" />
     </fragment>
-
     <include app:graph="@navigation/stockdetail_navigation_graph" />
 </navigation>

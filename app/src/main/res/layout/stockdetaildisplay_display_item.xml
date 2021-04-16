@@ -5,6 +5,20 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageView
+        android:id="@+id/list_item_stockDetail"
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="28dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/listview_bckgrd_stockdetail" />
+
     <TextView
         android:id="@+id/stockDetailDisplay_prodBarcode"
         android:layout_width="100dp"
@@ -53,19 +67,6 @@
         app:layout_constraintStart_toEndOf="@+id/btn_displaystockInDetail"
         app:layout_constraintTop_toBottomOf="@+id/stockDetailDisplay_rackId" />
 
-    <ImageView
-        android:id="@+id/list_item_stockDetail"
-        android:layout_width="match_parent"
-        android:layout_height="148dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="28dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/listview_bckgrd_stockdetail" />
 
     <TextView
         android:id="@+id/stockDetailDisplay_txtProdBarcode"
@@ -121,7 +122,7 @@
         android:layout_width="77dp"
         android:layout_height="76dp"
         android:background="@drawable/circlebtn_standard"
-        app:backgroundTint="@color/circleBtnHoverColor"
+        app:backgroundTint="@color/stockDetail_btnColor"
         android:text="@string/in"
         app:layout_constraintBottom_toBottomOf="@+id/list_item_stockDetail"
         app:layout_constraintEnd_toEndOf="@+id/list_item_stockDetail"

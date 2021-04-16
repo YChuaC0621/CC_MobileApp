@@ -3,9 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/stockoutdetail_navigation_graph"
     app:startDestination="@id/stockOutDetailFragment">
-
+    <fragment
+        android:id="@+id/addStockOutDetailFragment"
+        android:name="com.example.cc_mobileapp.stock.stockDetail.AddStockOutDetailFragment"
+        android:label="AddStockOutDetailFragment" />
+    <fragment
+        android:id="@+id/editStockOutDetailFragment"
+        android:name="com.example.cc_mobileapp.stock.stockOutDetail.EditStockOutDetailFragment"
+        android:label="EditStockOutDetailFragment" />
     <fragment
         android:id="@+id/stockOutDetailFragment"
         android:name="com.example.cc_mobileapp.stock.stockOutDetail.StockOutDetailFragment"
-        android:label="StockOutDetailFragment" />
+        android:label="StockOutDetailFragment" >
+        <action
+            android:id="@+id/action_stockOutDetailFragment_to_addStockOutDetailFragment"
+            app:destination="@id/addStockOutDetailFragment" />
+        <action
+            android:id="@+id/action_stockOutDetailFragment_to_editStockOutDetailFragment"
+            app:destination="@id/editStockOutDetailFragment" />
+    </fragment>
 </navigation>

@@ -5,16 +5,28 @@
     android:id="@+id/stockout_navigation_graph"
     app:startDestination="@id/stockOut_Fragment_Main">
     <fragment
+        android:id="@+id/stockOutClientFragment"
+        android:name="com.example.cc_mobileapp.stock.stockOut.StockOutClientFragment"
+        android:label="StockOutClientFragment" >
+        <action
+            android:id="@+id/action_stockOutClientFragment_to_stockoutdetail_navigation_graph"
+            app:destination="@id/stockoutdetail_navigation_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/stockOutDetailDisplayFragment"
+        android:name="com.example.cc_mobileapp.stock.stockOutDetail.StockOutDetailDisplayFragment"
+        android:label="StockOutDetailDisplayFragment" />
+    <fragment
         android:id="@+id/stockOut_Fragment_Main"
         android:name="com.example.cc_mobileapp.stock.stockOut.StockOut_Fragment_Main"
         android:label="fragment_stock_out___main"
         tools:layout="@layout/fragment_stock_out___main" >
         <action
-            android:id="@+id/action_stockOut_Fragment_Main_to_stockOutDetailFragment2"
-            app:destination="@id/stockOutDetailFragment2" />
+            android:id="@+id/action_stockOut_Fragment_Main_to_stockOutDetailDisplayFragment"
+            app:destination="@id/stockOutDetailDisplayFragment" />
+        <action
+            android:id="@+id/action_stockOut_Fragment_Main_to_stockOutClientFragment"
+            app:destination="@id/stockOutClientFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/stockOutDetailFragment2"
-        android:name="com.example.cc_mobileapp.stock.stockOutDetail.StockOutDetailFragment"
-        android:label="StockOutDetailFragment" />
+    <include app:graph="@navigation/stockoutdetail_navigation_graph" />
 </navigation>

@@ -186,6 +186,9 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 })
             }
         }
+        btn_editProdCancel.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
 
         btn_productDelete.setOnClickListener{
             AlertDialog.Builder(requireContext()).also{

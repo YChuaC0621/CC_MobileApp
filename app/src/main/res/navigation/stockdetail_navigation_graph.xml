@@ -4,15 +4,22 @@
     android:id="@+id/stockdetail_navigation_graph"
     app:startDestination="@id/stockDetailFragment">
     <fragment
+        android:id="@+id/addStockDetailFragment"
+        android:name="com.example.cc_mobileapp.stock.stockDetail.AddStockDetailFragment"
+        android:label="AddStockDetailFragment" />
+    <fragment
+        android:id="@+id/editStockDetailFragment"
+        android:name="com.example.cc_mobileapp.stock.stockDetail.EditStockDetailFragment"
+        android:label="EditStockDetailFragment" />
+    <fragment
         android:id="@+id/stockDetailFragment"
         android:name="com.example.cc_mobileapp.stock.stockDetail.StockDetailFragment"
         android:label="StockDetailFragment" >
         <action
-            android:id="@+id/action_stockDetailFragment_to_addStockDetailFragment2"
-            app:destination="@id/addStockDetailFragment2" />
+            android:id="@+id/action_stockDetailFragment_to_editStockDetailFragment"
+            app:destination="@id/editStockDetailFragment" />
+        <action
+            android:id="@+id/action_stockDetailFragment_to_addStockDetailFragment"
+            app:destination="@id/addStockDetailFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/addStockDetailFragment2"
-        android:name="com.example.cc_mobileapp.stock.stockDetail.AddStockOutDetailFragment"
-        android:label="AddStockDetailFragment" />
 </navigation>

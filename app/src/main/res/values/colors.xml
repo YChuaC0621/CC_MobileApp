@@ -39,8 +39,9 @@
     <color name="btn_clientId_color">#dd7012</color>
 
     <!-- stock detail -->
-    <color name="stockdetail_box">#4A878380</color>
-    <color name="lv_ddl_bckgrd_color_stockdetail">#4AA8A5A3</color>
+    <color name="stockDetail_btnColor">#F4A939</color>
+    <color name="stockdetail_box">#CEFFC927</color>
+    <color name="lv_ddl_bckgrd_color_stockdetail">#CBFAC937</color>
 
     <!-- test color -->
     <color name="theme_white">#FFFFFF</color>

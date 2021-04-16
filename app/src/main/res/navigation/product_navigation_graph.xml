@@ -3,18 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/product_navigation_graph"
-    app:startDestination="@id/productFragment2">
+    app:startDestination="@id/productFragment">
     <dialog
         android:id="@+id/addProductDialogFragment"
         android:name="com.example.cc_mobileapp.product.AddProductDialogFragment"
         android:label="fragment_add_product_dialog"
         tools:layout="@layout/fragment_add_product_dialog" />
     <fragment
-        android:id="@+id/productFragment2"
+        android:id="@+id/productFragment"
         android:name="com.example.cc_mobileapp.product.ProductFragment"
-        android:label="Product" >
+        android:label="ProductFragment" >
         <action
-            android:id="@+id/action_productFragment2_to_addProductDialogFragment"
+            android:id="@+id/action_productFragment_to_addProductDialogFragment"
             app:destination="@id/addProductDialogFragment" />
+        <action
+            android:id="@+id/action_productFragment_to_editProductFragment"
+            app:destination="@id/editProductFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editProductFragment"
+        android:name="com.example.cc_mobileapp.product.EditProductFragment"
+        android:label="EditProductFragment" />
 </navigation>
