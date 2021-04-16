@@ -42,4 +42,6 @@
     <color name="stockdetail_box">#4A878380</color>
     <color name="lv_ddl_bckgrd_color_stockdetail">#4AA8A5A3</color>
 
+    <!-- test color -->
+    <color name="theme_white">#FFFFFF</color>
 </resources>

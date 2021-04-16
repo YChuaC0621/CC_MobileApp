@@ -8,9 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.StockDetail
+import com.example.cc_mobileapp.model.StockIn
+import com.example.cc_mobileapp.stock.stockDetail.EditStockDetailFragment
+import com.example.cc_mobileapp.stock.stockDetail.StockDetailDisplayFragment
 import kotlinx.android.synthetic.main.fragment_stock_in___main.*
 
-class StockIn_Fragment_Main : Fragment() {
+class StockIn_Fragment_Main : Fragment(), StockInRecyclerViewClickListener  {
 
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     private val adapter = StockInAdapter()
@@ -32,6 +36,7 @@ class StockIn_Fragment_Main : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        adapter.listener = this
         recycler_view_stockin.adapter = adapter
 
         sharedStockInViewModel.fetchStockIn()
@@ -51,6 +56,18 @@ class StockIn_Fragment_Main : Fragment() {
             transaction.replace(currentView, StockInSupplierDialogFragment())
             transaction.addToBackStack("stockInSupplierDialogFragment")
             transaction.commit()
+        }
+    }
+
+    override fun onRecyclerViewItemClicked(view: View, stockIn: StockIn) {
+        when(view.id){
+            R.id.btn_stockInSupplierId-> {
+                val currentView = (requireView().parent as ViewGroup).id
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(currentView, StockDetailDisplayFragment(stockIn))
+                transaction.addToBackStack("viewStockInDetailRecycleView")
+                transaction.commit()
+            }
         }
     }
 

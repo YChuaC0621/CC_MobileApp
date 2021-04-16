@@ -15,7 +15,7 @@ import com.google.firebase.database.*
 class StockViewModel : ViewModel() {
     private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
-
+    private val dbPermanent = FirebaseDatabase.getInstance().getReference(Constant.NODE_PERM_STOCKINDETAIL)
 
     private val _result = MutableLiveData<Exception?>()
     val result: LiveData<Exception?>
@@ -84,6 +84,26 @@ class StockViewModel : ViewModel() {
 
     fun fetchStockDetail() {
         dbTemp.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val stocksDetail = mutableListOf<StockDetail>()
+                    for (stockDetailSnapshot in snapshot.children) {
+                        val stockDetail = stockDetailSnapshot.getValue(StockDetail::class.java)
+                        stockDetail?.stockDetailId = stockDetailSnapshot.key
+                        stockDetail?.let { stocksDetail.add(it) }
+                    }
+                    _stocksDetail.value = stocksDetail
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    fun fetchStockDetailDisplay(stockDetailTypeId: String){
+        dbPermanent.orderByChild("stockTypeId").equalTo(stockDetailTypeId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val stocksDetail = mutableListOf<StockDetail>()

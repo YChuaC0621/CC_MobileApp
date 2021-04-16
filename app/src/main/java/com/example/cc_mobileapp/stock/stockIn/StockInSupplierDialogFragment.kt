@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.stock.stockDetail.StockDetailFragment
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_in___main.*
 import kotlinx.android.synthetic.main.fragment_stock_in_supplier_dialog.*
 
-class StockInSupplierDialogFragment : Fragment() {
+class StockInSupplierDialogFragment : Fragment(){
     private val dbSupplier = FirebaseDatabase.getInstance().getReference(Constant.NODE_SUPPLIER)
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     lateinit var stockInSupplierName: String
@@ -71,20 +72,6 @@ class StockInSupplierDialogFragment : Fragment() {
                     }
                 })
             }
-
-
-//            stockInSupplierName = edit_text_stockIn_supplierName.text.toString().trim()
-//            when {
-//                stockInSupplierName.isEmpty() -> {
-//                    input_layout_stockIn_supplierName.error =
-//                        getString(R.string.error_field_required)
-//                    return@setOnClickListener
-//                }
-//                else ->{
-//                    sharedStockInViewModel.setStockInSupplierId(stockInSupplierName)
-//                }
-
-
         }
 
         btn_cancelAddStockInDetails.setOnClickListener {
@@ -116,4 +103,5 @@ class StockInSupplierDialogFragment : Fragment() {
             Log.d("checkAuto", "No match found")
         }
     }
+
 }

@@ -11,6 +11,7 @@ import com.example.cc_mobileapp.model.Client
 import com.example.cc_mobileapp.model.StockIn
 import com.example.cc_mobileapp.model.StockOut
 import com.example.cc_mobileapp.stock.stockIn.StockInAdapter
+import com.example.cc_mobileapp.stock.stockIn.StockInRecyclerViewClickListener
 import kotlinx.android.synthetic.main.client_display_item.view.*
 import kotlinx.android.synthetic.main.stockin_display_item.view.*
 import kotlinx.android.synthetic.main.stockout_display_item.view.*
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.stockout_display_item.view.*
 class StockOutAdapter : RecyclerView.Adapter<StockOutAdapter.StockOutViewModel>(){
 
     private var stocksOut = mutableListOf<StockOut>()
+    var listener: StockOutRecyclerViewClickListener? = null
+
 
     override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -35,6 +38,8 @@ class StockOutAdapter : RecyclerView.Adapter<StockOutAdapter.StockOutViewModel>(
         holder.view.txtView_stockOutTime.text = stocksOut[position].stockOutTime
         holder.view.btn_stockOutClientId.text = stocksOut[position].stockOutClientId
         holder.view.txtView_txtTotalPriceStockOut.text = stocksOut[position].totalProdPrice.toString()
+        holder.view.btn_stockOutClientId.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksOut[position])}
+
     }
 
     fun setStocksOut(stocksOut: List<StockOut>){

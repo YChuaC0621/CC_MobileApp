@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
+import com.example.cc_mobileapp.model.StockOut
 import com.example.cc_mobileapp.model.StockOutDetail
 import com.example.cc_mobileapp.product.ProductViewModel
 import com.google.firebase.database.*
@@ -86,6 +87,26 @@ class StockOutDetailViewModel : ViewModel() {
 
     fun fetchStockOutDetail() {
         dbTempOut.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val stocksOutDetail = mutableListOf<StockOutDetail>()
+                    for (stockOutDetailSnapshot in snapshot.children) {
+                        val stockOutDetail = stockOutDetailSnapshot.getValue(StockOutDetail::class.java)
+                        stockOutDetail?.stockOutDetailId = stockOutDetailSnapshot.key
+                        stockOutDetail?.let { stocksOutDetail.add(it) }
+                    }
+                    _stocksOutDetail.value = stocksOutDetail
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    fun fetchStockOutDetailDisplay(stockOutID: String) {
+        dbStockOutDetail.orderByChild("stockTypeId").equalTo(stockOutID).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val stocksOutDetail = mutableListOf<StockOutDetail>()
