@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(productIntent)
         }
 
-        val stockBtn: Button = findViewById(R.id.btn_product)
+        val stockBtn: Button = findViewById(R.id.btn_stocks)
 
         stockBtn.setOnClickListener {
             val stockIntent = Intent(this, Stock_Main::class.java)

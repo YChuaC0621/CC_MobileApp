@@ -96,6 +96,18 @@
         app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_supCmpLot" />
 
     <Button
+        android:id="@+id/btn_clientEditCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="@string/cancel"
+        app:cornerRadius="20dp" />
+
+    <Button
         android:id="@+id/btn_clientConfirmEdit"
         style="@style/circlebtn_standard"
         android:layout_gravity="end"
@@ -106,13 +118,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_clientLocation" />
 
-    <Button
-        android:id="@+id/btn_clientEditBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:text="Back"
-        />
 </LinearLayout>
 </ScrollView>

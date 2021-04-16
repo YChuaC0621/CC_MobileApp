@@ -185,7 +185,9 @@ class EditStockOutDetailFragment(
                 }
             }
         }
-
+        btn_editStockOutDetail_cancel.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
 
         btn_editStockOutDetail_scanBarcode.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id

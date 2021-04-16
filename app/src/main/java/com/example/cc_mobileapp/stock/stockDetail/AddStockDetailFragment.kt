@@ -177,6 +177,10 @@ class AddStockDetailFragment : Fragment() {
             }
         }
 
+        btn_stockDetail_cancel.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+
         btn_stockDetail_scanBarcode.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()

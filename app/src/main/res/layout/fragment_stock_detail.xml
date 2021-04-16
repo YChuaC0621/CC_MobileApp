@@ -20,7 +20,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:enabled="false"
-        app:backgroundTint="@color/supplierColor2"
+        app:backgroundTint="@color/circleBtnStdColor"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_save" />
 
@@ -29,10 +29,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="80dp"
-        app:backgroundTint="@color/supplierColor2"
+        android:layout_margin="16dp"
+        android:translationY="-70dp"
+        app:backgroundTint="@color/circleBtnStdColor"
         app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/ic_add_icon" />
+
 
 </FrameLayout>

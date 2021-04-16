@@ -11,91 +11,104 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.CC_MobileApp">
-        <activity android:name=".stock.Stock_Main">
+        <activity android:name=".stock.Stock_Main"
+             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".stock.stockIn.StockInActivity">
+        <activity android:name=".stock.stockIn.StockInActivity"
+            android:label="@string/stock_in">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".stock.stockOut.StockOutActivity">
+        <activity android:name=".stock.stockOut.StockOutActivity"
+            android:label="@string/stock_out">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".product.Product_Main">
+        <activity android:name=".product.Product_Main"
+            android:label="@string/product">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".client.Client_Main">
+        <activity android:name=".client.Client_Main"
+            android:label="@string/client">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".supplier.Supplier_Main">
+        <activity android:name=".supplier.Supplier_Main"
+            android:label="@string/supplier">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".rack.SiteMap">
+        <activity android:name=".rack.SiteMap"
+            android:label="@string/sitemap">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".user.Registration">
+        <activity android:name=".user.Registration"
+            android:label="@string/registration">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".user.Login">
+        <activity android:name=".user.Login"
+            android:label="@string/login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".user.ResetPsw">
+        <activity android:name=".user.ResetPsw"
+            android:label="@string/resetPsw">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".user.Usermgmt">
+        <activity android:name=".user.Usermgmt"
+            android:label="@string/profile">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".report.Report_Main">
+        <activity android:name=".report.Report_Main"
+            android:label="@string/report">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

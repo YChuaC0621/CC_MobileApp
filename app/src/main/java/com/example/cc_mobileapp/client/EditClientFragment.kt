@@ -145,7 +145,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
             }.create().show()
         }
 
-        btn_clientEditBack.setOnClickListener{
+        btn_clientEditCancel.setOnClickListener{
             requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }

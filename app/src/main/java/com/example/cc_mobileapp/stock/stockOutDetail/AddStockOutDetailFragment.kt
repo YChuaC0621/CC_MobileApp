@@ -44,13 +44,16 @@ class AddStockOutDetailFragment : Fragment() {
     private lateinit var prodViewModel: ProductViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        stockInDetailViewModel = ViewModelProvider(this@AddStockOutDetailFragment).get(StockViewModel::class.java)
-        stockOutDetailViewModel = ViewModelProvider(this@AddStockOutDetailFragment).get(StockOutDetailViewModel::class.java)
-        prodViewModel = ViewModelProvider(this@AddStockOutDetailFragment).get(ProductViewModel::class.java)
+        stockInDetailViewModel =
+            ViewModelProvider(this@AddStockOutDetailFragment).get(StockViewModel::class.java)
+        stockOutDetailViewModel =
+            ViewModelProvider(this@AddStockOutDetailFragment).get(StockOutDetailViewModel::class.java)
+        prodViewModel =
+            ViewModelProvider(this@AddStockOutDetailFragment).get(ProductViewModel::class.java)
         return inflater.inflate(R.layout.fragment_add_stockout_detail, container, false)
     }
 
@@ -74,7 +77,8 @@ class AddStockOutDetailFragment : Fragment() {
             var valid: Boolean = true
 
             if (prodBarcode.isNullOrEmpty()) {
-                input_layout_stockOutDetail_ProdBarcode.error = getString(R.string.error_field_required)
+                input_layout_stockOutDetail_ProdBarcode.error =
+                    getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
             } else if (!checkRegexBarcode(prodBarcode)) {
@@ -107,47 +111,67 @@ class AddStockOutDetailFragment : Fragment() {
                 stockOutDetail.stockOutDetailQty = stockQty
                 stockOutDetail.stockTypeId = sharedStockOutViewModel.stockOutTypePushKey.value
                 var availableStockDB: Int = 0
-                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
+                var prodBarcodeQuery: Query =
+                    FirebaseDatabase.getInstance().reference.child(NODE_PRODUCT)
+                        .orderByChild("prodBarcode").equalTo(prodBarcode.toString())
                 prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         var availableStock: Boolean = false
                         if (!snapshot.exists()) {
                             valid = false
-                            input_layout_stockOutDetail_ProdBarcode.error = "Invalid product barcode"
+                            input_layout_stockOutDetail_ProdBarcode.error =
+                                "Invalid product barcode"
                         } else {
                             for (checkProdSnapshot in snapshot.children) {
-                                var checkStockQtyProd = checkProdSnapshot.getValue(Product::class.java)
+                                var checkStockQtyProd =
+                                    checkProdSnapshot.getValue(Product::class.java)
                                 if (checkStockQtyProd?.prodQty!! >= stockOutDetail.stockOutDetailQty!!) {
                                     availableStock = true
-                                    availableStockDB = checkStockQtyProd.prodQty!! - stockOutDetail.stockOutDetailQty!!
-                                }
-                                else{
+                                    availableStockDB =
+                                        checkStockQtyProd.prodQty!! - stockOutDetail.stockOutDetailQty!!
+                                } else {
                                     valid = false
-                                    input_layout_stockOutDetail_qty.error = "Insufficient stock quantity"
+                                    input_layout_stockOutDetail_qty.error =
+                                        "Insufficient stock quantity"
                                 }
                             }
                             if (availableStock) {
-                                var tempStockOutQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP_OUT).orderByChild("stockOutDetailProdBarcode").equalTo(prodBarcode.toString())
-                                tempStockOutQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                var tempStockOutQuery: Query =
+                                    FirebaseDatabase.getInstance().reference.child(NODE_TEMP_OUT)
+                                        .orderByChild("stockOutDetailProdBarcode")
+                                        .equalTo(prodBarcode.toString())
+                                tempStockOutQuery.addListenerForSingleValueEvent(object :
+                                    ValueEventListener {
                                     override fun onDataChange(snapshot: DataSnapshot) {
                                         if (snapshot.exists()) {
-                                            for (tempStockOut in snapshot.children){
-                                                var tempStockOutDB = tempStockOut.getValue(StockOutDetail::class.java)
-                                                if(tempStockOutDB?.stockOutDetailProdBarcode == stockOutDetail.stockOutDetailProdBarcode){
-                                                    if(availableStockDB >= tempStockOutDB?.stockOutDetailQty!!){
+                                            for (tempStockOut in snapshot.children) {
+                                                var tempStockOutDB =
+                                                    tempStockOut.getValue(StockOutDetail::class.java)
+                                                if (tempStockOutDB?.stockOutDetailProdBarcode == stockOutDetail.stockOutDetailProdBarcode) {
+                                                    if (availableStockDB >= tempStockOutDB?.stockOutDetailQty!!) {
                                                         availableStockDB -= tempStockOutDB?.stockOutDetailQty!!
-                                                    }else{
+                                                    } else {
                                                         valid = false
-                                                        input_layout_stockOutDetail_qty.error = "Insufficient stock quantity"
+                                                        input_layout_stockOutDetail_qty.error =
+                                                            "Insufficient stock quantity"
                                                     }
                                                 }
                                             }
-                                            if(valid){
-                                            stockOutDetailViewModel.addStockOutDetail(stockOutDetail)
-                                            requireActivity().supportFragmentManager.popBackStack("addStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)                                            }
+                                            if (valid) {
+                                                stockOutDetailViewModel.addStockOutDetail(
+                                                    stockOutDetail
+                                                )
+                                                requireActivity().supportFragmentManager.popBackStack(
+                                                    "addStockOutDetailFragment",
+                                                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                                                )
+                                            }
                                         } else {
                                             stockOutDetailViewModel.addStockOutDetail(stockOutDetail)
-                                            requireActivity().supportFragmentManager.popBackStack("addStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                            requireActivity().supportFragmentManager.popBackStack(
+                                                "addStockOutDetailFragment",
+                                                FragmentManager.POP_BACK_STACK_INCLUSIVE
+                                            )
                                         }
                                     }
 
@@ -170,6 +194,12 @@ class AddStockOutDetailFragment : Fragment() {
                 })
             }
         }
+
+        btn_stockOutDetail_cancel.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack(
+                "addStockOutDetailFragment",
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )}
 
         btn_stockOutDetail_scanBarcode.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
