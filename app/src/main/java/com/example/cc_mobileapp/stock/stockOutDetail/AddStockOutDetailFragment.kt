@@ -223,8 +223,5 @@ class AddStockOutDetailFragment : Fragment() {
             edit_text_stockOutDetail_ProdBarcode.setText(sharedStockBarcodeViewModel.scannedProductCode.value)
             sharedStockBarcodeViewModel.clearBarcode()
         }
-        else{
-            Toast.makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()
-        }
     }
 }

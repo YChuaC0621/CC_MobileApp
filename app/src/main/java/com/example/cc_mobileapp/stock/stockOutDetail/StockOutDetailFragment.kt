@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stockout_detail.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListener {
@@ -223,9 +224,12 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
 
     private fun updateStockOutDetail() {
         val stockOut = StockOut()
-        var today = Calendar.getInstance()
-        today.add(Calendar.HOUR, 8)
-        stockOut.stockOutDateTime = today.time.toString()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val timeFormat = SimpleDateFormat("HH:mm:ss")
+        var today = Calendar.getInstance().getTime()
+        var todayTime = Calendar.getInstance().getTime()
+        stockOut.stockOutDate = dateFormat.format(today)
+        stockOut.stockOutTime = timeFormat.format(todayTime)
         stockOut.stockOutClientId = sharedStockOutViewModel.stockOutClientId.value
         stockOut.totalProdPrice = totalPrice
         sharedStockOutViewModel.addStockOut(stockOut)

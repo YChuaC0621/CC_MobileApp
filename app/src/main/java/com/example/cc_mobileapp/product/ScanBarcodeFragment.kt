@@ -77,13 +77,9 @@ class ScanBarcodeFragment : Fragment() {
                         Log.e("Main", "require context successful $it")
 
                         sharedBarcodeViewModel.productBarcode(it.text)
-
-                        Toast.makeText(requireContext(), it.text, Toast.LENGTH_SHORT).show()
                     }
                 }catch (e: Exception){
-                    Toast.makeText(requireContext(), "Error on decode call back", Toast.LENGTH_SHORT).show()
                     Log.e("Main", "required context error $it")
-
                 }
             }
 

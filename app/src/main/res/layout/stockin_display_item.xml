@@ -18,15 +18,25 @@
         app:srcCompat="@drawable/listview_bckgrd_stockin" />
 
     <TextView
-        android:id="@+id/txtView_stockInDateTime"
+        android:id="@+id/txtView_stockInDate"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="32dp"
-        android:text="DateTime"
+        android:text="Date"
         app:layout_constraintStart_toEndOf="@+id/stockIn_icon"
         app:layout_constraintTop_toTopOf="@+id/list_item_stockIn" />
 
+
+    <TextView
+        android:id="@+id/txtView_stockInTime"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="56dp"
+        android:text="Time"
+        app:layout_constraintStart_toEndOf="@+id/stockIn_icon"
+        app:layout_constraintTop_toTopOf="@+id/list_item_stockIn" />
 
     <Button
         android:id="@+id/btn_stockInSupplierId"

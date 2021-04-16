@@ -7,7 +7,8 @@ import java.util.*
 data class StockOut (
     @get:Exclude
     var stockOutId: String? = null,
-    var stockOutDateTime: String? = null,
+    var stockOutDate: String? = null,
+    var stockOutTime: String? = null,
     var stockOutClientId: String? = null,
     var totalProdPrice: Double? = 0.00
 )
@@ -22,8 +23,11 @@ data class StockOut (
 
     override fun hashCode(): Int {
         var result = stockOutId?.hashCode() ?: 0
-        result = 31 * result + (stockOutDateTime?.hashCode() ?: 0)
+        result = 31 * result + (stockOutDate?.hashCode() ?: 0)
+        result = 31 * result + (stockOutTime?.hashCode() ?: 0)
         result = 31 * result + (stockOutClientId?.hashCode() ?: 0)
+        result = 31 * result + (totalProdPrice?.hashCode() ?: 0)
         return result
     }
+
 }

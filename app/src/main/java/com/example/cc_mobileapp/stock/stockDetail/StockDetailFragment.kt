@@ -1,13 +1,12 @@
 package com.example.cc_mobileapp.stock.stockDetail
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -24,8 +23,8 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
@@ -61,12 +60,12 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
         stockViewModel.getRealtimeUpdates()
 
-        stockViewModel.stocksDetail.observe(viewLifecycleOwner, Observer{
+        stockViewModel.stocksDetail.observe(viewLifecycleOwner, Observer {
             adapter.setStocksDetail(it)
             btn_stockDetailSave.isEnabled = adapter.itemCount > 0
         })
 
-        stockViewModel.stockDetail.observe(viewLifecycleOwner, Observer{
+        stockViewModel.stockDetail.observe(viewLifecycleOwner, Observer {
             adapter.addStockDetail(it)
             btn_stockDetailSave.isEnabled = adapter.itemCount > 0
         })
@@ -89,7 +88,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
     private var totalPrice: Double = 0.0
 
     fun getProdsDetail(){
-        readData(object : FirebaseCallback{
+        readData(object : FirebaseCallback {
             override fun onCallBack(snapshot: DataSnapshot) {
                 productSnapshot = snapshot
                 Log.d("inside the on call back", snapshot.toString())
@@ -100,12 +99,12 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                         it.stockStatus = true
                         dbStockInDetail.push().setValue(it)
                         dbPermanentStock.push().setValue(it)
-                        count+=1
+                        count += 1
                         stockUpdateProduct(it.stockDetailProdBarcode, it.stockDetailQty)
-                        if(!(productfromDB?.prodPrice == null || it?.stockDetailQty == null)){
+                        if (!(productfromDB?.prodPrice == null || it?.stockDetailQty == null)) {
                             var price: Double = productfromDB?.prodPrice!!
-                            var qty : Int? = it?.stockDetailQty
-                            var subtotal:Double = price.times(qty!!)
+                            var qty: Int? = it?.stockDetailQty
+                            var subtotal: Double = price.times(qty!!)
                             totalPrice = totalPrice.plus(subtotal)
                         }
                     }
@@ -119,9 +118,12 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
     private fun updateStockInDetail() {
         val stockIn = StockIn()
-        var today = Calendar.getInstance()
-        today.add(Calendar.HOUR,8)
-        stockIn.stockInDateTime = today.time.toString()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val timeFormat = SimpleDateFormat("HH:mm:ss")
+        var today = Calendar.getInstance().getTime()
+        var todayTime = Calendar.getInstance().getTime()
+        stockIn.stockInDate = dateFormat.format(today)
+        stockIn.stockInTime = timeFormat.format(todayTime)
         stockIn.stockInSupplierId = sharedStockInViewModel.stockInSupplierId.value
         stockIn.totalProdPrice = totalPrice
         sharedStockInViewModel.addStockIn(stockIn)
@@ -168,11 +170,11 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
     }
 
     private fun readData(firebaseCallback: FirebaseCallback){
-        dbProduct.addValueEventListener(object: ValueEventListener {
+        dbProduct.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(callBackCount ==0){
+                if (callBackCount == 0) {
                     firebaseCallback.onCallBack(snapshot)
-                    callBackCount+=1
+                    callBackCount += 1
                 }
 
             }

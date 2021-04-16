@@ -48,7 +48,7 @@ class StockOut_Fragment_Main : Fragment() {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, StockOutClientFragment())
-            transaction.addToBackStack("stockOutClientFragment")
+            transaction.addToBackStack("stockOutDetailFragment")
             transaction.commit()
         }
     }

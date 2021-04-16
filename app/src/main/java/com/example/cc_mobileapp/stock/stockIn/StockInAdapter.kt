@@ -28,7 +28,8 @@ class StockInAdapter : RecyclerView.Adapter<StockInAdapter.StockInViewModel>(){
 
     override fun onBindViewHolder(holder: StockInViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
-        holder.view.txtView_stockInDateTime.text = stocksIn[position].stockInDateTime
+        holder.view.txtView_stockInDate.text = stocksIn[position].stockInDate
+        holder.view.txtView_stockInTime.text = stocksIn[position].stockInTime
         holder.view.btn_stockInSupplierId.text = stocksIn[position].stockInSupplierId
     }
 

@@ -31,7 +31,8 @@ class StockOutAdapter : RecyclerView.Adapter<StockOutAdapter.StockOutViewModel>(
 
     override fun onBindViewHolder(holder: StockOutViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
-        holder.view.txtView_stockOutDateTime.text = stocksOut[position].stockOutDateTime
+        holder.view.txtView_stockOutDate.text = stocksOut[position].stockOutDate
+        holder.view.txtView_stockOutTime.text = stocksOut[position].stockOutTime
         holder.view.btn_stockOutClientId.text = stocksOut[position].stockOutClientId
     }
 

@@ -85,15 +85,6 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 input_layout_editProductName.error = null
             }
 
-            if(prodDesc.isNullOrEmpty()){
-                input_layout_editProdDesc.error = getString(R.string.error_field_required)
-                valid = false
-                return@setOnClickListener
-            }
-            else{
-                input_layout_editProdDesc.error = null
-            }
-
             if(supplierName.isNullOrEmpty()){
                 input_layout_editSupplierName.error = getString(R.string.error_field_required)
                 valid = false
@@ -103,12 +94,21 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 input_layout_editSupplierName.error = null
             }
 
+            if(prodDesc.isNullOrEmpty()){
+                input_layout_editProdDesc.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                input_layout_editProdDesc.error = null
+            }
+
             if(prodPrice == null){
                 input_layout_editProdPrice.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
             }else if (prodPrice!!.equals(0.0)){
-                input_layout_editProdPrice.error = "This field required"
+                input_layout_editProdPrice.error = "Price cannot be 0"
                 valid = false
                 return@setOnClickListener
             }
@@ -131,6 +131,13 @@ class EditProductFragment(private val product: Product) : Fragment() {
             }
 
             if(valid){
+                val newProduct = Product()
+                newProduct.prodId = product.prodId
+                newProduct.prodName = prodName
+                newProduct.supplierName = supplierName
+                newProduct.prodDesc = prodDesc
+                newProduct.prodPrice = prodPrice!!.toDouble()
+                newProduct.prodBarcode = prodBarcode
 
                 var supplierNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_SUPPLIER).orderByChild("supCmpName").equalTo(supplierName)
                 supplierNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -139,21 +146,38 @@ class EditProductFragment(private val product: Product) : Fragment() {
                             valid = false
                             input_layout_editSupplierName.error = "Invalid supplier"
                         }else{
-                            val newProduct = Product()
-                            newProduct.prodId = product.prodId
-                            newProduct.prodName = prodName
-                            newProduct.supplierName = supplierName
-                            newProduct.prodDesc = prodDesc
-                            newProduct.prodPrice = prodPrice!!.toDouble()
-                            newProduct.prodBarcode = prodBarcode
-
-                            if(newProduct.prodPrice!! != product.prodPrice || newProduct.prodBarcode!! != product.prodBarcode || newProduct.prodName!! != product.prodName || newProduct.prodDesc!! != product.prodDesc || newProduct.supplierName!! != product.supplierName){
-                                viewModel.updateProduct(newProduct)
+                            if(newProduct.prodBarcode == product.prodBarcode){
+                                if(newProduct.prodPrice!! != product.prodPrice || newProduct.prodName!! != product.prodName || newProduct.prodDesc!! != product.prodDesc || newProduct.supplierName!! != product.supplierName){
+                                    viewModel.updateProduct(newProduct)
+                                }
+                                else{
+                                    Toast.makeText(requireContext(), "Product information remain unchanged", Toast.LENGTH_SHORT).show()
+                                }
+                                requireActivity().supportFragmentManager.popBackStack("editProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             }
                             else{
-                                Toast.makeText(requireContext(), "Product information remain unchanged", Toast.LENGTH_SHORT).show()
+                                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode)
+                                prodBarcodeQuery.addListenerForSingleValueEvent(object: ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        if(!snapshot.exists()){
+                                            if(newProduct.prodPrice!! != product.prodPrice || newProduct.prodBarcode!! != product.prodBarcode || newProduct.prodName!! != product.prodName || newProduct.prodDesc!! != product.prodDesc || newProduct.supplierName!! != product.supplierName){
+                                                viewModel.updateProduct(newProduct)
+                                            }
+                                            else{
+                                                Toast.makeText(requireContext(), "Product information remain unchanged", Toast.LENGTH_SHORT).show()
+                                            }
+                                            requireActivity().supportFragmentManager.popBackStack("editProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                        }else {
+                                            valid = false
+                                            input_layout_editProdBarcode.error = "Existing product barcode"
+                                        }
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
                             }
-                            requireActivity().supportFragmentManager.popBackStack("editProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {
@@ -219,9 +243,6 @@ class EditProductFragment(private val product: Product) : Fragment() {
         if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty()){
             edit_text_editProdBarcode.setText(sharedBarcodeViewModel.scannedCode.value)
             sharedBarcodeViewModel.clearBarcode()
-        }
-        else{
-            Toast.makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()
         }
     }
 
