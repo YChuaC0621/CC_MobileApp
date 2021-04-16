@@ -143,5 +143,11 @@
     <string name="current_qty">Current Quantity :</string>
     <string name="qty_num">Qty</string>
     <string name="prod_report">Product Report</string>
+    <string name="stock_report">Stock Report</string>
+    <string name="stock_in">Stock In</string>
+    <string name="stock_out">Stock Out</string>
+    <string name="report_info">Report Information</string>
+    <string name="date_start">Start Date</string>
+    <string name="date_end">End Date</string>
 </resources>
 

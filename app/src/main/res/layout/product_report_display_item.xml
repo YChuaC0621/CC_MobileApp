@@ -12,7 +12,7 @@
         android:layout_width="178dp"
         android:layout_height="39dp"
         android:layout_marginStart="16dp"
-        android:paddingStart="10dp"
+        android:paddingStart="5dp"
         android:text="@string/prod_name"
         android:textAlignment="textStart"
         android:textAllCaps="true"
@@ -29,8 +29,9 @@
         android:layout_height="26dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="2dp"
+        android:paddingStart="5dp"
         android:text="@string/prod_barcode"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +60,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtRackInfo"
+        android:id="@+id/txtStockInInfo"
         android:layout_width="367dp"
         android:layout_height="71dp"
         android:layout_marginStart="16dp"

@@ -15,5 +15,20 @@
         <action
             android:id="@+id/action_reportFragment_to_productReportFragment"
             app:destination="@id/productReportFragment" />
+        <action
+            android:id="@+id/action_reportFragment_to_stockReportFormFragment"
+            app:destination="@id/stockReportFormFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/stockReportFormFragment"
+        android:name="com.example.cc_mobileapp.report.StockReportFormFragment"
+        android:label="StockReportFormFragment" >
+        <action
+            android:id="@+id/action_stockReportFormFragment_to_stockReportFragment"
+            app:destination="@id/stockReportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stockReportFragment"
+        android:name="com.example.cc_mobileapp.report.StockReportFragment"
+        android:label="StockReportFragment" />
 </navigation>

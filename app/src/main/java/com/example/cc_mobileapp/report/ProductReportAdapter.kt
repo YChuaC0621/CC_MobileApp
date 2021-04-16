@@ -5,22 +5,18 @@ import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.*
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.product_report_display_item.view.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportViewModel>() {
 
     private var prod_report = mutableListOf<Product>()
-    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
     private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
-    private val viewPool:RecycledViewPool? = RecycledViewPool()
 
     var listener: ProdReportRecycleViewClickListener? = null
 
@@ -40,19 +36,9 @@ class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportVi
         notifyDataSetChanged()
     }
 
-    /*private fun setRackItemRecycle(recyclerView: RecyclerView?, rackReport: List<Rack>?) {
-        Log.d("Check", "rack report set: $rackReport")
-        val itemReportAdapter = RackReportAdapter()
-        recyclerView?.adapter = itemReportAdapter
-        itemReportAdapter.setRackReportDetails(rackReport)
-    }*/
 
     class ReportViewModel(val view: View) : RecyclerView.ViewHolder(view) {
-        /*var rackRecycle: RecyclerView? = null
 
-        init {
-            rackRecycle = view.findViewById(R.id.childrack_recycleview)
-        }*/
     }
 
 
@@ -80,7 +66,7 @@ class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportVi
                 if(rackResults.equals("")){
                     rackResults = "No rack is storing this product"
                 }
-                holder.view.txtRackInfo.setText(rackResults)
+                holder.view.txtStockInInfo.setText(rackResults)
                 holder.view.txtProdName.text = prod_report[position].prodName
                 holder.view.txtProdBarcode.text = prod_report[position].prodBarcode
                 holder.view.txtProdSupName.text = prod_report[position].supplierName

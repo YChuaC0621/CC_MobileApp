@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAlignment="viewStart">
+
+
+    <TextView
+        android:id="@+id/txtProdBarcode"
+        android:layout_width="77dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/prod_barcode"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/txtProdBarcodeTitle"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtQtyNum"
+        android:layout_width="38dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/qty_num"
+        android:textAlignment="viewStart"
+        app:layout_constraintStart_toEndOf="@+id/txtCurrentQty"
+        app:layout_constraintTop_toBottomOf="@+id/txtProdSupName" />
+
+    <TextView
+        android:id="@+id/txtProdBarcodeTitle"
+        android:layout_width="77dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:paddingStart="5dp"
+        android:text="@string/prod_barcode"
+        android:textAlignment="textStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtStockOutInfo"
+        android:layout_width="165dp"
+        android:layout_height="83dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:paddingStart="20dp"
+        android:textColor="#03A9F4"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/txtStockOut" />
+
+    <TextView
+        android:id="@+id/txtCurrentQty"
+        android:layout_width="135dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="12dp"
+        android:paddingStart="5dp"
+        android:text="@string/current_qty"
+        android:textAlignment="textStart"
+        android:typeface="sans"
+        app:layout_constraintStart_toEndOf="@+id/txtProdName"
+        app:layout_constraintTop_toBottomOf="@+id/txtProdSupName" />
+
+    <TextView
+        android:id="@+id/txtStockOut"
+        android:layout_width="94dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rackborder"
+        android:text="@string/stock_out"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/txtCurrentQty" />
+
+    <TextView
+        android:id="@+id/txtProdSupName"
+        android:layout_width="179dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="15dp"
+        android:paddingStart="5dp"
+        android:text="@string/supplier_name"
+        android:textAlignment="textStart"
+        android:typeface="sans"
+        app:layout_constraintStart_toEndOf="@+id/txtProdBarcode"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="3dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toEndOf="@+id/txtStockInInfo"
+        app:layout_constraintTop_toBottomOf="@+id/txtProdName"
+        app:srcCompat="@drawable/separator_line" />
+
+    <TextView
+        android:id="@+id/txtProdName"
+        android:layout_width="179dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:paddingStart="5dp"
+        android:text="@string/prod_name"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
+        android:textColor="#171717"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="24sp"
+        android:typeface="serif"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProdBarcodeTitle" />
+
+    <EditText
+        android:id="@+id/txtStockInInfo"
+        android:layout_width="162dp"
+        android:layout_height="83dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:paddingStart="20dp"
+        android:textColor="#03A9F4"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtStockIn" />
+
+    <TextView
+        android:id="@+id/txtStockIn"
+        android:layout_width="94dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/rackborder"
+        android:text="@string/stock_in"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProdName" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtStockOutInfo"
+        app:srcCompat="@drawable/separator_line" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
