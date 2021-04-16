@@ -6,8 +6,8 @@
             <solid android:color="@color/stockdetail_box"/>
 
             <size
-                android:width="330dp"
-                android:height="120dp"/>
+                android:width="320dp"
+                android:height="150dp"/>
         </shape>
 
     </item>

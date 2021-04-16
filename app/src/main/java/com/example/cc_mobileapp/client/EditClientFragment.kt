@@ -48,8 +48,6 @@ class EditClientFragment(private val client: Client) : Fragment() {
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show().toString()
             requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-            //dismiss()
         })
 
         btn_clientConfirmEdit.setOnClickListener {

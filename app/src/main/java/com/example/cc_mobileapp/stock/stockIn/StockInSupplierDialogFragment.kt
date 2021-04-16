@@ -56,7 +56,7 @@ class StockInSupplierDialogFragment : Fragment() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                             sharedStockInViewModel.setStockInSupplierId(stockInSupplierName)
-                            val typePushKey: String = sharedStockInViewModel.generateTypePuskKey().toString()
+                            val typePushKey: String = sharedStockInViewModel.generateTypePushKey().toString()
                             val currentView = (requireView().parent as ViewGroup).id
                             val transaction = requireActivity().supportFragmentManager.beginTransaction()
                             transaction.replace(currentView, StockDetailFragment())

@@ -40,7 +40,7 @@ class StockOutViewModel: ViewModel() {
     val stockOutClientId: LiveData<String>
         get() = _stockOutClientId
 
-    fun generateTypePuskKey(){
+    fun generateTypePushKey(){
         _stockOutTypePushKey.value = dbStockOut.push().key
     }
 

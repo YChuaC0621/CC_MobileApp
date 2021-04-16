@@ -21,12 +21,9 @@ import com.example.cc_mobileapp.Constant.NODE_TEMP
 import com.example.cc_mobileapp.Constant.NODE_TEMP_OUT
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
-import com.example.cc_mobileapp.model.StockDetail
-import com.example.cc_mobileapp.model.StockIn
 import com.example.cc_mobileapp.model.StockOutDetail
 import com.example.cc_mobileapp.product.ProductViewModel
-import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
-import com.example.cc_mobileapp.stock.stockOutDetail.StockOutDetailAdapter
+import com.example.cc_mobileapp.stock.stockOut.StockOutViewModel
 import com.example.cc_mobileapp.stock.stockOutDetail.StockOutDetailViewModel
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
@@ -41,7 +38,7 @@ class AddStockOutDetailFragment : Fragment() {
     private lateinit var stockInDetailViewModel: StockViewModel
     private lateinit var stockOutDetailViewModel: StockOutDetailViewModel
     private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
-    private val sharedStockOutDetailViewModel: StockOutDetailViewModel by activityViewModels()
+    private val sharedStockOutViewModel: StockOutViewModel by activityViewModels()
     private val dbProd = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
     private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
     private lateinit var prodViewModel: ProductViewModel
@@ -108,7 +105,7 @@ class AddStockOutDetailFragment : Fragment() {
                 val stockOutDetail = StockOutDetail()
                 stockOutDetail.stockOutDetailProdBarcode = prodBarcode
                 stockOutDetail.stockOutDetailQty = stockQty
-                stockOutDetail.stockTypeId = sharedStockOutDetailViewModel.stockOutTypeKey.value
+                stockOutDetail.stockTypeId = sharedStockOutViewModel.stockOutTypePushKey.value
                 var availableStockDB: Int = 0
                 var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
                 prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {

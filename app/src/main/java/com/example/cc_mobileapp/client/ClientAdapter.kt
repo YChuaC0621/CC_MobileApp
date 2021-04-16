@@ -27,7 +27,7 @@ class ClientAdapter: RecyclerView.Adapter<ClientAdapter.ClientViewModel>(){
 
     override fun onBindViewHolder(holder: ClientViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
-        holder.view.txtView_productDesc.text = clients[position].clientCoName
+        holder.view.txtView_clientCoName.text = clients[position].clientCoName
         holder.view.txtView_clientLocation.text = clients[position].clientLocation
         holder.view.btn_clientEdit.setOnClickListener { listener?.onRecycleViewItemClicked(it, clients[position])}
     }
