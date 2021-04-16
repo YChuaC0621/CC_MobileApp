@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout
     android:id="@+id/addClientFragment"
@@ -19,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Add New Stock Detail"
+        android:text="Add New Stock In Detail"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
@@ -43,9 +42,12 @@
         android:id="@+id/btn_stockDetail_scanBarcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="Scan Product Barcode" />
+        android:text="Scan Barcode"
+        app:cornerRadius="20dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_stockDetail_rackId"
@@ -77,20 +79,25 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_stockDetail_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:text="Add" />
-
-    <Button
         android:id="@+id/btn_stockDetail_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="Cancel" />
+        android:text="Cancel"
+        app:cornerRadius="20dp" />
+
+    <Button
+        android:id="@+id/btn_stockDetail_add"
+        style="@style/circlebtn_standard"
+        android:layout_gravity="end"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/circlebtn_standard"
+        app:icon="@drawable/ic_save"
+         />
 </LinearLayout>
 
 </ScrollView>

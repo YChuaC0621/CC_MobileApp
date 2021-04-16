@@ -124,7 +124,7 @@ class AddStockDetailFragment : Fragment() {
                                         valid = false
                                         input_layout_stockDetail_rackId.error = "Invalid rack id"
                                     } else {
-                                        var rackStatusQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_STOCKDETAIL).orderByChild("stockStatus").equalTo(true)
+                                        var rackStatusQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_STOCKDETAIL)
                                         rackStatusQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                                             override fun onDataChange(snapshot: DataSnapshot) {
                                                 var stockInUse: Boolean = false
@@ -226,7 +226,7 @@ class AddStockDetailFragment : Fragment() {
                 var prodBarcode: String = it.child("prodBarcode").value.toString()
                 prodBarcodes.add(prodBarcode)
             }
-            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, prodBarcodes)
+            var adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, prodBarcodes)
             edit_text_stockDetail_ProdBarcode.setAdapter(adapter)
         } else {
             Log.d("checkAuto", "No match found")
@@ -240,7 +240,7 @@ class AddStockDetailFragment : Fragment() {
                 var rackCodeStored: String = it.child("rackName").value.toString()
                 rackBarcodes.add(rackCodeStored)
             }
-            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, rackBarcodes)
+            var adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, rackBarcodes)
             edit_text_stockDetail_rackId.setAdapter(adapter)
         } else {
             Log.d("checkAuto", "No match found")

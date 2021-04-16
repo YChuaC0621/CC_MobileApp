@@ -133,7 +133,7 @@ class EditStockDetailFragment(
                                         valid = false
                                         input_layout_editStockDetail_rackId.error = "Invalid rack id"
                                     } else {
-                                        var rackStatusQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_STOCKDETAIL).orderByChild("stockStatus").equalTo(true)
+                                        var rackStatusQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_STOCKDETAIL)
                                         rackStatusQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                                             override fun onDataChange(snapshot: DataSnapshot) {
                                                 var stockInUse: Boolean = false
@@ -197,6 +197,17 @@ class EditStockDetailFragment(
             transaction.replace(currentView, ScanBarcodeFragment("product"))
             transaction.addToBackStack("productBarcode")
             transaction.commit()
+        }
+
+        btn_editStockDetail_delete.setOnClickListener{
+            AlertDialog.Builder(requireContext()).also{
+                it.setTitle(getString(R.string.delete_confirmation))
+                it.setPositiveButton(getString(R.string.yes)){ dialog, which ->
+                    stockViewModel.deleteStockDetail(stockDetail)
+                    requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                }
+                it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
+            }.create().show()
         }
 
         // Autocomplete for product barcode

@@ -207,16 +207,12 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                 transaction.addToBackStack("editStockDetailFragment")
                 transaction.commit()
             }
-            R.id.btn_delete_stockDetail ->{
-                AlertDialog.Builder(requireContext()).also{
-                    it.setTitle(getString(R.string.delete_confirmation))
-                    it.setPositiveButton(getString(R.string.yes)){ dialog, which ->
-                        stockViewModel.deleteStockDetail(stockDetail)
-                    }
-                    it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
-                }.create().show()
-            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbTemp.removeValue()
     }
 }
 

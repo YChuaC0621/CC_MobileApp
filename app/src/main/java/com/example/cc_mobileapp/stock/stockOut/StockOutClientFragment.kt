@@ -93,7 +93,7 @@ class StockOutClientFragment : Fragment() {
                 var clientName: String = it.child("clientCoName").value.toString()
                 clientNames.add(clientName)
             }
-            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, clientNames)
+            var adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, clientNames)
             edit_text_stockOut_clientName.setAdapter(adapter)
         }else{
             Log.d("checkAuto", "No match found")

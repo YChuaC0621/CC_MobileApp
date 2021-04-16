@@ -46,13 +46,13 @@ class ClientViewModel(): ViewModel() {
             Log.d("Check", "childListener$snapshot")
             val client = snapshot.getValue(Client::class.java)
             client?.clientId = snapshot.key
-            _client.value = client
+            _client.value = client!!
         }
 
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
             val client = snapshot.getValue(Client::class.java)
             client?.clientId = snapshot.key
-            _client.value = client
+            _client.value = client!!
         }
 
         override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -61,7 +61,7 @@ class ClientViewModel(): ViewModel() {
             val client = snapshot.getValue(Client::class.java)
             client?.clientId = snapshot.key
             client?.isDeleted = true
-            _client.value = client
+            _client.value = client!!
         }
 
         override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {

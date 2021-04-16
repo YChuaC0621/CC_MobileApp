@@ -3,13 +3,11 @@ package com.example.cc_mobileapp.stock.stockOutDetail
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
@@ -25,9 +23,6 @@ import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stockout_detail.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.util.*
 
 class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListener {
@@ -105,9 +100,9 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
                         dbStockOutDetail.push().setValue(it)
                         count += 1
                         stockUpdateProduct(it.stockOutDetailProdBarcode, it.stockOutDetailQty)
-                        if (!(productfromDB?.prodPrice == null || it?.stockOutDetailQty == null)) {
+                        if (!(productfromDB?.prodPrice == null || it.stockOutDetailQty == null)) {
                             var price: Double = productfromDB?.prodPrice!!
-                            var qty: Int? = it?.stockOutDetailQty
+                            var qty: Int? = it.stockOutDetailQty
                             var subtotal: Double = price.times(qty!!)
                             totalPrice = totalPrice.plus(subtotal)
                             stockUpdateQty()
@@ -155,21 +150,26 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
             stockInQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                 var stockCallBack = 0
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if(stockCallBack == 0){
+                    if (stockCallBack == 0) {
                         if (snapshot.exists()) {
-                            for(stockInInfo in snapshot.children){
+                            for (stockInInfo in snapshot.children) {
                                 var stockInDetail = stockInInfo.getValue(StockDetail::class.java)
                                 stockInDetail?.stockDetailId = stockInInfo.key
-                                if(stockOutQty!! > 0){
-                                    if(stockOutQty!! <= stockInDetail?.stockDetailQty!!){
+                                if (stockOutQty!! > 0) {
+                                    if (stockOutQty!! <= stockInDetail?.stockDetailQty!!) {
                                         stockInDetail.stockDetailQty = stockInDetail.stockDetailQty!! - stockOutQty!!
                                         stockOutQty = 0
-
-                                    }else{
+                                        if (stockInDetail.stockDetailQty == 0) {
+                                        }
+                                    } else {
                                         stockOutQty = stockOutQty!! - stockInDetail.stockDetailQty!!
                                         stockInDetail.stockDetailQty = 0
                                     }
-                                    stockViewModel.updateStockDetailinDB(stockInDetail!!)
+                                    if (stockInDetail.stockDetailQty == 0) {
+                                        stockViewModel.deleteStockDetailinDB(stockInDetail)
+                                    } else {
+                                        stockViewModel.updateStockDetailinDB(stockInDetail)
+                                    }
                                     stockCallBack += 1
                                 }
                             }
@@ -224,7 +224,7 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
     private fun updateStockOutDetail() {
         val stockOut = StockOut()
         var today = Calendar.getInstance()
-        today.add(Calendar.HOUR,8)
+        today.add(Calendar.HOUR, 8)
         stockOut.stockOutDateTime = today.time.toString()
         stockOut.stockOutClientId = sharedStockOutViewModel.stockOutClientId.value
         stockOut.totalProdPrice = totalPrice
@@ -258,13 +258,14 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
     var callBackCount: Int = 0
 
     private fun readData(firebaseCallback: FirebaseCallback){
-        dbProduct.addValueEventListener(object: ValueEventListener {
+        dbProduct.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(callBackCount ==0){
+                if (callBackCount == 0) {
                     firebaseCallback.onCallBack(snapshot)
-                    callBackCount+=1
+                    callBackCount += 1
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
@@ -272,11 +273,11 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
     }
 
     private fun readStockData(firebaseCallback: FirebaseCallback){
-        dbStockInDetail.addValueEventListener(object: ValueEventListener {
+        dbStockInDetail.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(callBackCount ==0){
+                if (callBackCount == 0) {
                     firebaseCallback.onCallBack(snapshot)
-                    callBackCount+=1
+                    callBackCount += 1
                 }
 
             }
@@ -288,7 +289,7 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
     }
 
     private interface FirebaseCallback{
-        fun onCallBack(snapshot: DataSnapshot);
+        fun onCallBack(snapshot: DataSnapshot)
     }
 
     fun getCallerFragment(): String? {
@@ -307,16 +308,12 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
                 transaction.addToBackStack("editStockOutDetailFragment")
                 transaction.commit()
             }
-            R.id.btn_delete_stockOutDetail ->{
-                AlertDialog.Builder(requireContext()).also{
-                    it.setTitle(getString(R.string.delete_confirmation))
-                    it.setPositiveButton(getString(R.string.yes)){ dialog, which ->
-                        stockOutDetailViewModel.deleteStockOutDetail(stockOutDetail)
-                    }
-                    it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
-                }.create().show()
-            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbTempOut.removeValue()
     }
 }
 

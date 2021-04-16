@@ -6,12 +6,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".client.ClientFragment">
 
-   <androidx.recyclerview.widget.RecyclerView
-       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_client"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/client_display_item"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/client_display_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add"
@@ -21,7 +21,7 @@
         android:layout_margin="16dp"
         app:backgroundTint="@color/supplierColor2"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_save"
+        app:srcCompat="@drawable/ic_add_icon"
         />
 
 </FrameLayout>

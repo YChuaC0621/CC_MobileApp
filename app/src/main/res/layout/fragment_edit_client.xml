@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -79,24 +79,32 @@
              />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <TextView
         android:id="@+id/btn_dialog_clientDelete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:text="Delete"
-        android:drawableRight="@drawable/ic_delete"
-        />
+        android:layout_width="90dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="28dp"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_delete"
+        android:layout_gravity="center"
+        android:text="@string/delete"
+        android:textAlignment="center"
+        android:textColor="@color/btn_supplierId_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_supCmpLot" />
 
     <Button
         android:id="@+id/btn_clientConfirmEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:text="Edit"
-        />
+        style="@style/circlebtn_standard"
+        android:layout_gravity="end"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/circlebtn_standard"
+        app:icon="@drawable/ic_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_clientLocation" />
 
     <Button
         android:id="@+id/btn_clientEditBack"

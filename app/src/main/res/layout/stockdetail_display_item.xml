@@ -95,15 +95,4 @@
         app:layout_constraintTop_toTopOf="@+id/list_item_stockDetail"
         app:srcCompat="@drawable/ic_edit_stockdetail_icon" />
 
-    <ImageButton
-        android:id="@+id/btn_delete_stockDetail"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/list_item_stockDetail"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/btn_edit_stockDetail"
-        app:layout_constraintTop_toBottomOf="@+id/btn_edit_stockDetail"
-        app:srcCompat="@drawable/ic_delete" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

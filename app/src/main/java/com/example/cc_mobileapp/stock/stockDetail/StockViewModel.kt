@@ -141,5 +141,18 @@ class StockViewModel : ViewModel() {
                 }
     }
 
+    fun deleteStockDetailinDB(stockDetail: StockDetail) {
+        dbStockInDetail.child(stockDetail.stockDetailId!!).setValue(null)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        _result.value = null
+                    } else {
+                        _result.value = it.exception
+                    }
+                }
+    }
+
+
+
 
 }

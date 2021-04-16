@@ -22,7 +22,7 @@
         android:id="@+id/btn_supplier"
         style="@style/homepage_btn"
         android:layout_marginTop="@dimen/homepg_btnMarginTop"
-        android:layout_marginEnd="@dimen/homepg_btnMarginEndOrStart"
+        android:layout_marginEnd="28dp"
         android:background="@drawable/homepg_btn"
         android:drawableTop="@drawable/ic_supplier_icon"
         android:text="@string/supplier"

@@ -130,7 +130,6 @@ class AddStockOutDetailFragment : Fragment() {
                                 }
                             }
                             if (availableStock) {
-                                // TODO check temporary stock out
                                 var tempStockOutQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP_OUT).orderByChild("stockOutDetailProdBarcode").equalTo(prodBarcode.toString())
                                 tempStockOutQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -159,39 +158,6 @@ class AddStockOutDetailFragment : Fragment() {
                                         TODO("Not yet implemented")
                                     }
                                 })
-                                // TODO only after save it will check
-//                                var availableStockDate: ArrayList<StockIn>? = null
-//                                var availableProd: ArrayList<StockDetail>? = null
-//                                var stockOutQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_STOCKDETAIL).orderByChild("stockStatus").equalTo(true)
-//                                stockOutQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-//                                    override fun onDataChange(snapshot: DataSnapshot) {
-//                                        for (checkStockSnapshot in snapshot.children) {
-//                                            var checkStockStatus = checkStockSnapshot.getValue(StockDetail::class.java)
-//                                            if (checkStockStatus?.stockDetailProdBarcode.equals(stockOutDetail.stockOutDetailProdBarcode)) {
-//                                                availableProd?.add(checkStockStatus!!)
-//                                            }
-//                                            var purchaseQty = stockOutDetail.stockOutDetailQty
-//                                            availableProd?.forEach {
-//                                                if (purchaseQty!! > 0) {
-//                                                    if (it.stockDetailQty!! < purchaseQty!!) {
-//                                                        it.stockStatus = false
-//                                                        it.stockDetailQty = 0
-//                                                        purchaseQty = purchaseQty!! - it.stockDetailQty!!
-//                                                    } else {
-//                                                        it.stockDetailQty = it.stockDetailQty!! - stockOutDetail.stockOutDetailQty!!
-//                                                        purchaseQty = 0
-//                                                    }
-//                                                    // update stock in details
-//                                                    stockInDetailViewModel.updateStockDetail(it)
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//
-//                                    override fun onCancelled(error: DatabaseError) {
-//                                        TODO("Not yet implemented")
-//                                    }
-//                                })
                             }
                         }
                     }

@@ -3,6 +3,8 @@ package com.example.cc_mobileapp.stock.stockOutDetail
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
@@ -14,6 +16,7 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.stockdetail_display_item.view.*
 import kotlinx.android.synthetic.main.stockoutdetail_display_item.view.*
 import kotlinx.coroutines.*
+import androidx.fragment.app.Fragment
 
 
 class StockOutDetailAdapter(): RecyclerView.Adapter<StockOutDetailAdapter.StockOutDetailViewModel>(){
@@ -57,7 +60,6 @@ class StockOutDetailAdapter(): RecyclerView.Adapter<StockOutDetailAdapter.StockO
         holder.view.stockOutDetail_prodBarcode.text = stocksOutDetail[position].stockOutDetailProdBarcode.toString()
         holder.view.stockOutDetail_qty.text = stocksOutDetail[position].stockOutDetailQty.toString()
         holder.view.btn_edit_stockOutDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksOutDetail[position])}
-        holder.view.btn_delete_stockOutDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksOutDetail[position])}
         val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
         var price:Double? = 0.0
         GlobalScope.launch(Dispatchers.IO) {

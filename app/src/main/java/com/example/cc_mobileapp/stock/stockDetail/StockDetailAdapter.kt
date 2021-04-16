@@ -27,6 +27,28 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
 
     override fun getItemCount() = stocksDetail.size
 
+    override fun onBindViewHolder(holder: StockViewModel, position: Int) {
+        holder.view.stockDetail_prodBarcode.text = stocksDetail[position].stockDetailProdBarcode.toString()
+        holder.view.stockDetail_rackId.text = stocksDetail[position].stockDetailRackId
+        holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty.toString()
+        holder.view.btn_edit_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
+        val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+        var price:Double? = 0.0
+        GlobalScope.launch(Dispatchers.IO) {
+            dbProduct.get().addOnSuccessListener {
+                if (it.exists()) {
+                    it.children.forEach {
+                        var prod: Product? = it.getValue(Product::class.java)
+                        if (prod?.prodBarcode == stocksDetail[position].stockDetailProdBarcode) {
+                            var price: Double? = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
+                            holder.view.stockDetail_totalPrice.text = price.toString()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private lateinit var productSnapshot: DataSnapshot
 
     fun setStocksDetail(stocksDetail: List<StockDetail>){
@@ -50,26 +72,5 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
 
     class StockViewModel(val view: View) : RecyclerView.ViewHolder(view)
 
-    override fun onBindViewHolder(holder: StockViewModel, position: Int) {
-        holder.view.stockDetail_prodBarcode.text = stocksDetail[position].stockDetailProdBarcode.toString()
-        holder.view.stockDetail_rackId.text = stocksDetail[position].stockDetailRackId
-        holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty.toString()
-        holder.view.btn_edit_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
-        holder.view.btn_delete_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
-        val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
-        var price:Double? = 0.0
-        GlobalScope.launch(Dispatchers.IO) {
-            dbProduct.get().addOnSuccessListener {
-                if (it.exists()) {
-                    it.children.forEach {
-                        var prod: Product? = it.getValue(Product::class.java)
-                        if (prod?.prodBarcode == stocksDetail[position].stockDetailProdBarcode) {
-                            var price: Double? = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
-                            holder.view.stockDetail_totalPrice.text = price.toString()
-                        }
-                    }
-                }
-            }
-        }
-    }
+
 }

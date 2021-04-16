@@ -171,7 +171,6 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()
             requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
         }
 
         btn_editScanBarcode.setOnClickListener {
@@ -208,7 +207,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 var supplierName: String = it.child("supCmpName").value.toString()
                 supplierNames.add(supplierName)
             }
-            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, supplierNames)
+            var adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, supplierNames)
             edit_text_editSupplierName.setAdapter(adapter)
         }else{
             Log.d("checkAuto", "No match found")
