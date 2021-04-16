@@ -66,8 +66,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(stockIntent)
         }
 
-
-
-
     }
+
+
 }
