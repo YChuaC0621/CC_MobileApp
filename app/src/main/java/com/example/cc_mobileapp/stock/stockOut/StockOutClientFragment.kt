@@ -53,7 +53,7 @@ class StockOutClientFragment : Fragment() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                             sharedStockOutViewModel.setStockOutClientId(stockOutClientName)
-                            val typePushKey: String = sharedStockOutViewModel.generateTypePuskKey().toString()
+                            val typePushKey: String = sharedStockOutViewModel.generateTypePushKey().toString()
                             val currentView = (requireView().parent as ViewGroup).id
                             val transaction = requireActivity().supportFragmentManager.beginTransaction()
                             transaction.replace(currentView, StockOutDetailFragment())

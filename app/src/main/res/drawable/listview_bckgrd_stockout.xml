@@ -6,8 +6,8 @@
             <solid android:color="@color/lv_bckgrd_color_stockout"/>
 
             <size
-                android:width="300dp"
-                android:height="120dp"/>
+                android:width="320dp"
+                android:height="150dp"/>
         </shape>
 
     </item>

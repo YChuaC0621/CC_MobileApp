@@ -96,7 +96,6 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                 var count: Int = 0
                 numbers.listIterator().forEach {
                     it.value?.forEach {
-                        it.stockStatus = true
                         dbStockInDetail.push().setValue(it)
                         dbPermanentStock.push().setValue(it)
                         count += 1
@@ -121,7 +120,9 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         val timeFormat = SimpleDateFormat("HH:mm:ss")
         var today = Calendar.getInstance().getTime()
-        var todayTime = Calendar.getInstance().getTime()
+        var malaysiaTime = Calendar.getInstance()
+        malaysiaTime.add(Calendar.HOUR, 8)
+        var todayTime =malaysiaTime.time
         stockIn.stockInDate = dateFormat.format(today)
         stockIn.stockInTime = timeFormat.format(todayTime)
         stockIn.stockInSupplierId = sharedStockInViewModel.stockInSupplierId.value

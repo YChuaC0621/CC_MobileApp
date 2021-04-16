@@ -97,7 +97,6 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
                 var stockOutDetails = mutableListOf(stockOutDetailViewModel.stocksOutDetail)
                 stockOutDetails.listIterator().forEach {
                     it.value?.forEach {
-                        // TODO stock status update here
                         dbStockOutDetail.push().setValue(it)
                         count += 1
                         stockUpdateProduct(it.stockOutDetailProdBarcode, it.stockOutDetailQty)
@@ -227,7 +226,9 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         val timeFormat = SimpleDateFormat("HH:mm:ss")
         var today = Calendar.getInstance().getTime()
-        var todayTime = Calendar.getInstance().getTime()
+        var malaysiaTime = Calendar.getInstance()
+        malaysiaTime.add(Calendar.HOUR, 8)
+        var todayTime = malaysiaTime.time
         stockOut.stockOutDate = dateFormat.format(today)
         stockOut.stockOutTime = timeFormat.format(todayTime)
         stockOut.stockOutClientId = sharedStockOutViewModel.stockOutClientId.value

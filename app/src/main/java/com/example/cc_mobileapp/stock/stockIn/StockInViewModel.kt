@@ -39,7 +39,7 @@ class StockInViewModel: ViewModel() {
     val stockInSupplierId: LiveData<String>
         get() = _stockInSupplierId
 
-    fun generateTypePuskKey(){
+    fun generateTypePushKey(){
         _stockTypePushKey.value = dbStockIn.push().key
     }
 
