@@ -31,6 +31,7 @@ class StockInAdapter : RecyclerView.Adapter<StockInAdapter.StockInViewModel>(){
         holder.view.txtView_stockInDate.text = stocksIn[position].stockInDate
         holder.view.txtView_stockInTime.text = stocksIn[position].stockInTime
         holder.view.btn_stockInSupplierId.text = stocksIn[position].stockInSupplierId
+        holder.view.txtView_txtTotalPriceStockIn.text = stocksIn[position].totalProdPrice.toString()
     }
 
     fun setStocksIn(stocksIn: List<StockIn>){

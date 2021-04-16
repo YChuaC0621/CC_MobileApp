@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/list_item_product"
-        android:layout_width="364dp"
-        android:layout_height="119dp"
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,43 +18,73 @@
         app:srcCompat="@drawable/listview_bckgrd_product" />
 
     <TextView
-        android:id="@+id/txtView_productName"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:id="@+id/txtView_prodBarcode"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
+        android:layout_marginTop="20dp"
+        android:text="@string/prod_barcode"
         app:layout_constraintStart_toEndOf="@+id/product_icon"
-        app:layout_constraintTop_toTopOf="@+id/list_item_product" />
+        app:layout_constraintTop_toTopOf="@+id/list_item_product"
+        android:ellipsize="end"
+        android:maxLines="1"/>
 
     <TextView
-        android:id="@+id/txtView_productDesc"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtView_productName"
+        android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="@string/prod_name"
         app:layout_constraintStart_toEndOf="@+id/product_icon"
-        app:layout_constraintTop_toBottomOf="@+id/txtView_productName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtView_prodBarcode"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/txtView_productDesc"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/prod_desc"
+        app:layout_constraintStart_toEndOf="@+id/product_icon"
+        app:layout_constraintTop_toBottomOf="@+id/txtView_productName"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/txtView_productSupplier"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/prod_supplier"
+        app:layout_constraintStart_toEndOf="@+id/product_icon"
+        app:layout_constraintTop_toBottomOf="@+id/txtView_productDesc"
+        android:ellipsize="end"
+        android:maxLines="1"/>
 
     <Button
         android:id="@+id/btn_productEdit"
         style="@style/circlebtn_standard"
         android:layout_width="77dp"
         android:layout_height="76dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/circlebtn_standard"
         app:backgroundTint="@color/circleBtnHoverColor"
         app:icon="@drawable/ic_edit_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_product"
         app:layout_constraintEnd_toEndOf="@+id/list_item_product"
-        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/list_item_product"
-        app:layout_constraintTop_toTopOf="@+id/list_item_product" />
+        app:layout_constraintTop_toTopOf="@+id/list_item_product"
+        app:layout_constraintVertical_bias="0.916" />
 
     <ImageView
         android:id="@+id/product_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
         app:layout_constraintBottom_toTopOf="@+id/spinner_product"
         app:layout_constraintStart_toEndOf="@+id/btn_productEdit"
         app:layout_constraintTop_toTopOf="@+id/list_item_product"
@@ -63,6 +94,7 @@
         android:id="@+id/spinner_product"
         android:layout_width="255dp"
         android:layout_height="24dp"
+        android:layout_marginStart="25dp"
         android:background="@drawable/lv_ddl_bckgrd_product"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

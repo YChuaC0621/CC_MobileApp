@@ -29,6 +29,8 @@ class ClientAdapter: RecyclerView.Adapter<ClientAdapter.ClientViewModel>(){
         Log.d("Check", "adapter bind view holder")
         holder.view.txtView_clientCoName.text = clients[position].clientCoName
         holder.view.txtView_clientLocation.text = clients[position].clientLocation
+        holder.view.txtView_clientEmail.text = clients[position].clientEmail
+        holder.view.txtView_clientHpNum.text = clients[position].clientHpNum
         holder.view.btn_clientEdit.setOnClickListener { listener?.onRecycleViewItemClicked(it, clients[position])}
     }
 

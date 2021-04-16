@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
-import kotlinx.android.synthetic.main.client_display_item.view.txtView_productDesc
 import kotlinx.android.synthetic.main.product_display_item.view.*
 
 class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewModel>() {
@@ -29,6 +28,8 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewModel>() {
         Log.d("Check", "adapter bind view holder")
         holder.view.txtView_productName.text = products[position].prodName
         holder.view.txtView_productDesc.text = products[position].prodDesc
+        holder.view.txtView_productSupplier.text = products[position].supplierName
+        holder.view.txtView_prodBarcode.text = products[position].prodBarcode
         holder.view.btn_productEdit.setOnClickListener { listener?.onRecyclerViewItemClicked(it, products[position])}
     }
 

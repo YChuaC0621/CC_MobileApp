@@ -59,6 +59,9 @@
     <!-- product -->
     <string name="prodAddSuccess">Product Added Successfully</string>
     <string name="quantity">Quantity</string>
+    <string name="prod_desc">prodDesc</string>
+    <string name="prod_supplier">prodSupplier</string>
+
     <!--supplier-->
     <string name="editSupTitle">Edit Supplier</string>
     <string name="addSupTitle">Add Supplier</string>
@@ -149,5 +152,16 @@
     <string name="report_info">Report Information</string>
     <string name="date_start">Start Date</string>
     <string name="date_end">End Date</string>
+
+    <!-- Stock -->
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="total_price">Total Price: </string>
+    <string name="price">Price</string>
+    <string name="stock_id">ID</string>
+
+    <!-- button -->
+    <string name="next">NEXT</string>
+    <string name="cancel">CANCEL</string>
 </resources>
 
