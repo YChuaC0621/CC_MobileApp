@@ -165,5 +165,7 @@
     <!-- button -->
     <string name="next">NEXT</string>
     <string name="cancel">CANCEL</string>
+    <string name="in">IN</string>
+    <string name="out">OUT</string>
 </resources>
 

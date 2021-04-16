@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/stockDetailDisplay_prodBarcode"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/prod_barcode"
+        app:layout_constraintStart_toEndOf="@+id/btn_displaystockInDetail"
+        app:layout_constraintTop_toTopOf="@+id/list_item_stockDetail" />
+
+    <TextView
+        android:id="@+id/stockDetailDisplay_totalPrice"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/price"
+        app:layout_constraintStart_toEndOf="@+id/btn_displaystockInDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockDetailDisplay_qty" />
+
+    <TextView
+        android:id="@+id/stockDetailDisplay_rackId"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/rack_id"
+        app:layout_constraintStart_toEndOf="@+id/btn_displaystockInDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockDetailDisplay_prodBarcode" />
+
+    <TextView
+        android:id="@+id/stockDetailDisplay_qty"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/quantity"
+        app:layout_constraintStart_toEndOf="@+id/btn_displaystockInDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockDetailDisplay_rackId" />
+
+    <ImageView
+        android:id="@+id/list_item_stockDetail"
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="28dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/listview_bckgrd_stockdetail" />
+
+    <TextView
+        android:id="@+id/stockDetailDisplay_txtProdBarcode"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/prod_barcode"
+        app:layout_constraintStart_toEndOf="@+id/btn_displaystockInDetail"
+        app:layout_constraintTop_toTopOf="@+id/list_item_stockDetail" />
+
+    <TextView
+        android:id="@+id/stockDetailDisplay_txtRackId"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/rack_id"
+        app:layout_constraintStart_toEndOf="@+id/btn_displaystockInDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockDetailDisplay_txtProdBarcode" />
+
+    <TextView
+        android:id="@+id/stockDetailDisplay_txtQty"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/quantity"
+        app:layout_constraintStart_toEndOf="@+id/btn_displaystockInDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockDetailDisplay_txtRackId" />
+
+    <TextView
+        android:id="@+id/stockDetailDisplay_txtTotalPrice"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/price"
+        app:layout_constraintStart_toEndOf="@+id/btn_displaystockInDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockDetailDisplay_txtQty" />
+
+    <Button
+        android:id="@+id/btn_displaystockInDetail"
+        style="@style/circlebtn_standard"
+        android:layout_width="77dp"
+        android:layout_height="76dp"
+        android:background="@drawable/circlebtn_standard"
+        app:backgroundTint="@color/circleBtnHoverColor"
+        android:text="@string/in"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_stockDetail"
+        app:layout_constraintEnd_toEndOf="@+id/list_item_stockDetail"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/list_item_stockDetail"
+        app:layout_constraintTop_toTopOf="@+id/list_item_stockDetail"
+        app:layout_constraintVertical_bias="0.736" />
+
+    <Spinner
+        android:id="@+id/spinner_stockDetail"
+        android:layout_width="255dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="25dp"
+        android:background="@drawable/lv_ddl_bckgrd_stockdetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_item_stockDetail" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

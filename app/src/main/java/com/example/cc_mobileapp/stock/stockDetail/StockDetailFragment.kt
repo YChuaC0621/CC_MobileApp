@@ -23,6 +23,7 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
+import kotlinx.android.synthetic.main.fragment_stock_detail_display.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -52,7 +53,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         super.onActivityCreated(savedInstanceState)
 
         adapter.listener = this
-        recycler_view_stockDetail.adapter = adapter
+        recycler_view_stockDetail_display.adapter = adapter
 
         productViewModel.fetchProduct()
 
@@ -157,18 +158,6 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
     var productfromDB: Product? = null
     var callBackCount: Int = 0
-
-    private fun getData(snapshot: DataSnapshot, prodBarcode: Int) {
-        snapshot.children.forEach {
-            var product = it.getValue(Product::class.java)!!
-            if(product.prodBarcode!!.equals(prodBarcode)){
-                Log.d("checkStoreprodBarcode", product.prodBarcode.toString())
-                productfromDB = it.getValue(Product::class.java)
-                Log.d("checkStoreafterStore", it.value.toString())
-            }
-            Log.d("checkStoreForEach", product.toString())
-        }
-    }
 
     private fun readData(firebaseCallback: FirebaseCallback){
         dbProduct.addValueEventListener(object : ValueEventListener {
