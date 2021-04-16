@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/supplierFragment"
         android:name="com.example.cc_mobileapp.supplier.SupplierFragment"
-        android:label="fragment_supplier"
+        android:label="Supplier"
         tools:layout="@layout/fragment_supplier" >
         <action
             android:id="@+id/action_supplierFragment_to_addSupplierDialogFragment"

@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/siteMapFragment"
         android:name="com.example.cc_mobileapp.rack.SiteMapFragment"
-        android:label="SiteMapFragment" >
+        android:label="SiteMap" >
         <action
             android:id="@+id/action_siteMapFragment_to_addRackDialogFragment"
             app:destination="@id/addRackDialogFragment" />

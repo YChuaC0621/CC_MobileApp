@@ -14,7 +14,9 @@ import com.example.cc_mobileapp.product.Product_Main
 import com.example.cc_mobileapp.rack.SiteMap
 import com.example.cc_mobileapp.report.Report_Main
 import com.example.cc_mobileapp.stock.Stock_Main
+import com.example.cc_mobileapp.stock.stockIn.StockInActivity
 import com.example.cc_mobileapp.stock.stockIn.StockIn_Fragment_Main
+import com.example.cc_mobileapp.stock.stockOut.StockOutActivity
 import com.example.cc_mobileapp.stock.stockOut.StockOut_Fragment_Main
 import com.example.cc_mobileapp.supplier.Supplier_Main
 import com.example.cc_mobileapp.user.Login
@@ -49,8 +51,8 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.item_userMgmt -> startActivity(Intent(this, Usermgmt::class.java))
                 R.id.item_product -> startActivity(Intent(this, Product_Main::class.java))
-                R.id.item_stockIn -> startActivity(Intent(this, StockIn_Fragment_Main::class.java))
-                R.id.item_stockOut -> startActivity(Intent(this, StockOut_Fragment_Main::class.java))
+                R.id.item_stockIn -> startActivity(Intent(this, StockInActivity::class.java))
+                R.id.item_stockOut -> startActivity(Intent(this, StockOutActivity::class.java))
                 R.id.item_sitemap -> startActivity(Intent(this, SiteMap::class.java))
                 R.id.item_client -> startActivity(Intent(this, Client_Main::class.java))
                 R.id.item_supplier-> startActivity(Intent(this, Supplier_Main::class.java))

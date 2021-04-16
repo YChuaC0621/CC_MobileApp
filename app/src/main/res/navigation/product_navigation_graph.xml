@@ -12,7 +12,7 @@
     <fragment
         android:id="@+id/productFragment2"
         android:name="com.example.cc_mobileapp.product.ProductFragment"
-        android:label="ProductFragment" >
+        android:label="Product" >
         <action
             android:id="@+id/action_productFragment2_to_addProductDialogFragment"
             app:destination="@id/addProductDialogFragment" />

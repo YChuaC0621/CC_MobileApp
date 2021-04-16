@@ -11,7 +11,7 @@
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.example.cc_mobileapp.report.ReportFragment"
-        android:label="ReportFragment" >
+        android:label="Report" >
         <action
             android:id="@+id/action_reportFragment_to_productReportFragment"
             app:destination="@id/productReportFragment" />
