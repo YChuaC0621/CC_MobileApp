@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_userMgmt"
+        android:title="Profile"
+        android:icon="@drawable/ic_user_icon">
+    </item>
+
+    <item
+        android:id="@+id/item_product"
+        android:title="Product"
+        android:icon="@drawable/ic_product_icon">
+    </item>
+
+    <item
+        android:id="@+id/item_stockIn"
+        android:title="Stock In"
+        android:icon="@drawable/ic_stockin_icon">
+    </item>
+
+    <item
+        android:id="@+id/item_stockOut"
+        android:title="Stock Out"
+        android:icon="@drawable/ic_stockout_icon">
+    </item>
+
+    <item
+        android:id="@+id/item_sitemap"
+        android:title="Site Map"
+        android:icon="@drawable/ic_sitemap_icon">
+    </item>
+
+    <item
+        android:id="@+id/item_client"
+        android:title="Client"
+        android:icon="@drawable/ic_client_icon">
+    </item>
+
+    <item
+        android:id="@+id/item_supplier"
+        android:title="Supplier"
+        android:icon="@drawable/ic_supplier_icon">
+    </item>
+
+    <item
+        android:id="@+id/item_report"
+        android:title="Report"
+        android:icon="@drawable/ic_visualdata_icon">
+    </item>
+</menu>

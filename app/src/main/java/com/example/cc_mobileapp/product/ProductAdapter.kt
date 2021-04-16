@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
-import kotlinx.android.synthetic.main.client_display_item.view.txtView_productDesc
 import kotlinx.android.synthetic.main.product_display_item.view.*
 
 class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewModel>() {
