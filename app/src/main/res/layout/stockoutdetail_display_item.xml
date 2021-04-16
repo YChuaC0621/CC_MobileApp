@@ -5,74 +5,115 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:id="@+id/stockOutDetail_prodBarcode"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="35dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/prod_barcode"
+        app:layout_constraintStart_toEndOf="@+id/btn_edit_stockOutDetail"
+        app:layout_constraintTop_toTopOf="@+id/list_item_stockDetail" />
+
+    <TextView
+        android:id="@+id/stockOutDetail_qty"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/quantity"
+        app:layout_constraintStart_toEndOf="@+id/btn_edit_stockOutDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockOutDetail_prodBarcode" />
+
+    <TextView
+        android:id="@+id/stockOutDetail_totalPrice"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/price"
+        app:layout_constraintStart_toEndOf="@+id/btn_edit_stockOutDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockOutDetail_qty" />
+
     <ImageView
         android:id="@+id/list_item_stockDetail"
-        android:layout_width="364dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="24dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/listview_bckgrd_stockdetail" />
 
     <TextView
-        android:id="@+id/stockOutDetail_prodBarcode"
-        android:layout_width="wrap_content"
+        android:id="@+id/stockOutDetail_txtProdBarcode"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="Product Barcode"
-        app:layout_constraintStart_toStartOf="@+id/list_item_stockDetail"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="35dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/prod_barcode"
+        app:layout_constraintStart_toEndOf="@+id/btn_edit_stockOutDetail"
         app:layout_constraintTop_toTopOf="@+id/list_item_stockDetail" />
 
     <TextView
-        android:id="@+id/stockOutDetail_qty"
-        android:layout_width="wrap_content"
+        android:id="@+id/stockOutDetail_txtQty"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:text="Qty"
-        app:layout_constraintStart_toStartOf="@+id/txt_quantityOut"
-        app:layout_constraintTop_toBottomOf="@+id/txt_quantityOut" />
-
-    <TextView
-        android:id="@+id/stockOutDetail_totalPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:text="Total"
-        app:layout_constraintStart_toStartOf="@+id/txt_totalPriceOut"
-        app:layout_constraintTop_toBottomOf="@+id/txt_totalPriceOut" />
-
-    <TextView
-        android:id="@+id/txt_quantityOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="Quantity"
-        android:textSize="8sp"
-        app:layout_constraintStart_toEndOf="@+id/stockOutDetail_prodBarcode"
-        app:layout_constraintTop_toBottomOf="@+id/stockOutDetail_prodBarcode" />
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/quantity"
+        app:layout_constraintStart_toEndOf="@+id/btn_edit_stockOutDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockOutDetail_txtProdBarcode" />
 
     <TextView
-        android:id="@+id/txt_totalPriceOut"
-        android:layout_width="wrap_content"
+        android:id="@+id/stockOutDetail_txtTotalPrice"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Total Price"
-        android:textSize="8sp"
-        app:layout_constraintStart_toStartOf="@+id/stockOutDetail_qty"
-        app:layout_constraintTop_toBottomOf="@+id/stockOutDetail_qty" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/price"
+        app:layout_constraintStart_toEndOf="@+id/btn_edit_stockOutDetail"
+        app:layout_constraintTop_toBottomOf="@+id/stockOutDetail_txtQty" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_edit_stockOutDetail"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="28dp"
+        style="@style/circlebtn_standard"
+        android:layout_width="77dp"
+        android:layout_height="76dp"
+        android:background="@drawable/circlebtn_standard"
+        app:backgroundTint="@color/circleBtnHoverColor"
+        app:icon="@drawable/ic_edit_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_stockDetail"
         app:layout_constraintEnd_toEndOf="@+id/list_item_stockDetail"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/list_item_stockDetail"
         app:layout_constraintTop_toTopOf="@+id/list_item_stockDetail"
-        app:srcCompat="@drawable/ic_edit_stockdetail_icon" />
+        app:layout_constraintVertical_bias="0.736" />
+
+    <Spinner
+        android:id="@+id/spinner_stockDetail"
+        android:layout_width="255dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="25dp"
+        android:background="@drawable/lv_ddl_bckgrd_stockdetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_item_stockDetail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

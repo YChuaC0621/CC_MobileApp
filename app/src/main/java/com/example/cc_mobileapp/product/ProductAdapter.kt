@@ -28,6 +28,8 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewModel>() {
         Log.d("Check", "adapter bind view holder")
         holder.view.txtView_productName.text = products[position].prodName
         holder.view.txtView_productDesc.text = products[position].prodDesc
+        holder.view.txtView_productSupplier.text = products[position].supplierName
+        holder.view.txtView_prodBarcode.text = products[position].prodBarcode
         holder.view.btn_productEdit.setOnClickListener { listener?.onRecyclerViewItemClicked(it, products[position])}
     }
 
