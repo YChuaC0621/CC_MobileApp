@@ -47,4 +47,10 @@
         android:title="Report"
         android:icon="@drawable/ic_visualdata_icon">
     </item>
+
+    <item
+        android:id="@+id/item_logout"
+        android:title="Log out"
+        android:icon="@drawable/ic_logout_icon">
+    </item>
 </menu>

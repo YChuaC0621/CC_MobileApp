@@ -2,6 +2,7 @@ package com.example.cc_mobileapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -13,7 +14,11 @@ import com.example.cc_mobileapp.product.Product_Main
 import com.example.cc_mobileapp.rack.SiteMap
 import com.example.cc_mobileapp.report.Report_Main
 import com.example.cc_mobileapp.stock.Stock_Main
+import com.example.cc_mobileapp.stock.stockIn.StockIn_Fragment_Main
+import com.example.cc_mobileapp.stock.stockOut.StockOut_Fragment_Main
 import com.example.cc_mobileapp.supplier.Supplier_Main
+import com.example.cc_mobileapp.user.Login
+import com.example.cc_mobileapp.user.Usermgmt
 import com.google.android.material.navigation.NavigationView
 
 
@@ -42,22 +47,15 @@ class MainActivity : AppCompatActivity() {
 
         navigationView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.item_userMgmt -> Toast.makeText(applicationContext, "User Management is clicked",
-                        Toast.LENGTH_SHORT).show()
-                R.id.item_product -> Toast.makeText(applicationContext, "Product is clicked",
-                        Toast.LENGTH_SHORT).show()
-                R.id.item_stockIn -> Toast.makeText(applicationContext, "Stock In is clicked",
-                        Toast.LENGTH_SHORT).show()
-                R.id.item_stockOut -> Toast.makeText(applicationContext, "Stock Out is clicked",
-                        Toast.LENGTH_SHORT).show()
-                R.id.item_sitemap -> Toast.makeText(applicationContext, "Site Map is clicked",
-                        Toast.LENGTH_SHORT).show()
-                R.id.item_client -> Toast.makeText(applicationContext, "Client is clicked",
-                        Toast.LENGTH_SHORT).show()
-                R.id.item_supplier-> Toast.makeText(applicationContext, "Supplier is clicked",
-                        Toast.LENGTH_SHORT).show()
-                R.id.item_report -> Toast.makeText(applicationContext, "Report is clicked",
-                        Toast.LENGTH_SHORT).show()
+                R.id.item_userMgmt -> startActivity(Intent(this, Usermgmt::class.java))
+                R.id.item_product -> startActivity(Intent(this, Product_Main::class.java))
+                R.id.item_stockIn -> startActivity(Intent(this, StockIn_Fragment_Main::class.java))
+                R.id.item_stockOut -> startActivity(Intent(this, StockOut_Fragment_Main::class.java))
+                R.id.item_sitemap -> startActivity(Intent(this, SiteMap::class.java))
+                R.id.item_client -> startActivity(Intent(this, Client_Main::class.java))
+                R.id.item_supplier-> startActivity(Intent(this, Supplier_Main::class.java))
+                R.id.item_report -> startActivity(Intent(this, Report_Main::class.java))
+                R.id.item_logout -> startActivity(Intent(this, Login::class.java))
 
             }
             true
