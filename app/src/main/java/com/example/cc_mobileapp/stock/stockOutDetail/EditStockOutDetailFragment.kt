@@ -44,7 +44,6 @@ class EditStockOutDetailFragment(
     private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
     private val sharedStockOutDetailViewModel: StockOutDetailViewModel by activityViewModels()
     private val dbProd = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
-    private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +56,7 @@ class EditStockOutDetailFragment(
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        edit_text_editStockOutDetail_ProdBarcode.setText(stockOutDetail.stockOutDetailProdBarcode.toString())
+        edit_text_editStockOutDetail_ProdBarcode.setText(stockOutDetail.stockOutDetailProdBarcode.toString().trim())
         edit_text_editStockOutDetail_qty.setText(stockOutDetail.stockOutDetailQty.toString())
 
         Log.e("Error", "check 1st stock out detail$stockOutDetail")
@@ -65,7 +64,7 @@ class EditStockOutDetailFragment(
 
         stockOutDetailViewModel.result.observe(viewLifecycleOwner, Observer {
             val message = if (it == null) {
-                "Stock Detail Update Successful"
+                getString(R.string.stockdetail_delete_success)
             } else {
                 getString(R.string.error, it.message)
             }
@@ -83,7 +82,7 @@ class EditStockOutDetailFragment(
                 valid = false
                 return@setOnClickListener
             } else if (!checkRegexBarcode(prodBarcode)) {
-                input_layout_editStockOutDetail_ProdBarcode.error = "Only integer are allowed"
+                input_layout_editStockOutDetail_ProdBarcode.error = getString(R.string.only_integer_error)
                 valid = false
                 return@setOnClickListener
             } else {
@@ -95,11 +94,11 @@ class EditStockOutDetailFragment(
                 valid = false
                 return@setOnClickListener
             } else if (!checkRegexBarcode(stockQty.toString())) {
-                input_layout_editStockOutDetail_qty.error = "Invalid quantity input"
+                input_layout_editStockOutDetail_qty.error = getString(R.string.only_integer_error)
                 valid = false
                 return@setOnClickListener
             } else if (stockQty!! == 0) {
-                input_layout_editStockOutDetail_qty.error = "Product Quantity cannot be zero"
+                input_layout_editStockOutDetail_qty.error = getString(R.string.stock_nonzero_error)
                 valid = false
                 return@setOnClickListener
             } else {
@@ -114,78 +113,99 @@ class EditStockOutDetailFragment(
                 stockOutDetailEdit.stockOutDetailId = stockOutDetail.stockOutDetailId
                 var availableStockDB: Int = 0
 
-                if (stockOutDetailEdit.stockOutDetailProdBarcode != stockOutDetail.stockOutDetailProdBarcode || stockOutDetailEdit.stockOutDetailQty != stockOutDetail.stockOutDetailQty) {
-                    var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
-                    prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            var availableStock: Boolean = false
-                            if (!snapshot.exists()) {
-                                valid = false
-                                input_layout_editStockOutDetail_ProdBarcode.error = "Invalid product barcode"
-                            } else {
-                                for (checkProdSnapshot in snapshot.children) {
-                                    var checkStockQtyProd = checkProdSnapshot.getValue(Product::class.java)
-                                    if (checkStockQtyProd?.prodQty!! >= stockOutDetailEdit.stockOutDetailQty!!) {
-                                        availableStock = true
-                                        availableStockDB = checkStockQtyProd.prodQty!! - stockOutDetailEdit.stockOutDetailQty!!
-                                    } else {
-                                        valid = false
-                                        input_layout_editStockOutDetail_qty.error = "Insufficient stock quantity"
-                                    }
-                                }
-                                if (availableStock) {
-                                    var tempStockOutQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_TEMP_OUT).orderByChild("stockOutDetailProdBarcode").equalTo(prodBarcode.toString())
-                                    tempStockOutQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                if (stockOutDetailEdit.stockOutDetailProdBarcode != stockOutDetail.stockOutDetailProdBarcode || stockOutDetailEdit.stockOutDetailQty != stockOutDetail.stockOutDetailQty)
+                {
+                    var checkExistProdBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_TEMP_OUT).orderByChild("stockOutDetailProdBarcode").equalTo(prodBarcode.toString()).also {
+                        it.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if (snapshot.exists()) {
+                                    valid = false
+                                    input_layout_editStockOutDetail_ProdBarcode.error = getString(R.string.exist_stockDetailProd_error)
+                                } else {
+                                    var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
+                                    prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                                         override fun onDataChange(snapshot: DataSnapshot) {
-                                            if (snapshot.exists()) {
-                                                for (tempStockOut in snapshot.children) {
-                                                    var tempStockOutDB = tempStockOut.getValue(StockOutDetail::class.java)
-                                                    tempStockOutDB?.stockOutDetailId = tempStockOut.key
-                                                    if(stockOutDetailEdit.stockOutDetailId != tempStockOutDB?.stockOutDetailId) {
-                                                        if (tempStockOutDB?.stockOutDetailProdBarcode == stockOutDetailEdit.stockOutDetailProdBarcode) {
-                                                            if (availableStockDB >= tempStockOutDB?.stockOutDetailQty!!) {
-                                                                availableStockDB -= tempStockOutDB?.stockOutDetailQty!!
-                                                            } else {
-                                                                valid = false
-                                                                input_layout_editStockOutDetail_qty.error = "Insufficient stock quantity"
-                                                            }
-                                                        }
+                                            var availableStock: Boolean = false
+                                            if (!snapshot.exists()) {
+                                                valid = false
+                                                input_layout_editStockOutDetail_ProdBarcode.error = getString(R.string.invalid_nonexist_error)
+                                            } else {
+                                                for (checkProdSnapshot in snapshot.children) {
+                                                    var checkStockQtyProd = checkProdSnapshot.getValue(Product::class.java)
+                                                    if (checkStockQtyProd?.prodQty!! >= stockOutDetailEdit.stockOutDetailQty!!) {
+                                                        availableStock = true
+                                                        availableStockDB = checkStockQtyProd.prodQty!! - stockOutDetailEdit.stockOutDetailQty!!
+                                                    } else {
+                                                        valid = false
+                                                        input_layout_editStockOutDetail_qty.error = getString(R.string.insufficientstock_error)
                                                     }
                                                 }
-                                                if (valid) {
-                                                    stockOutDetailViewModel.updateStockOutDetail(stockOutDetailEdit)
-                                                    requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                                if (availableStock) {
+                                                    var tempStockOutQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_TEMP_OUT).orderByChild("stockOutDetailProdBarcode").equalTo(prodBarcode.toString())
+                                                    tempStockOutQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                                            if (snapshot.exists()) {
+                                                                for (tempStockOut in snapshot.children) {
+                                                                    var tempStockOutDB = tempStockOut.getValue(StockOutDetail::class.java)
+                                                                    tempStockOutDB?.stockOutDetailId = tempStockOut.key
+                                                                    if (stockOutDetailEdit.stockOutDetailId != tempStockOutDB?.stockOutDetailId) {
+                                                                        if (tempStockOutDB?.stockOutDetailProdBarcode == stockOutDetailEdit.stockOutDetailProdBarcode) {
+                                                                            if (availableStockDB >= tempStockOutDB?.stockOutDetailQty!!) {
+                                                                                availableStockDB -= tempStockOutDB?.stockOutDetailQty!!
+                                                                            } else {
+                                                                                valid = false
+                                                                                input_layout_editStockOutDetail_qty.error = getString(R.string.insufficientstock_error)
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                if (valid) {
+                                                                    stockOutDetailViewModel.updateStockOutDetail(stockOutDetailEdit)
+                                                                    Toast.makeText(requireActivity(), getString(R.string.stockdetail_success), Toast.LENGTH_SHORT).show()
+                                                                    requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                                                }
+                                                            } else {
+                                                                stockOutDetailViewModel.updateStockOutDetail(stockOutDetailEdit)
+                                                                Toast.makeText(requireActivity(), getString(R.string.stockdetail_success), Toast.LENGTH_SHORT).show()
+                                                                requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                                            }
+                                                        }
+
+                                                        override fun onCancelled(error: DatabaseError) {
+                                                            TODO("Not yet implemented")
+                                                        }
+                                                    })
                                                 }
-                                            } else {
-                                                stockOutDetailViewModel.updateStockOutDetail(stockOutDetailEdit)
-                                                requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                                             }
                                         }
 
                                         override fun onCancelled(error: DatabaseError) {
                                             TODO("Not yet implemented")
                                         }
+
+                                        // FIFO check stock
+
+
+                                        // TODO scare of duplication of same stock in transac -> get limit to one
                                     })
                                 }
                             }
-                        }
 
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-
-                        // FIFO check stock
-
-
-                        // TODO scare of duplication of same stock in transac -> get limit to one
-                    })
-                } else {
-                    Toast.makeText(requireActivity(),"Stock Out information remain unchanged", Toast.LENGTH_SHORT).show()
-                    requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+                    }
                 }
             }
+            else
+            {
+                Toast.makeText(requireActivity(),getString(R.string.stockedit_info_remain), Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            }
         }
-        btn_editStockOutDetail_cancel.setOnClickListener {
+
+                btn_editStockOutDetail_cancel.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
@@ -202,7 +222,6 @@ class EditStockOutDetailFragment(
                 it.setTitle(getString(R.string.delete_confirmation))
                 it.setPositiveButton(getString(R.string.yes)) { dialog, which ->
                     stockOutDetailViewModel.deleteStockOutDetail(stockOutDetail)
-                    requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
                 it.setNegativeButton("No") { dialog, which -> dialog.dismiss() }
             }.create().show()
@@ -246,9 +265,6 @@ class EditStockOutDetailFragment(
         if(!sharedStockBarcodeViewModel.scannedProductCode.value.isNullOrEmpty()){
             edit_text_editStockOutDetail_ProdBarcode.setText(sharedStockBarcodeViewModel.scannedProductCode.value)
             sharedStockBarcodeViewModel.clearBarcode()
-        }
-        else{
-            makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()
         }
     }
 }

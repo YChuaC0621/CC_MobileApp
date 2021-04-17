@@ -33,7 +33,6 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
         holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty.toString()
         holder.view.btn_edit_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
         val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
-        var price:Double? = 0.0
         GlobalScope.launch(Dispatchers.IO) {
             dbProduct.get().addOnSuccessListener {
                 if (it.exists()) {
@@ -41,7 +40,7 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
                         var prod: Product? = it.getValue(Product::class.java)
                         if (prod?.prodBarcode == stocksDetail[position].stockDetailProdBarcode) {
                             var price: Double? = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
-                            holder.view.stockDetail_totalPrice.text = price.toString()
+                            holder.view.stockDetail_totalPrice.text = price.toString().trim()
                         }
                     }
                 }

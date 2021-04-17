@@ -46,14 +46,13 @@ class EditProductFragment(private val product: Product) : Fragment() {
         edit_text_editProductName.setText(product.prodName)
         edit_text_editSupplierName.setText(product.supplierName)
         edit_text_editProdDesc.setText(product.prodDesc)
-        edit_text_editProdPrice.setText(product.prodPrice.toString())
+        edit_text_editProdPrice.setText(product.prodPrice.toString().trim())
         edit_text_editProdBarcode.setText(product.prodBarcode)
 
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val message:String
             if (it == null) {
-                message = (R.string.client_added).toString()
-
+                message = getString(R.string.prod_delete_success)
             } else {
                 message = getString(R.string.error, it.message)
             }
@@ -72,8 +71,8 @@ class EditProductFragment(private val product: Product) : Fragment() {
             prodName = edit_text_editProductName.text.toString().trim()
             supplierName = edit_text_editSupplierName.text.toString().trim()
             prodDesc = edit_text_editProdDesc.text.toString().trim()
-            prodPrice = edit_text_editProdPrice.text.toString().toDoubleOrNull()
-            prodBarcode = edit_text_editProdBarcode.text.toString()
+            prodPrice = edit_text_editProdPrice.text.toString().trim().toDoubleOrNull()
+            prodBarcode = edit_text_editProdBarcode.text.toString().trim()
             var valid: Boolean = true
 
             if(prodName.isNullOrEmpty()){
@@ -108,7 +107,12 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 valid = false
                 return@setOnClickListener
             }else if (prodPrice!!.equals(0.0)){
-                input_layout_editProdPrice.error = "Price cannot be 0"
+                input_layout_editProdPrice.error =getString(R.string.prodPrice_nonzero_error)
+                valid = false
+                return@setOnClickListener
+            }
+            else if(!checkRegexPrice(prodPrice.toString())){
+                input_layout_prodPrice.error = getString(R.string.only_priceformat_error)
                 valid = false
                 return@setOnClickListener
             }
@@ -122,7 +126,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 return@setOnClickListener
             }
             else if(!checkRegexBarcode(prodBarcode)){
-                input_layout_editProdBarcode.error = "Only integer are allowed"
+                input_layout_editProdBarcode.error = getString(R.string.only_integer_error)
                 valid = false
                 return@setOnClickListener
             }
@@ -137,21 +141,21 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 newProduct.supplierName = supplierName
                 newProduct.prodDesc = prodDesc
                 newProduct.prodPrice = prodPrice!!.toDouble()
-                newProduct.prodBarcode = prodBarcode
+                newProduct.prodBarcode = prodBarcode.trim()
 
                 var supplierNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_SUPPLIER).orderByChild("supCmpName").equalTo(supplierName)
                 supplierNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if(!snapshot.exists()){
                             valid = false
-                            input_layout_editSupplierName.error = "Invalid supplier"
+                            input_layout_editSupplierName.error = getString(R.string.invalid_nonexist_error)
                         }else{
                             if(newProduct.prodBarcode == product.prodBarcode){
                                 if(newProduct.prodPrice!! != product.prodPrice || newProduct.prodName!! != product.prodName || newProduct.prodDesc!! != product.prodDesc || newProduct.supplierName!! != product.supplierName){
                                     viewModel.updateProduct(newProduct)
                                 }
                                 else{
-                                    Toast.makeText(requireContext(), "Product information remain unchanged", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(requireContext(), getString(R.string.prodedit_info_remain), Toast.LENGTH_SHORT).show()
                                 }
                                 requireActivity().supportFragmentManager.popBackStack("editProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             }
@@ -162,14 +166,15 @@ class EditProductFragment(private val product: Product) : Fragment() {
                                         if(!snapshot.exists()){
                                             if(newProduct.prodPrice!! != product.prodPrice || newProduct.prodBarcode!! != product.prodBarcode || newProduct.prodName!! != product.prodName || newProduct.prodDesc!! != product.prodDesc || newProduct.supplierName!! != product.supplierName){
                                                 viewModel.updateProduct(newProduct)
+                                                Toast.makeText(requireContext(), getString(R.string.prodInfo_success), Toast.LENGTH_SHORT).show()
                                             }
                                             else{
-                                                Toast.makeText(requireContext(), "Product information remain unchanged", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(requireContext(), getString(R.string.prodedit_info_remain), Toast.LENGTH_SHORT).show()
                                             }
                                             requireActivity().supportFragmentManager.popBackStack("editProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                                         }else {
                                             valid = false
-                                            input_layout_editProdBarcode.error = "Existing product barcode"
+                                            input_layout_editProdBarcode.error = getString(R.string.exist_prodBarcode_error)
                                         }
                                     }
 
@@ -187,7 +192,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
             }
         }
         btn_editProdCancel.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            requireActivity().supportFragmentManager.popBackStack("editProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         btn_productDelete.setOnClickListener{
@@ -197,7 +202,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 }
                 it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()
-            requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            requireActivity().supportFragmentManager.popBackStack("editProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         btn_editScanBarcode.setOnClickListener {
@@ -225,6 +230,12 @@ class EditProductFragment(private val product: Product) : Fragment() {
         var prodBarcode: String = prodBarcode
         var regex:Regex = Regex(pattern="""\d+""")
         return regex.matches(input = prodBarcode)
+    }
+
+    private fun checkRegexPrice(prodPrice: String): Boolean {
+        var prodPrice: String = prodPrice
+        var regex:Regex = Regex(pattern="^\\d{0,9}\\.\\d{1,2}$")
+        return regex.matches(input = prodPrice)
     }
 
     protected fun populateSearchSupplierName(snapshot: DataSnapshot) {

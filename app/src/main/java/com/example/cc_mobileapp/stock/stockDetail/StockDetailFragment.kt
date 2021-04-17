@@ -51,7 +51,6 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         adapter.listener = this
         recycler_view_stockDetail.adapter = adapter
 
@@ -186,7 +185,6 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
     fun getCallerFragment(): String? {
         val fm: FragmentManager = requireActivity().supportFragmentManager
         val count: Int = requireActivity().supportFragmentManager.backStackEntryCount
-        Toast.makeText(requireContext(), fm.getBackStackEntryAt(count - 2).name, Toast.LENGTH_SHORT).show()
         return fm.getBackStackEntryAt(count - 2).name
     }
 

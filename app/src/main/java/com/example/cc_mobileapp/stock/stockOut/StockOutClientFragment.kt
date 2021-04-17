@@ -60,7 +60,7 @@ class StockOutClientFragment : Fragment() {
                             transaction.addToBackStack("stockOutDetailFragment")
                             transaction.commit()
                         }else{
-                            input_layout_stockOut_clientName.error = "Invalid client"
+                            input_layout_stockOut_clientName.error = getString(R.string.invalid_nonexist_error)
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {

@@ -42,7 +42,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val message:String
             if (it == null) {
-                message = (R.string.client_added).toString()
+                message = getString(R.string.client_delete_success)
             } else {
                 message = getString(R.string.error, it.message)
             }
@@ -72,7 +72,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
                 return@setOnClickListener
             }
             else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(clientEmail).matches()){
-                input_layout_editClientEmail.error = "Invalid Input"
+                input_layout_editClientEmail.error = getString(R.string.email_format_error)
                 return@setOnClickListener
             }
             else{
@@ -85,7 +85,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
                 return@setOnClickListener
             }
             else if (!android.util.Patterns.PHONE.matcher(clientHp).matches()){
-                input_layout_editClientHp.error = "Invalid Input"
+                input_layout_editClientHp.error = getString(R.string.phone_format_error)
                 return@setOnClickListener
             }
             else{
@@ -113,18 +113,19 @@ class EditClientFragment(private val client: Client) : Fragment() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.childrenCount > 0) {
                             if(client.clientCoName != clientCoName){
-                                Toast.makeText(requireActivity(), "Client Company Name Exist", Toast.LENGTH_SHORT).show()
-                                input_layout_editClientCoName.error = "Client Company Name Exist"
+                                input_layout_editClientCoName.error = getString(R.string.exist_clientname_error)
                             }else{
                                 if(client.clientEmail != newClient.clientEmail || client.clientHpNum != newClient.clientHpNum || client.clientLocation != newClient.clientLocation ){
                                     viewModel.updateClient(newClient)
+                                    Toast.makeText(requireContext(), getString(R.string.clientInfo_success), Toast.LENGTH_SHORT).show()
                                 }else{
-                                    Toast.makeText(requireContext(), "Client information remain unchanged", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(requireContext(), getString(R.string.client_info_remain), Toast.LENGTH_SHORT).show()
                                 }
                                 requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                             }
                         } else {
                             viewModel.updateClient(newClient)
+                            Toast.makeText(requireContext(), getString(R.string.clientInfo_success), Toast.LENGTH_SHORT).show()
                             requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                         }
                     }

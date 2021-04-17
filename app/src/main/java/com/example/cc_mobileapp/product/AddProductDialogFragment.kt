@@ -19,6 +19,7 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
+import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.product_display_item.*
 
 class AddProductDialogFragment : Fragment() {
@@ -63,7 +64,7 @@ class AddProductDialogFragment : Fragment() {
             prodName = edit_text_prodName.text.toString().trim()
             supplierName = edit_text_prodSupplierName.text.toString().trim()
             prodDesc = edit_text_prodDesc.text.toString().trim()
-            prodPrice = edit_text_prodPrice.text.toString().toDoubleOrNull()
+            prodPrice = edit_text_prodPrice.text.toString().trim().toDoubleOrNull()
             prodBarcode = edit_text_prodBarcode.text.toString().trim()
             var valid: Boolean = true
             if(prodName.isNullOrEmpty()){
@@ -95,11 +96,15 @@ class AddProductDialogFragment : Fragment() {
             }
 
             if(prodPrice == null){
-                input_layout_prodPrice.error = "The field is empty or null"
+                input_layout_prodPrice.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
             }else if (prodPrice!!.equals(0.0)){
-                input_layout_prodPrice.error = "Product Price cannot be zero"
+                input_layout_prodPrice.error = getString(R.string.prodPrice_nonzero_error)
+                valid = false
+                return@setOnClickListener
+            }else if(!checkRegexPrice(prodPrice.toString())){
+                input_layout_prodPrice.error = getString(R.string.only_priceformat_error)
                 valid = false
                 return@setOnClickListener
             }
@@ -114,7 +119,7 @@ class AddProductDialogFragment : Fragment() {
                 return@setOnClickListener
             }
             else if(!checkRegexBarcode(prodBarcode)){
-                input_layout_prodBarcode.error = "Only integer are allowed"
+                input_layout_prodBarcode.error = getString(R.string.only_integer_error)
                 valid = false
                 return@setOnClickListener
             }
@@ -129,18 +134,31 @@ class AddProductDialogFragment : Fragment() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if(!snapshot.exists()){
                             valid = false
-                            input_layout_prodSupplierName.error = "Invalid supplier"
+                            input_layout_prodSupplierName.error = getString(R.string.invalid_nonexist_error)
                         }else{
-                            val product = Product()
-                            product.prodName = prodName
-                            product.supplierName = supplierName
-                            product.prodDesc = prodDesc
-                            product.prodPrice = prodPrice!!.toDouble()
-                            product.prodBarcode = prodBarcode
-                            product.prodQty = 0
-                            Log.d("Check", "client data $product")
-                            viewModel.addProduct(product)
-                            requireActivity().supportFragmentManager.popBackStack("addProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode)
+                            prodBarcodeQuery.addListenerForSingleValueEvent(object: ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    if(!snapshot.exists()){
+                                        val product = Product()
+                                        product.prodName = prodName
+                                        product.supplierName = supplierName
+                                        product.prodDesc = prodDesc
+                                        product.prodPrice = prodPrice!!.toDouble()
+                                        product.prodBarcode = prodBarcode
+                                        product.prodQty = 0
+                                        viewModel.addProduct(product)
+                                        requireActivity().supportFragmentManager.popBackStack("addProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                    }else {
+                                        valid = false
+                                        input_layout_prodBarcode.error = getString(R.string.exist_prodBarcode_error)
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {
@@ -175,6 +193,12 @@ class AddProductDialogFragment : Fragment() {
         dbSupplier.addListenerForSingleValueEvent(supplierNameListener)
     }
 
+    private fun checkRegexPrice(prodPrice: String): Boolean {
+        var prodPrice: String = prodPrice
+        var regex:Regex = Regex(pattern="^\\d{0,9}\\.\\d{1,2}$")
+        return regex.matches(input = prodPrice)
+    }
+
     private fun checkRegexBarcode(prodBarcode: String): Boolean {
         var prodBarcode: String = prodBarcode
         var regex:Regex = Regex(pattern="""\d+""")
@@ -188,7 +212,7 @@ class AddProductDialogFragment : Fragment() {
                 var supplierName: String = it.child("supCmpName").value.toString()
                 supplierNames.add(supplierName)
             }
-            var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, supplierNames)
+            var adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, supplierNames)
             edit_text_prodSupplierName.setAdapter(adapter)
         }else{
             Log.d("checkAuto", "No match found")
@@ -202,9 +226,6 @@ class AddProductDialogFragment : Fragment() {
         if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty()){
             edit_text_prodBarcode.setText(sharedBarcodeViewModel.scannedCode.value)
             sharedBarcodeViewModel.clearBarcode()
-        }
-        else{
-            Toast.makeText(requireContext(), "viewModel have nothing", Toast.LENGTH_SHORT).show()
         }
     }
 

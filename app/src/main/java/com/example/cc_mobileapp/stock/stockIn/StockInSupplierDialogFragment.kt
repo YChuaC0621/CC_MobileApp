@@ -64,7 +64,7 @@ class StockInSupplierDialogFragment : Fragment(){
                             transaction.addToBackStack("stockInDetailFragment")
                             transaction.commit()
                         }else{
-                            input_layout_stockIn_supplierName.error = "Invalid supplier"
+                            input_layout_stockIn_supplierName.error = getString(R.string.invalid_nonexist_error)
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {

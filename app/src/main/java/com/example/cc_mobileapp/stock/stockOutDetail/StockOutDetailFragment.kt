@@ -51,7 +51,6 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         adapter.listener = this
         recycler_view_stockOutDetail.adapter = adapter
 
@@ -116,30 +115,6 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
 
     }
 
-
-
-//    private fun stockUpdateStockInQty(stockOutDetailProdBarcode: String?, stockOutDetailQty: Int?) {
-//        var stockOutDetailQty = stockOutDetailQty
-//        GlobalScope.launch(Dispatchers.IO){
-//            dbStockInDetail.orderByChild("stockDetailProdBarcode").equalTo(stockOutDetailProdBarcode).get().addOnSuccessListener {
-//                if(it.exists()){
-//                    it.children.forEach {
-//                        if(stockOutDetailQty!! > 0) {
-//                            var stockInUpdate = it.getValue(StockDetail::class.java)
-//                            if (stockInUpdate?.stockDetailQty!! >= stockOutDetailQty!!) {
-//                                stockInUpdate.stockDetailQty = stockInUpdate.stockDetailQty!! - stockOutDetailQty!!
-//                                stockOutDetailQty = 0
-//                            } else {
-//                                stockOutDetailQty = stockOutDetailQty!! - stockInUpdate.stockDetailQty!!
-//                                stockInUpdate.stockDetailQty = 0
-//                            }
-//                            stockInDetailViewModel.updateStockDetail(stockInUpdate)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
     private fun stockUpdateQty() {
     var stockOutDetails = mutableListOf(stockOutDetailViewModel.stocksOutDetail)
     stockOutDetails.listIterator().forEach {
@@ -155,12 +130,10 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
                             for (stockInInfo in snapshot.children) {
                                 var stockInDetail = stockInInfo.getValue(StockDetail::class.java)
                                 stockInDetail?.stockDetailId = stockInInfo.key
-                                if (stockOutQty!! > 0) {
+                                if (stockOutQty!! != 0) {
                                     if (stockOutQty!! <= stockInDetail?.stockDetailQty!!) {
                                         stockInDetail.stockDetailQty = stockInDetail.stockDetailQty!! - stockOutQty!!
                                         stockOutQty = 0
-                                        if (stockInDetail.stockDetailQty == 0) {
-                                        }
                                     } else {
                                         stockOutQty = stockOutQty!! - stockInDetail.stockDetailQty!!
                                         stockInDetail.stockDetailQty = 0
@@ -185,42 +158,6 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         }
     }
 }
-//    private fun stockUpdateQty() {
-//        stockOutDetails.listIterator().forEach {
-//            it.value?.forEach {
-//                var stockOutDetail = it
-//                var stockOutQty = stockOutDetail.stockOutDetailQty
-//                stockSnapshot.children.forEach {
-//                    if(stockOutQty ==0){
-//                        var stockInDetail = it.getValue(StockDetail::class.java)
-//                        if(stockOutDetail.stockOutDetailProdBarcode == stockInDetail?.stockDetailProdBarcode){
-//                            if(stockInDetail.stockDetailQty > stockOutQty)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-//        var stockOutDetailQty = stockOutDetailQty
-//        stockSnapshot.children.forEach {
-//            var stockDB: StockDetail? =null
-//            stockDB = it.getValue(StockDetail::class.java)
-//
-//            if(stockDB?.stockDetailProdBarcode.equals(stockOutDetailProdBarcode)){
-//                if(stockOutDetailQty!! > 0) {
-//                    if (stockDB?.stockDetailQty!! >= stockOutDetailQty!!) {
-//                        stockDB.stockDetailQty = stockDB.stockDetailQty!! - stockOutDetailQty!!
-//                        stockOutDetailQty = 0
-//                    } else {
-//                        stockOutDetailQty = stockOutDetailQty!! - stockDB.stockDetailQty!!
-//                        stockDB.stockDetailQty = 0
-//                    }
-//                    stockInDetailViewModel.updateStockDetail(stockDB)
-//                }
-//            }
-
-
     private fun updateStockOutDetail() {
         val stockOut = StockOut()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
@@ -277,21 +214,6 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         })
     }
 
-    private fun readStockData(firebaseCallback: FirebaseCallback){
-        dbStockInDetail.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (callBackCount == 0) {
-                    firebaseCallback.onCallBack(snapshot)
-                    callBackCount += 1
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-    }
 
     private interface FirebaseCallback{
         fun onCallBack(snapshot: DataSnapshot)

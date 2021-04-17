@@ -56,8 +56,6 @@ class ClientViewModel(): ViewModel() {
         }
 
         override fun onChildRemoved(snapshot: DataSnapshot) {
-            Log.d("Check", "onchildremove $snapshot")
-
             val client = snapshot.getValue(Client::class.java)
             client?.clientId = snapshot.key
             client?.isDeleted = true
@@ -73,16 +71,13 @@ class ClientViewModel(): ViewModel() {
     }
 
     fun getRealtimeUpdates(){
-        Log.d("Check", "testgetRealtimeupdate")
         dbClient.addChildEventListener(childEventListener)
     }
 
     fun fetchClients(){
         dbClient.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("Check", "fetch clients")
                 if(snapshot.exists()){
-                    Log.d("Check", "has snapshot $snapshot")
                     val clients = mutableListOf<Client>()
                     for(clientSnapshot in snapshot.children){
                         val client = clientSnapshot.getValue(Client::class.java)
@@ -101,7 +96,6 @@ class ClientViewModel(): ViewModel() {
 
     fun updateClient(client: Client){
     // save inside the unique key
-        Log.d("Check", "Update view model $client")
         dbClient.child(client.clientId.toString()).setValue(client)
         .addOnCompleteListener {
             if (it.isSuccessful) {
@@ -113,7 +107,6 @@ class ClientViewModel(): ViewModel() {
     }
 
     fun deleteClient(client:Client){
-        Log.d("Check", "Delete view model $client")
         dbClient.child(client.clientId.toString()).setValue(null)
             .addOnCompleteListener {
                 if (it.isSuccessful) {

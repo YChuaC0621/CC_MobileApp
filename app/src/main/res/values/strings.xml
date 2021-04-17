@@ -54,9 +54,34 @@
     <!-- error string -->
     <string name="error_field_required">This Field Required</string>
     <string name="error">Error: %15s</string>
-    <string name="title_activity_product__main">Product_Main</string>
+    <string name="email_format_error">The email address format is incorrect</string>
+    <string name="phone_format_error">The phone number format is incorrect</string>
+    <string name="exist_clientname_error">Client Company Name is already exist</string>
+    <string name="only_integer_error">Only integer is allow</string>
+    <string name="prod_nonzero_error">Product Quantity cannot be zero</string>
+    <string name="invalid_nonexist_error">The input is non-exist in the record</string>
+    <string name="rack_occupied_error">Rack is occupied</string>
+    <string name="rack_occupiedontemp_error">Occupied rack id in your stock detail</string>
+    <string name="prodPrice_nonzero_error">Product Price cannot be zero</string>
+    <string name="insufficientstock_error">Insufficient stock quantity</string>
+    <string name="stock_nonzero_error">Stock Quantity cannot be zero</string>
+
+
+    <!-- update msg -->
+    <string name="client_info_remain">Client information remain unchanged</string>
+    <string name="stockedit_info_remain">Stock Detail Remain Unchanged</string>
+    <string name="prodedit_info_remain">Product information Remain Unchanged</string>
+    <string name="stockdetail_success">Stock Detail Update Successfully</string>
+    <string name="prodInfo_success">Product Information Update Successfully</string>
+    <string name="clientInfo_success">Client Information Update Successfully</string>
+    <string name="client_delete_success">Client Successfully Deleted</string>
+    <string name="prod_delete_success">Product Successfully Deleted</string>
+    <string name="stockdetail_delete_success">Stock Detail successfully deleted</string>
+    <string name="only_priceformat_error">Only price format is allowed</string>
+    <string name="exist_prodBarcode_error">The Barcode is already exist</string>
 
     <!-- product -->
+    <string name="title_activity_product__main">Product_Main</string>
     <string name="prodAddSuccess">Product Added Successfully</string>
     <string name="quantity">Quantity</string>
     <string name="prod_desc">prodDesc</string>
@@ -167,10 +192,15 @@
     <string name="cancel">CANCEL</string>
     <string name="in">IN</string>
     <string name="out">OUT</string>
-    <string name="report">Repotr</string>
+
+    <!--title -->
+    <string name="report">Report</string>
     <string name="profile">Profile</string>
     <string name="resetPsw">Reset Password</string>
     <string name="login">Login</string>
     <string name="registration">Registration</string>
+    <string name="add_new_stock_in_detail">Add New Stock In Detail</string>
+    <string name="exist_stockDetailProd_error">Product is already in stock detail</string>
+
 </resources>
 

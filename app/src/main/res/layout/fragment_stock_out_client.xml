@@ -35,6 +35,9 @@
         android:id="@+id/btn_continueAddStockOutDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/design_default_color_primary"
         android:text="NEXT"
         android:textColor="@android:color/white" />
@@ -43,7 +46,9 @@
         android:id="@+id/btn_cancelAddStockOutDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         android:background="@color/design_default_color_primary"
         android:text="CANCEL"
         android:textColor="@android:color/white" />

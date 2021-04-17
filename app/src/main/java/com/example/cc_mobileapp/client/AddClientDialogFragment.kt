@@ -68,7 +68,7 @@ class AddClientDialogFragment : Fragment() {
                 return@setOnClickListener
             }
             else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(clientEmail).matches()){
-                input_layout_clientEmail.error = "Invalid Input"
+                input_layout_clientEmail.error = getString(R.string.email_format_error)
                 return@setOnClickListener
             }
             else{
@@ -81,7 +81,7 @@ class AddClientDialogFragment : Fragment() {
                 return@setOnClickListener
             }
             else if (!android.util.Patterns.PHONE.matcher(clientHp).matches()){
-                input_layout_clientHp.error = "Invalid Input"
+                input_layout_clientHp.error = getString(R.string.phone_format_error)
                 return@setOnClickListener
             }
             else{
@@ -102,15 +102,13 @@ class AddClientDialogFragment : Fragment() {
                 clientNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.childrenCount > 0) {
-                            Toast.makeText(requireActivity(), "Client Company Name Exist", Toast.LENGTH_SHORT).show()
-                            input_layout_clientCoName.error = "Client Company Name Exist"
+                            input_layout_clientCoName.error = getString(R.string.exist_clientname_error)
                         } else {
                             val client = Client()
                             client.clientCoName = clientCoName
                             client.clientEmail = clientEmail
                             client.clientHpNum = clientHp
                             client.clientLocation = clientLocation
-                            Log.d("Check", "client data $client")
                             viewModel.addClient(client)
                             requireActivity().supportFragmentManager.popBackStack("addClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                         }

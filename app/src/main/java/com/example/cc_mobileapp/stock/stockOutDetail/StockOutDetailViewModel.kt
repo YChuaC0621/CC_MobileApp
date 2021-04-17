@@ -1,6 +1,7 @@
 package com.example.cc_mobileapp.stock.stockOutDetail
 
 import android.util.Log
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,8 +18,6 @@ import com.google.firebase.database.*
 class StockOutDetailViewModel : ViewModel() {
     private val dbStockOutDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKOUTDETAIL)
     private val dbTempOut = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP_OUT)
-    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
-
 
     private val _result = MutableLiveData<Exception?>()
     val result: LiveData<Exception?>
