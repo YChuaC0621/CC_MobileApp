@@ -41,7 +41,7 @@ class EditStockOutDetailFragment(
 ) : Fragment() {
 
     private lateinit var stockOutDetailViewModel: StockOutDetailViewModel
-    private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
+    private val sharedStockBarcodeViewModel: StockOutBarcodeViewModel by activityViewModels()
     private val sharedStockOutDetailViewModel: StockOutDetailViewModel by activityViewModels()
     private val dbProd = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
 
