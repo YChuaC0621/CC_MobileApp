@@ -65,7 +65,6 @@ class EditStockDetailFragment(
                 getString(R.string.error, it.message)
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         })
 
         btn_editStockDetail_edit.setOnClickListener {
@@ -117,7 +116,7 @@ class EditStockDetailFragment(
                 stockDetailEdit.stockDetailQty = stockQty.toInt()
                 stockDetailEdit.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
                 stockDetailEdit.stockDetailId = stockDetail.stockDetailId
-                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
+                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("supplier").equalTo(prodBarcode.toString())
                 prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (!snapshot.exists()) {

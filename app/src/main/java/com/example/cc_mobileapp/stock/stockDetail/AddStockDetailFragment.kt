@@ -17,6 +17,7 @@ import com.example.cc_mobileapp.Constant.NODE_PRODUCT
 import com.example.cc_mobileapp.Constant.NODE_STOCKDETAIL
 import com.example.cc_mobileapp.Constant.NODE_TEMP
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.product.ProductViewModel
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
@@ -110,80 +111,92 @@ class AddStockDetailFragment : Fragment() {
                 stockDetail.stockDetailQty = stockQty
                 stockDetail.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
 
-                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
+                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_PRODUCT).orderByChild("supplierName").equalTo(sharedStockInViewModel.stockInSupplierId.value)
                 prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (!snapshot.exists()) {
                             valid = false
-                            input_layout_stockDetail_ProdBarcode.error = getString(R.string.invalid_nonexist_error)
+                            input_layout_stockDetail_ProdBarcode.error = getString(R.string.supplier_noProd_error)
                         } else {
-                            var checkExistProdBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP).orderByChild("stockDetailProdBarcode").equalTo(prodBarcode.toString())
-                            checkExistProdBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(snapshot: DataSnapshot) {
-                                    if (snapshot.exists()) {
-                                        valid = false
-                                        input_layout_stockDetail_ProdBarcode.error = getString(R.string.exist_stockDetailProd_error)
-                                    } else {
-                                        var rackBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_RACK).orderByChild("rackName").equalTo(rackId.toString())
-                                        rackBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                                            override fun onDataChange(snapshot: DataSnapshot) {
-                                                if (!snapshot.exists()) {
-                                                    valid = false
-                                                    input_layout_stockDetail_rackId.error = getString(R.string.invalid_nonexist_error)
-                                                } else {
-                                                    var rackStatusQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_STOCKDETAIL)
-                                                    rackStatusQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                                                        override fun onDataChange(snapshot: DataSnapshot) {
-                                                            var stockInUse: Boolean = false
-                                                            for (stockSnapshot in snapshot.children) {
-                                                                val occupiedRack = stockSnapshot.getValue(StockDetail::class.java)?.stockDetailRackId
-                                                                if (occupiedRack == stockDetail.stockDetailRackId) {
-                                                                    stockInUse = true
+                            var availableProd = false
+                            for (prodSnapshot in snapshot.children) {
+                                val availableProdBarcode = prodSnapshot.getValue(Product::class.java)?.prodBarcode
+                                if (availableProdBarcode == stockDetail.stockDetailProdBarcode) {
+                                    availableProd = true
+                                }
+                            }
+                            if(!availableProd){
+                                valid = false
+                                input_layout_stockDetail_ProdBarcode.error = getString(R.string.invalid_nonexist_error)
+                            }else{
+                                var checkExistProdBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP).orderByChild("stockDetailProdBarcode").equalTo(prodBarcode.toString())
+                                checkExistProdBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        if (snapshot.exists()) {
+                                            valid = false
+                                            input_layout_stockDetail_ProdBarcode.error = getString(R.string.exist_stockDetailProd_error)
+                                        } else {
+                                            var rackBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_RACK).orderByChild("rackName").equalTo(rackId.toString())
+                                            rackBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                override fun onDataChange(snapshot: DataSnapshot) {
+                                                    if (!snapshot.exists()) {
+                                                        valid = false
+                                                        input_layout_stockDetail_rackId.error = getString(R.string.invalid_nonexist_error)
+                                                    } else {
+                                                        var rackStatusQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_STOCKDETAIL)
+                                                        rackStatusQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                                var stockInUse: Boolean = false
+                                                                for (stockSnapshot in snapshot.children) {
+                                                                    val occupiedRack = stockSnapshot.getValue(StockDetail::class.java)?.stockDetailRackId
+                                                                    if (occupiedRack == stockDetail.stockDetailRackId) {
+                                                                        stockInUse = true
+                                                                    }
+                                                                }
+                                                                if (stockInUse) {
+                                                                    input_layout_stockDetail_rackId.error = getString(R.string.rack_occupied_error)
+                                                                } else {
+                                                                    var tempRackQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP).orderByChild("stockDetailRackId").equalTo(rackId.toString())
+                                                                    tempRackQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                                                            if (snapshot.exists()) {
+                                                                                valid = false
+                                                                                input_layout_stockDetail_rackId.error = getString(R.string.rack_occupiedontemp_error)
+                                                                            } else {
+                                                                                stockViewModel.addStockDetail(stockDetail)
+                                                                                requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                                                            }
+                                                                        }
+
+                                                                        override fun onCancelled(error: DatabaseError) {
+                                                                            TODO("Not yet implemented")
+                                                                        }
+                                                                    })
                                                                 }
                                                             }
-                                                            if (stockInUse) {
-                                                                input_layout_stockDetail_rackId.error = getString(R.string.rack_occupied_error)
-                                                            } else {
-                                                                var tempRackQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP).orderByChild("stockDetailRackId").equalTo(rackId.toString())
-                                                                tempRackQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                                                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                                                        if (snapshot.exists()) {
-                                                                            valid = false
-                                                                            input_layout_stockDetail_rackId.error = getString(R.string.rack_occupiedontemp_error)
-                                                                        } else {
-                                                                            stockViewModel.addStockDetail(stockDetail)
-                                                                            requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                                                                        }
-                                                                    }
 
-                                                                    override fun onCancelled(error: DatabaseError) {
-                                                                        TODO("Not yet implemented")
-                                                                    }
-                                                                })
+                                                            override fun onCancelled(error: DatabaseError) {
+                                                                TODO("Not yet implemented")
                                                             }
-                                                        }
-
-                                                        override fun onCancelled(error: DatabaseError) {
-                                                            TODO("Not yet implemented")
-                                                        }
-                                                    })
+                                                        })
+                                                    }
                                                 }
-                                            }
 
-                                            override fun onCancelled(error: DatabaseError) {
-                                                TODO("Not yet implemented")
-                                            }
-                                        })
+                                                override fun onCancelled(error: DatabaseError) {
+                                                    TODO("Not yet implemented")
+                                                }
+                                            })
+                                        }
                                     }
-                                }
 
-                                override fun onCancelled(error: DatabaseError) {
-                                    TODO("Not yet implemented")
-                                }
-                            })
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
+                            }
+
                         }
                     }
-
                     override fun onCancelled(error: DatabaseError) {
                         TODO("Not yet implemented")
                     }

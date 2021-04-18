@@ -204,6 +204,7 @@
     <string name="registration">Registration</string>
     <string name="add_new_stock_in_detail">Add New Stock In Detail</string>
     <string name="exist_stockDetailProd_error">Product is already in stock detail</string>
+    <string name="supplier_noProd_error">The supplier do provide any product yet</string>
 
     <!--staff-->
     <string name="staffName">Staff Name</string>
