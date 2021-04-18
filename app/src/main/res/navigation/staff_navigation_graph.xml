@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/staffFragment"
         android:name="com.example.cc_mobileapp.staff.StaffFragment"
-        android:label="fragment_staff"
+        android:label="Staff"
         tools:layout="@layout/fragment_staff" >
         <action
             android:id="@+id/action_staffFragment_to_editStaffFragment"

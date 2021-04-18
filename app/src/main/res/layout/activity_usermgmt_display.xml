@@ -171,7 +171,7 @@
 
 
 
-    <Button
+   <!-- <Button
         android:id="@+id/btn_setting"
         style="@style/transparentbtn2_standard"
         android:layout_marginStart="16dp"
@@ -179,9 +179,9 @@
         android:clickable="false"
         android:drawableTop="@drawable/ic_setting_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_workingStatus" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_workingStatus" />-->
 
-    <Spinner
+    <!--<Spinner
         android:id="@+id/ddlTheme"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="250dp"
@@ -191,7 +191,7 @@
         android:background="@drawable/dropdown_bckgrd"
         android:entries="@array/themeSpinner"
         app:layout_constraintStart_toEndOf="@+id/btn_setting"
-        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_working_status" />
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_working_status" />-->
 
         <Button
             android:id="@+id/btn_Save"
@@ -207,14 +207,14 @@
             android:id="@+id/txtForgtPsw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="39dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="36dp"
             android:background="@color/transparent"
             android:clickable="true"
             android:text="@string/reset_Psw"
             android:textColor="@color/blue_61"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ddlTheme" />
+            app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_working_status" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.model.Users
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class StaffViewModel (): ViewModel() {
@@ -22,6 +23,8 @@ class StaffViewModel (): ViewModel() {
     private val _result = MutableLiveData<Exception?>()
     val result: LiveData<Exception?>
         get() = _result
+
+    private lateinit var mAuth : FirebaseAuth;
 
     private val childEventListener = object: ChildEventListener {
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {

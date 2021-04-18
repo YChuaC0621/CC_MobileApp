@@ -10,7 +10,6 @@ data class Users (
     var userName: String? = null,
     var userEmail: String? = null,
     var userHpNum: String? = null,
-    var userPsw: String? = null,
     var workingStatus: Int? = null,
     var workingPosition: Int? = null)
 {
@@ -25,7 +24,6 @@ data class Users (
         var result = userName?.hashCode() ?: 0
         result = 31 * result + (userEmail?.hashCode() ?: 0)
         result = 31 * result + (userHpNum?.hashCode() ?: 0)
-        result = 31 * result + (userPsw?.hashCode() ?: 0)
         result = 31 * result + (workingStatus ?: 0)
         result = 31 * result + (workingPosition ?: 0)
         return result

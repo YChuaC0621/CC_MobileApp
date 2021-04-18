@@ -3,6 +3,7 @@ package com.example.cc_mobileapp.stock.stockIn
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -23,30 +24,16 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class StockInActivity : AppCompatActivity() {
+class StockInActivity: AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var navController : NavController
-    var user = FirebaseAuth.getInstance().currentUser
-    lateinit var mDatabase : DatabaseReference
-    var user_pos = "1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock_in)
 
-        var uid = user!!.uid
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users")
-        mDatabase.child(uid).child("workingPosition").addValueEventListener( object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                user_pos =  snapshot.value.toString()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
 
         navController = Navigation.findNavController(this,R.id.stockin_nav_host_fragment)
         drawerLayout = findViewById(R.id.stock_in_drawer)
@@ -54,7 +41,7 @@ class StockInActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(navigationView,navController)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
@@ -62,17 +49,58 @@ class StockInActivity : AppCompatActivity() {
         }
 
         navigationView.setNavigationItemSelectedListener {
+
             when(it.itemId){
-                R.id.item_homepage -> startActivity(Intent(this, MainActivity::class.java))
-                R.id.item_userMgmt -> startActivity(Intent(this, Usermgmt::class.java))
-                R.id.item_product -> startActivity(Intent(this, Product_Main::class.java))
-                R.id.item_stockIn -> startActivity(Intent(this, StockInActivity::class.java))
-                R.id.item_stockOut -> startActivity(Intent(this, StockOutActivity::class.java))
-                R.id.item_sitemap -> startActivity(Intent(this, SiteMap::class.java))
-                R.id.item_client -> startActivity(Intent(this, Client_Main::class.java))
-                R.id.item_supplier-> startActivity(Intent(this, Supplier_Main::class.java))
-                R.id.item_manageStaff -> startActivity(Intent(this, Staff_Main::class.java))
-                R.id.item_report -> startActivity(Intent(this, Report_Main::class.java))
+                R.id.item_homepage -> {
+                    var intent: Intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_userMgmt ->  {
+                    var intent: Intent = Intent(this, Usermgmt::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_product ->  {
+                    var intent: Intent = Intent(this, Product_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_stockIn ->  {
+                    var intent: Intent = Intent(this, StockInActivity::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_stockOut ->  {
+                    var intent: Intent = Intent(this, StockOutActivity::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_sitemap ->  {
+                    var intent: Intent = Intent(this, SiteMap::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_client ->  {
+                    var intent: Intent = Intent(this, Client_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_supplier ->  {
+                    var intent: Intent = Intent(this, Supplier_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_manageStaff ->  {
+                    var intent: Intent = Intent(this, Staff_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_report ->  {
+                    var intent: Intent = Intent(this, Report_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
                 R.id.item_logout -> startActivity(Intent(this, Login::class.java))
 
             }

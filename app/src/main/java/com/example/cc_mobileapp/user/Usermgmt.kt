@@ -107,7 +107,7 @@ class Usermgmt : AppCompatActivity() {
             }
         })
 
-        // Create an ArrayAdapter
+        /*// Create an ArrayAdapter
         val adapter = ArrayAdapter.createFromResource(this,
                 R.array.themeSpinner, android.R.layout.simple_spinner_item)
 
@@ -115,7 +115,7 @@ class Usermgmt : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         // Apply the adapter to the spinner
         ddlTheme.adapter = adapter
-
+*/
         val saveBtn: Button = findViewById(R.id.btn_Save)
 
         saveBtn.setOnClickListener {

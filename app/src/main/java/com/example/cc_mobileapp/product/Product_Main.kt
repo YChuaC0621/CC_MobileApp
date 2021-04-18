@@ -2,7 +2,9 @@ package com.example.cc_mobileapp.product
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.ListFragment
 import androidx.navigation.NavController
@@ -10,9 +12,11 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.MainActivity
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.client.Client_Main
+import com.example.cc_mobileapp.model.Users
 import com.example.cc_mobileapp.rack.SiteMap
 import com.example.cc_mobileapp.report.Report_Main
 import com.example.cc_mobileapp.staff.Staff_Main
@@ -24,16 +28,14 @@ import com.example.cc_mobileapp.user.Usermgmt
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 
-class Product_Main : AppCompatActivity(R.layout.activity_product__main) {
+class Product_Main: AppCompatActivity(R.layout.activity_product__main) {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var navController : NavController
-    var user = FirebaseAuth.getInstance().currentUser
-    lateinit var mDatabase : DatabaseReference
-    var user_pos = "1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,17 +45,7 @@ class Product_Main : AppCompatActivity(R.layout.activity_product__main) {
         navController = navHostFragment.navController
 
         setupActionBarWithNavController(navController)*/
-        var uid = user!!.uid
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users")
-        mDatabase.child(uid).child("workingPosition").addValueEventListener( object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                user_pos =  snapshot.value.toString()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
 
         navController = Navigation.findNavController(this,R.id.product_nav_host_fragment)
         drawerLayout = findViewById(R.id.product_drawer)
@@ -62,6 +54,7 @@ class Product_Main : AppCompatActivity(R.layout.activity_product__main) {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
@@ -69,17 +62,58 @@ class Product_Main : AppCompatActivity(R.layout.activity_product__main) {
         }
 
         navigationView.setNavigationItemSelectedListener {
+
             when(it.itemId){
-                R.id.item_homepage -> startActivity(Intent(this, MainActivity::class.java))
-                R.id.item_userMgmt -> startActivity(Intent(this, Usermgmt::class.java))
-                R.id.item_product -> startActivity(Intent(this, Product_Main::class.java))
-                R.id.item_stockIn -> startActivity(Intent(this, StockInActivity::class.java))
-                R.id.item_stockOut -> startActivity(Intent(this, StockOutActivity::class.java))
-                R.id.item_sitemap -> startActivity(Intent(this, SiteMap::class.java))
-                R.id.item_client -> startActivity(Intent(this, Client_Main::class.java))
-                R.id.item_supplier-> startActivity(Intent(this, Supplier_Main::class.java))
-                R.id.item_manageStaff -> startActivity(Intent(this, Staff_Main::class.java))
-                R.id.item_report -> startActivity(Intent(this, Report_Main::class.java))
+                R.id.item_homepage -> {
+                    var intent: Intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_userMgmt ->  {
+                    var intent: Intent = Intent(this, Usermgmt::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_product ->  {
+                    var intent: Intent = Intent(this, Product_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_stockIn ->  {
+                    var intent: Intent = Intent(this, StockInActivity::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_stockOut ->  {
+                    var intent: Intent = Intent(this, StockOutActivity::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_sitemap ->  {
+                    var intent: Intent = Intent(this, SiteMap::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_client ->  {
+                    var intent: Intent = Intent(this, Client_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_supplier ->  {
+                    var intent: Intent = Intent(this, Supplier_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_manageStaff ->  {
+                    var intent: Intent = Intent(this, Staff_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
+                R.id.item_report ->  {
+                    var intent: Intent = Intent(this, Report_Main::class.java)
+                    intent.putExtra("user_position", user_pos)
+                    startActivity(intent)
+                }
                 R.id.item_logout -> startActivity(Intent(this, Login::class.java))
 
             }

@@ -171,7 +171,7 @@
     <string name="report_type">Report Type</string>
     <string name="prod_name">Product</string>
     <string name="prod_barcode">Barcode</string>
-    <string name="current_qty">Current Quantity :</string>
+    <string name="current_qty">Current Quantity </string>
     <string name="qty_num">Qty</string>
     <string name="prod_report">Product Report</string>
     <string name="stock_report">Stock Report</string>

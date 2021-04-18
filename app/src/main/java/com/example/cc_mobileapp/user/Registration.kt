@@ -85,11 +85,12 @@ class Registration : AppCompatActivity() {
                                     val uid = user!!.uid
                                     mDatabase.child(uid).child("userName").setValue(name)
                                     mDatabase.child(uid).child("userEmail").setValue(email)
-                                    mDatabase.child(uid).child("userPsw").setValue(password)
                                     mDatabase.child(uid).child("userHpNum").setValue(hp)
                                     mDatabase.child(uid).child("workingStatus").setValue(working_status)
                                     mDatabase.child(uid).child("workingPosition").setValue(working_pos)
-                                    startActivity(Intent(this, MainActivity::class.java))
+                                    var intent: Intent = Intent(this, MainActivity::class.java)
+                                    intent.putExtra("user_position", working_pos)
+                                    startActivity(intent)
                                     Toast.makeText(this, "Successfully registered :) Please verify your email.", Toast.LENGTH_LONG).show()
                                     sendEmailVerification();
                                 }else {
