@@ -49,7 +49,6 @@ class MainActivity: AppCompatActivity() {
         val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {
-            btn_visualizeData.isVisible = false
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false
         }
@@ -112,6 +111,7 @@ class MainActivity: AppCompatActivity() {
             }
             true
         }
+
         val clientBtn: Button = findViewById(R.id.btn_client)
 
         clientBtn.setOnClickListener {
@@ -136,10 +136,10 @@ class MainActivity: AppCompatActivity() {
             startActivity(intent)
         }
 
-        val reportBtn: Button = findViewById(R.id.btn_visualizeData)
+        val reportBtn: Button = findViewById(R.id.btn_stockOut)
 
         reportBtn.setOnClickListener {
-            var intent: Intent = Intent(this, Report_Main::class.java)
+            var intent: Intent = Intent(this, StockOutActivity::class.java)
             intent.putExtra("user_position", user_pos)
             startActivity(intent)
         }
@@ -152,10 +152,10 @@ class MainActivity: AppCompatActivity() {
             startActivity(intent)
         }
 
-        val stockBtn: Button = findViewById(R.id.btn_stocks)
+        val stockInBtn: Button = findViewById(R.id.btn_stocksIn)
 
-        stockBtn.setOnClickListener {
-            var intent: Intent = Intent(this, Stock_Main::class.java)
+        stockInBtn.setOnClickListener {
+            var intent: Intent = Intent(this, StockInActivity::class.java)
             intent.putExtra("user_position", user_pos)
             startActivity(intent)
         }
