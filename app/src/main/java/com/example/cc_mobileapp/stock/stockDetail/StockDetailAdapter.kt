@@ -28,19 +28,23 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
     override fun getItemCount() = stocksDetail.size
 
     override fun onBindViewHolder(holder: StockViewModel, position: Int) {
-        holder.view.stockDetail_prodBarcode.text = stocksDetail[position].stockDetailProdBarcode.toString()
-        holder.view.stockDetail_rackId.text = stocksDetail[position].stockDetailRackId
-        holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty.toString()
-        holder.view.btn_edit_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
-        val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
-        GlobalScope.launch(Dispatchers.IO) {
-            dbProduct.get().addOnSuccessListener {
-                if (it.exists()) {
-                    it.children.forEach {
-                        var prod: Product? = it.getValue(Product::class.java)
-                        if (prod?.prodBarcode == stocksDetail[position].stockDetailProdBarcode) {
-                            var price: Double? = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
-                            holder.view.stockDetail_totalPrice.text = price.toString().trim()
+        if(position < stocksDetail.size && stocksDetail.size!= position){
+            holder.view.stockDetail_prodBarcode.text = stocksDetail[position].stockDetailProdBarcode.toString()
+            holder.view.stockDetail_rackId.text = stocksDetail[position].stockDetailRackId
+            holder.view.stockDetail_qty.text = stocksDetail[position].stockDetailQty.toString()
+            holder.view.btn_edit_stockDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksDetail[position])}
+            val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+            GlobalScope.launch(Dispatchers.IO) {
+                dbProduct.get().addOnSuccessListener {
+                    if (it.exists()) {
+                        it.children.forEach {
+                            if(position < stocksDetail.size && stocksDetail.size!= position) {
+                                var prod: Product? = it.getValue(Product::class.java)
+                                if (prod?.prodBarcode == stocksDetail[position].stockDetailProdBarcode) {
+                                    var price: Double? = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
+                                    holder.view.stockDetail_totalPrice.text = price.toString().trim()
+                                }
+                            }
                         }
                     }
                 }
@@ -61,7 +65,7 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
         }else{
             val index = stocksDetail.indexOf(stockDetail)
             if(stockDetail.isDeleted){
-                stocksDetail.removeAt(index)
+                stocksDetail.remove(stockDetail)
             }else{ // for update product
                 stocksDetail[index] = stockDetail
             }

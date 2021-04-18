@@ -34,7 +34,7 @@ class StockOutDetailAdapter(): RecyclerView.Adapter<StockOutDetailAdapter.StockO
     override fun getItemCount() = stocksOutDetail.size
 
     override fun onBindViewHolder(holder: StockOutDetailViewModel, position: Int) {
-        if(position < stocksOutDetail.size){
+        if(position < stocksOutDetail.size && position != stocksOutDetail.size){
             holder.view.stockOutDetail_prodBarcode.text = stocksOutDetail[position].stockOutDetailProdBarcode.toString()
             holder.view.stockOutDetail_qty.text = stocksOutDetail[position].stockOutDetailQty.toString()
             holder.view.btn_edit_stockOutDetail.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksOutDetail[position])}
@@ -43,10 +43,13 @@ class StockOutDetailAdapter(): RecyclerView.Adapter<StockOutDetailAdapter.StockO
                 dbProduct.get().addOnSuccessListener {
                     if (it.exists()) {
                         it.children.forEach {
-                            var prod: Product? = it.getValue(Product::class.java)
-                            if (prod?.prodBarcode == stocksOutDetail[position].stockOutDetailProdBarcode) {
-                                var price: Double? = prod?.prodPrice!! * stocksOutDetail[position].stockOutDetailQty!!
-                                holder.view.stockOutDetail_totalPrice.text = price.toString().trim() }
+                            if(position < stocksOutDetail.size && position != stocksOutDetail.size) {
+                                var prod: Product? = it.getValue(Product::class.java)
+                                if (prod?.prodBarcode == stocksOutDetail[position].stockOutDetailProdBarcode) {
+                                    var price: Double? = prod?.prodPrice!! * stocksOutDetail[position].stockOutDetailQty!!
+                                    holder.view.stockOutDetail_totalPrice.text = price.toString().trim()
+                                }
+                            }
 
                         }
 
