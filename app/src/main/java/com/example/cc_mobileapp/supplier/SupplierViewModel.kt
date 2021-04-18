@@ -86,7 +86,11 @@ class SupplierViewModel(): ViewModel() {
                     for(supSnapshot in snapshot.children){
                         val sup = supSnapshot.getValue(Supplier::class.java)
                         sup?.supId = supSnapshot.key
-                        sup?.let {sups.add(it)}
+                        if(sup?.supStatus == true)
+                        {
+                            sup?.let {sups.add(it)}
+                        }
+
                     }
                     _suppliers.value = sups
                 }
@@ -113,7 +117,8 @@ class SupplierViewModel(): ViewModel() {
 
     fun deleteSupplier(supplier: Supplier){
         Log.d("Check", "Delete view model $supplier")
-        dbSupplier.child(supplier.supId.toString()).setValue(null)
+        supplier.supStatus = false
+        dbSupplier.child(supplier.supId.toString()).setValue(supplier)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         _result.value = null

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#FFFF"
+    tools:context=".staff.EditStaffFragment">
+
+    <TextView
+        android:id="@+id/txtView_editStaff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        android:text="@string/editStaffTitle"
+        android:textSize="@dimen/form_titleSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputLayout_staffName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="@dimen/editTxt_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtView_editStaff"
+        android:hint="@string/staffName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTxt_staffName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputLayout_staffEmail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="@dimen/editTxt_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_staffName"
+        android:hint="@string/email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTxt_staffEmail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputLayout_staffHpNum"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="@dimen/editTxt_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_staffEmail"
+        android:hint="@string/hpNum">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTxt_staffHpNum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputLayout_working_pos"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="@dimen/editTxt_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_staffHpNum"
+        android:hint="@string/working_pos">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTxt_working_position"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtInputLayout_working_status"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="@dimen/editTxt_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/editTxt_marginStart"
+        android:layout_marginTop="@dimen/editTxt_marginTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_working_pos"
+        android:hint="@string/working_status">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTxt_working_status"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtDelete"
+        android:layout_width="90dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="28dp"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_delete"
+        android:layout_gravity="center"
+        android:text="@string/delete"
+        android:textAlignment="center"
+        android:textColor="@color/btn_supplierId_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_working_status" />
+
+    <Button
+        android:id="@+id/btn_Save"
+        style="@style/circlebtn_standard"
+        android:layout_gravity="end"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/circlebtn_standard"
+        app:icon="@drawable/ic_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDelete" />
+
+</LinearLayout>

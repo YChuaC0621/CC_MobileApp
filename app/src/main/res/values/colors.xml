@@ -43,6 +43,11 @@
     <color name="stockdetail_box">#CEFFC927</color>
     <color name="lv_ddl_bckgrd_color_stockdetail">#CBFAC937</color>
 
+    <!--staff-->
+    <color name="lv_ddl_bckgrd_color_staff">#D1D0CE</color>
+    <color name="lv_bckgrd_color_staff">#B6B6B4</color>
+    <color name="btn_staffId_color">#848482</color>
+
     <!-- test color -->
     <color name="theme_white">#FFFFFF</color>
 </resources>

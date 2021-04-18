@@ -65,6 +65,8 @@ class Registration : AppCompatActivity() {
         var repeatPassword = repeatPasswordTxt.text.toString()
         var name = nameTxt.text.toString()
         var hp = hpNumTxt.text.toString()
+        var working_pos = 1
+        var working_status = 1
 
 
         if (!email.isEmpty() && !password.isEmpty() && !name.isEmpty()&& !repeatPassword.isEmpty() && !hp.isEmpty()) {
@@ -81,8 +83,12 @@ class Registration : AppCompatActivity() {
                                 if (task.isSuccessful) {
                                     val user = mAuth.currentUser
                                     val uid = user!!.uid
-                                    mDatabase.child(uid).child("Name").setValue(name)
-                                    mDatabase.child(uid).child("Phone").setValue(hp)
+                                    mDatabase.child(uid).child("userName").setValue(name)
+                                    mDatabase.child(uid).child("userEmail").setValue(email)
+                                    mDatabase.child(uid).child("userPsw").setValue(password)
+                                    mDatabase.child(uid).child("userHpNum").setValue(hp)
+                                    mDatabase.child(uid).child("workingStatus").setValue(working_status)
+                                    mDatabase.child(uid).child("workingPosition").setValue(working_pos)
                                     startActivity(Intent(this, MainActivity::class.java))
                                     Toast.makeText(this, "Successfully registered :) Please verify your email.", Toast.LENGTH_LONG).show()
                                     sendEmailVerification();

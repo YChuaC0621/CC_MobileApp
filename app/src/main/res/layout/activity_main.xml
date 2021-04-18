@@ -46,41 +46,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_sitemap" />
 
-    <Button
-        android:id="@+id/btn_visualizeData"
-        style="@style/homepage_btn"
-        android:layout_marginTop="@dimen/homepg_btnMarginTop"
-        android:layout_marginEnd="@dimen/homepg_btnMarginEndOrStart"
-        android:background="@drawable/homepg_btn"
-        android:drawableTop="@drawable/ic_visualdata_icon"
-        android:text="@string/visualize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_supplier" />
+        <Button
+            android:id="@+id/btn_visualizeData"
+            style="@style/homepage_btn"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="38dp"
+            android:background="@drawable/homepg_btn"
+            android:drawableTop="@drawable/ic_visualdata_icon"
+            android:text="@string/visualize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_client" />
 
-    <Button
-        android:id="@+id/btn_product"
-        style="@style/homepage_btn"
-        android:layout_marginStart="@dimen/homepg_btnMarginEndOrStart"
-        android:layout_marginTop="@dimen/homepg_btnMarginTop"
-        android:background="@drawable/homepg_btn"
-        android:drawableTop="@drawable/ic_product_icon"
-        android:text="@string/product"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_client" />
+        <Button
+            android:id="@+id/btn_product"
+            style="@style/homepage_btn"
+            android:layout_marginTop="39dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/homepg_btn"
+            android:drawableTop="@drawable/ic_product_icon"
+            android:text="@string/product"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_supplier" />
 
-    <Button
-        android:id="@+id/btn_stocks"
-        style="@style/homepage_btn"
-        android:layout_marginTop="@dimen/homepg_btnMarginTop"
-        android:layout_marginEnd="@dimen/homepg_btnMarginEndOrStart"
-        android:background="@drawable/homepg_btn"
-        android:drawableTop="@drawable/ic_stock_icon"
-        android:text="@string/stocks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btn_product"
-        app:layout_constraintTop_toBottomOf="@+id/btn_visualizeData"
-         />
+        <Button
+            android:id="@+id/btn_stocks"
+            style="@style/homepage_btn"
+            android:layout_marginTop="39dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/homepg_btn"
+            android:drawableTop="@drawable/ic_stock_icon"
+            android:text="@string/stocks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_product" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -111,6 +111,66 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/btn_workingPosition"
+            style="@style/transparentbtn2_standard"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:clickable="false"
+            android:drawableTop="@drawable/ic_position_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_userEmail" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputLayout_working_pos"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/working_pos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_workingPosition"
+            app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_userEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTxt_working_position"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_workingStatus"
+            style="@style/transparentbtn2_standard"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:clickable="false"
+            android:drawableTop="@drawable/ic_status_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_working_pos" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputLayout_working_status"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/working_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_workingStatus"
+            app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_working_pos">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTxt_workingp_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
     <Button
         android:id="@+id/btn_setting"
         style="@style/transparentbtn2_standard"
@@ -119,7 +179,7 @@
         android:clickable="false"
         android:drawableTop="@drawable/ic_setting_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_email" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_workingStatus" />
 
     <Spinner
         android:id="@+id/ddlTheme"
@@ -131,15 +191,30 @@
         android:background="@drawable/dropdown_bckgrd"
         android:entries="@array/themeSpinner"
         app:layout_constraintStart_toEndOf="@+id/btn_setting"
-        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_userEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/txtInputLayout_working_status" />
 
-    <Button
-        android:id="@+id/btn_Save"
-        style="@style/circlebtn_standard"
-        app:icon="@drawable/ic_save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/circlebtn_standard"/>
+        <Button
+            android:id="@+id/btn_Save"
+            style="@style/circlebtn_standard"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/circlebtn_standard"
+            app:icon="@drawable/ic_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/txtForgtPsw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="39dp"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:text="@string/reset_Psw"
+            android:textColor="@color/blue_61"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ddlTheme" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

@@ -1,21 +1,21 @@
-package com.example.cc_mobileapp.product
+package com.example.cc_mobileapp.staff
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.ListFragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.cc_mobileapp.MainActivity
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.client.Client_Main
+import com.example.cc_mobileapp.product.Product_Main
 import com.example.cc_mobileapp.rack.SiteMap
 import com.example.cc_mobileapp.report.Report_Main
-import com.example.cc_mobileapp.staff.Staff_Main
 import com.example.cc_mobileapp.stock.stockIn.StockInActivity
 import com.example.cc_mobileapp.stock.stockOut.StockOutActivity
 import com.example.cc_mobileapp.supplier.Supplier_Main
@@ -24,9 +24,9 @@ import com.example.cc_mobileapp.user.Usermgmt
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_main.*
 
-
-class Product_Main : AppCompatActivity(R.layout.activity_product__main) {
+class Staff_Main: AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
@@ -37,12 +37,7 @@ class Product_Main : AppCompatActivity(R.layout.activity_product__main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-/*
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.product_nav_host_fragment)as NavHostFragment
-
-        navController = navHostFragment.navController
-
-        setupActionBarWithNavController(navController)*/
+        setContentView(R.layout.activity_staff_main)
         var uid = user!!.uid
         mDatabase = FirebaseDatabase.getInstance().getReference("Users")
         mDatabase.child(uid).child("workingPosition").addValueEventListener( object : ValueEventListener {
@@ -55,9 +50,9 @@ class Product_Main : AppCompatActivity(R.layout.activity_product__main) {
             }
         })
 
-        navController = Navigation.findNavController(this,R.id.product_nav_host_fragment)
-        drawerLayout = findViewById(R.id.product_drawer)
-        navigationView = findViewById(R.id.product_nav_view)
+        navController = Navigation.findNavController(this, R.id.fragmentStaff)
+        drawerLayout = findViewById(R.id.staff_drawer)
+        navigationView = findViewById(R.id.staff_nav_view)
         NavigationUI.setupWithNavController(navigationView,navController)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -86,6 +81,18 @@ class Product_Main : AppCompatActivity(R.layout.activity_product__main) {
             true
         }
 
+
+    }
+
+    override fun onBackPressed() {
+        val fm: FragmentManager = supportFragmentManager
+        if (fm.backStackEntryCount > 0) {
+            Log.i("MainActivity", "popping backstack")
+            fm.popBackStack()
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super")
+            super.onBackPressed()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

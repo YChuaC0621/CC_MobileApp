@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/staff_navigation_graph.xml"
+    app:startDestination="@id/staffFragment">
+
+    <fragment
+        android:id="@+id/editStaffFragment"
+        android:name="com.example.cc_mobileapp.staff.EditStaffFragment"
+        android:label="fragment_edit_staff"
+        tools:layout="@layout/fragment_edit_staff" />
+    <fragment
+        android:id="@+id/staffFragment"
+        android:name="com.example.cc_mobileapp.staff.StaffFragment"
+        android:label="fragment_staff"
+        tools:layout="@layout/fragment_staff" >
+        <action
+            android:id="@+id/action_staffFragment_to_editStaffFragment"
+            app:destination="@id/editStaffFragment" />
+    </fragment>
+</navigation>

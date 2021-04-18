@@ -39,8 +39,11 @@
     <string name="verificationCode">Verification Code</string>
     <string name="newPsw">New Password</string>
     <string name="forgtPsw">Forgot Password</string>
+    <string name="reset_Psw">Reset Password</string>
     <string name="btncontinue">Continue</string>
     <string name="back">Back</string>
+    <string name="working_pos">Working Position</string>
+    <string name="working_status">Working Status</string>
     <string name="resetPswMsg">To reset your password,enter your email,
     press continue button and check your email to follow instructions</string>
     <string-array name="themeSpinner">
@@ -202,5 +205,10 @@
     <string name="add_new_stock_in_detail">Add New Stock In Detail</string>
     <string name="exist_stockDetailProd_error">Product is already in stock detail</string>
 
+    <!--staff-->
+    <string name="staffName">Staff Name</string>
+    <string name="editStaffTitle">Edit Staff</string>
+    <string name="staff_edited">Edit Staff Successfully</string>
+    <string name="error_pos">You can either enter "Staff" or "Top Management"</string>
 </resources>
 

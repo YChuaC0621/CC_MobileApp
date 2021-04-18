@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/stockIn_Fragment_Main"
         android:name="com.example.cc_mobileapp.stock.stockIn.StockIn_Fragment_Main"
-        android:label="StockIn_Fragment_Main" >
+        android:label="Stock In" >
         <action
             android:id="@+id/action_stockIn_Fragment_Main_to_stockInSupplierDialogFragment"
             app:destination="@id/stockInSupplierDialogFragment" />

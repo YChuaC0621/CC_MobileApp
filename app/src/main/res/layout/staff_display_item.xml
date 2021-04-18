@@ -7,64 +7,64 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/list_item_supplier"
-        android:layout_width="364dp"
-        android:layout_height="119dp"
+        android:id="@+id/list_item_staff"
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
         android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/listview_bckgrd" />
+        app:srcCompat="@drawable/listview_bckgrd_staff" />
 
     <TextView
-        android:id="@+id/txtSupName"
+        android:id="@+id/txtStaffName"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="32dp"
-        android:text="@string/supplier_name"
-        app:layout_constraintStart_toEndOf="@+id/supplier_icon"
-        app:layout_constraintTop_toTopOf="@+id/list_item_supplier" />
+        android:text="@string/staffName"
+        app:layout_constraintStart_toEndOf="@+id/staff_icon"
+        app:layout_constraintTop_toTopOf="@+id/list_item_staff" />
 
     <TextView
-        android:id="@+id/txtCmpName"
+        android:id="@+id/txtStaffEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="@string/company_name"
-        app:layout_constraintStart_toEndOf="@+id/supplier_icon"
-        app:layout_constraintTop_toBottomOf="@+id/txtSupName" />
+        android:text="@string/email"
+        app:layout_constraintStart_toEndOf="@+id/staff_icon"
+        app:layout_constraintTop_toBottomOf="@+id/txtStaffName" />
 
     <Button
-        android:id="@+id/btn_supEdit"
+        android:id="@+id/btn_staffEdit"
         style="@style/circlebtn_standard"
         android:layout_width="77dp"
         android:layout_height="76dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/circlebtn_standard"
-        app:backgroundTint="@color/circleBtnHoverColor"
+        app:backgroundTint="@color/btn_staffId_color"
         app:icon="@drawable/ic_edit_icon"
-        app:layout_constraintEnd_toEndOf="@+id/list_item_supplier"
+        app:layout_constraintEnd_toEndOf="@+id/list_item_staff"
         app:layout_constraintHorizontal_bias="0.017"
-        app:layout_constraintStart_toStartOf="@+id/list_item_supplier"
-        app:layout_constraintTop_toTopOf="@+id/list_item_supplier" />
+        app:layout_constraintStart_toStartOf="@+id/list_item_staff"
+        app:layout_constraintTop_toTopOf="@+id/list_item_staff" />
 
     <ImageView
-        android:id="@+id/supplier_icon"
+        android:id="@+id/staff_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_supplier"
-        app:layout_constraintStart_toEndOf="@+id/btn_supEdit"
-        app:layout_constraintTop_toTopOf="@+id/list_item_supplier"
-        app:srcCompat="@drawable/ic_supplier_icon" />
+        app:layout_constraintBottom_toTopOf="@+id/spinner_staff"
+        app:layout_constraintStart_toEndOf="@+id/btn_staffEdit"
+        app:layout_constraintTop_toTopOf="@+id/list_item_staff"
+        app:srcCompat="@drawable/ic_staff_icon" />
 
     <Spinner
-        android:id="@+id/spinner_supplier"
+        android:id="@+id/spinner_staff"
         android:layout_width="255dp"
         android:layout_height="24dp"
-        android:background="@drawable/lv_ddl_bckgrd"
+        android:background="@drawable/lv_ddl_bckgrd_staff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_item_supplier" />
+        app:layout_constraintTop_toBottomOf="@+id/list_item_staff" />
 </androidx.constraintlayout.widget.ConstraintLayout>

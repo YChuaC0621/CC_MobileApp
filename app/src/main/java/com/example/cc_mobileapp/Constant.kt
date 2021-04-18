@@ -1,6 +1,7 @@
 package com.example.cc_mobileapp
 
 object Constant {
+    const val NODE_USERS ="Users"
     const val NODE_CLIENT ="Client"
     const val NODE_PRODUCT ="Product"
     const val NODE_STOCKDETAIL ="StockDetail"

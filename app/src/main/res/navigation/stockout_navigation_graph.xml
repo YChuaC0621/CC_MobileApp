@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/stockOut_Fragment_Main"
         android:name="com.example.cc_mobileapp.stock.stockOut.StockOut_Fragment_Main"
-        android:label="fragment_stock_out___main"
+        android:label="Stock Out"
         tools:layout="@layout/fragment_stock_out___main" >
         <action
             android:id="@+id/action_stockOut_Fragment_Main_to_stockOutDetailDisplayFragment"

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/item_homepage"
+        android:title="Profile"
+        android:icon="@drawable/ic_home_icon">
+    </item>
+
+    <item
         android:id="@+id/item_userMgmt"
         android:title="Profile"
         android:icon="@drawable/ic_user_icon">
@@ -40,6 +46,12 @@
         android:id="@+id/item_supplier"
         android:title="Supplier"
         android:icon="@drawable/ic_supplier_icon">
+    </item>
+
+    <item
+        android:id="@+id/item_manageStaff"
+        android:title="Manage Staff"
+        android:icon="@drawable/ic_position_icon">
     </item>
 
     <item
