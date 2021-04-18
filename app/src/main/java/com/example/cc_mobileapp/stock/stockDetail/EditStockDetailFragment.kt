@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.Constant.NODE_TEMP
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.Rack
 import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
@@ -65,6 +66,7 @@ class EditStockDetailFragment(
                 getString(R.string.error, it.message)
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         })
 
         btn_editStockDetail_edit.setOnClickListener {
@@ -116,82 +118,98 @@ class EditStockDetailFragment(
                 stockDetailEdit.stockDetailQty = stockQty.toInt()
                 stockDetailEdit.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
                 stockDetailEdit.stockDetailId = stockDetail.stockDetailId
-                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("supplier").equalTo(prodBarcode.toString())
+
+                var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("supplierName").equalTo(sharedStockInViewModel.stockInSupplierId.value)
                 prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (!snapshot.exists()) {
                             valid = false
-                            input_layout_editStockDetail_ProdBarcode.error = getString(R.string.invalid_nonexist_error)
+                            input_layout_editStockDetail_ProdBarcode.error = getString(R.string.supplier_noProd_error)
                         } else {
-                            var checkExistProdBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP).orderByChild("stockDetailProdBarcode").equalTo(prodBarcode.toString())
-                            checkExistProdBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(snapshot: DataSnapshot) {
-                                    if (snapshot.exists()) {
-                                        valid = false
-                                        input_layout_editStockDetail_ProdBarcode.error = getString(R.string.exist_stockDetailProd_error)
-                                    } else {
-                                        var rackBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_RACK).orderByChild("rackName").equalTo(rackId.toString())
-                                        rackBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                                            override fun onDataChange(snapshot: DataSnapshot) {
-                                                if (!snapshot.exists()) {
-                                                    valid = false
-                                                    input_layout_editStockDetail_rackId.error = getString(R.string.invalid_nonexist_error)
-                                                } else {
-                                                    var rackStatusQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_STOCKDETAIL)
-                                                    rackStatusQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                                                        override fun onDataChange(snapshot: DataSnapshot) {
-                                                            var stockInUse: Boolean = false
-                                                            for (stockSnapshot in snapshot.children) {
-                                                                val occupiedRack = stockSnapshot.getValue(StockDetail::class.java)?.stockDetailRackId
-                                                                if (occupiedRack == stockDetailEdit.stockDetailRackId) {
-                                                                    stockInUse = true
+                            if(stockDetailEdit.stockDetailProdBarcode == stockDetail.stockDetailProdBarcode){
+
+                            }
+                            var availableProd = false
+                            for (prodSnapshot in snapshot.children) {
+                                val availableProdBarcode = prodSnapshot.getValue(Product::class.java)?.prodBarcode
+                                if (availableProdBarcode == stockDetailEdit.stockDetailProdBarcode) {
+                                    availableProd = true
+                                }
+                            }
+                            if (!availableProd) {
+                                valid = false
+                                input_layout_editStockDetail_ProdBarcode.error = getString(R.string.invalid_nonexist_error)
+                            } else {
+                                var checkExistProdBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP).orderByChild("stockDetailProdBarcode").equalTo(prodBarcode.toString())
+                                checkExistProdBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        if (snapshot.exists() && stockDetailEdit.stockDetailProdBarcode != stockDetail.stockDetailProdBarcode) {
+                                            valid = false
+                                            input_layout_editStockDetail_ProdBarcode.error = getString(R.string.exist_stockDetailProd_error)
+                                        } else {
+                                            var rackBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_RACK).orderByChild("rackName").equalTo(rackId.toString())
+                                            rackBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                override fun onDataChange(snapshot: DataSnapshot) {
+                                                    if (!snapshot.exists()) {
+                                                        valid = false
+                                                        input_layout_editStockDetail_rackId.error = getString(R.string.invalid_nonexist_error)
+                                                    } else {
+                                                        var rackStatusQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_STOCKDETAIL)
+                                                        rackStatusQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                                var stockInUse: Boolean = false
+                                                                for (stockSnapshot in snapshot.children) {
+                                                                    val occupiedRack = stockSnapshot.getValue(StockDetail::class.java)?.stockDetailRackId
+                                                                    if (occupiedRack == stockDetailEdit.stockDetailRackId) {
+                                                                        stockInUse = true
+                                                                    }
+                                                                }
+                                                                if (stockInUse) {
+                                                                    input_layout_editStockDetail_rackId.error = getString(R.string.rack_occupied_error)
+                                                                } else {
+                                                                    var tempRackQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_TEMP).orderByChild("stockDetailRackId").equalTo(rackId.toString())
+                                                                    tempRackQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                                                            if (snapshot.exists() && !stockDetailEdit.stockDetailRackId.equals(stockDetail.stockDetailRackId)) {
+                                                                                valid = false
+                                                                                input_layout_editStockDetail_rackId.error = getString(R.string.rack_occupiedontemp_error)
+                                                                            } else {
+                                                                                if (stockDetailEdit.stockDetailProdBarcode != stockDetail.stockDetailProdBarcode || stockDetailEdit.stockDetailQty != stockDetail.stockDetailQty || stockDetailEdit.stockDetailRackId != stockDetail.stockDetailRackId) {
+                                                                                    stockViewModel.updateStockDetail(stockDetailEdit)
+                                                                                    makeText(requireContext(), getString(R.string.stockdetail_success), Toast.LENGTH_SHORT).show()
+                                                                                } else {
+                                                                                    makeText(requireContext(), getString(R.string.stockedit_info_remain), Toast.LENGTH_SHORT).show()
+                                                                                }
+                                                                                requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                                                            }
+                                                                        }
+
+                                                                        override fun onCancelled(error: DatabaseError) {
+                                                                            TODO("Not yet implemented")
+                                                                        }
+                                                                    })
                                                                 }
                                                             }
-                                                            if (stockInUse) {
-                                                                input_layout_editStockDetail_rackId.error = getString(R.string.rack_occupied_error)
-                                                            } else {
-                                                                var tempRackQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_TEMP).orderByChild("stockDetailRackId").equalTo(rackId.toString())
-                                                                tempRackQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                                                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                                                        if (snapshot.exists() && !stockDetailEdit.stockDetailRackId.equals(stockDetail.stockDetailRackId)) {
-                                                                            valid = false
-                                                                            input_layout_editStockDetail_rackId.error = getString(R.string.rack_occupiedontemp_error)
-                                                                        } else {
-                                                                            if (stockDetailEdit.stockDetailProdBarcode != stockDetail.stockDetailProdBarcode || stockDetailEdit.stockDetailQty != stockDetail.stockDetailQty || stockDetailEdit.stockDetailRackId != stockDetail.stockDetailRackId) {
-                                                                                stockViewModel.updateStockDetail(stockDetailEdit)
-                                                                                makeText(requireContext(), getString(R.string.stockdetail_success), Toast.LENGTH_SHORT).show()
-                                                                            } else {
-                                                                                makeText(requireContext(), getString(R.string.stockedit_info_remain), Toast.LENGTH_SHORT).show()
-                                                                            }
-                                                                            requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                                                                        }
-                                                                    }
 
-                                                                    override fun onCancelled(error: DatabaseError) {
-                                                                        TODO("Not yet implemented")
-                                                                    }
-                                                                })
+                                                            override fun onCancelled(error: DatabaseError) {
+                                                                TODO("Not yet implemented")
                                                             }
-                                                        }
-
-                                                        override fun onCancelled(error: DatabaseError) {
-                                                            TODO("Not yet implemented")
-                                                        }
-                                                    })
+                                                        })
+                                                    }
                                                 }
-                                            }
 
-                                            override fun onCancelled(error: DatabaseError) {
-                                                TODO("Not yet implemented")
-                                            }
-                                        })
+                                                override fun onCancelled(error: DatabaseError) {
+                                                    TODO("Not yet implemented")
+                                                }
+                                            })
+                                        }
                                     }
-                                }
 
-                                override fun onCancelled(error: DatabaseError) {
-                                    TODO("Not yet implemented")
-                                }
-                            })
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
+                            }
                         }
                     }
 
@@ -200,6 +218,7 @@ class EditStockDetailFragment(
                     }
                 })
             }
+
         }
         btn_editStockDetail_cancel.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
@@ -218,7 +237,6 @@ class EditStockDetailFragment(
                 it.setTitle(getString(R.string.delete_confirmation))
                 it.setPositiveButton(getString(R.string.yes)){ dialog, which ->
                     stockViewModel.deleteStockDetail(stockDetail)
-                    requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 }
                 it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()

@@ -118,7 +118,7 @@ class EditStockOutDetailFragment(
                     var checkExistProdBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_TEMP_OUT).orderByChild("stockOutDetailProdBarcode").equalTo(prodBarcode.toString()).also {
                         it.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
-                                if (snapshot.exists()) {
+                                if (snapshot.exists() && stockOutDetailEdit.stockOutDetailProdBarcode != stockOutDetail.stockOutDetailProdBarcode) {
                                     valid = false
                                     input_layout_editStockOutDetail_ProdBarcode.error = getString(R.string.exist_stockDetailProd_error)
                                 } else {
