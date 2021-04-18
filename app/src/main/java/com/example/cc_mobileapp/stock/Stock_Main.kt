@@ -36,7 +36,7 @@ class Stock_Main : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock__main)
         drawerLayout = findViewById(R.id.stock_drawer)
-        navigationView = findViewById(R.id.stock_nav_view)
+        navigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)

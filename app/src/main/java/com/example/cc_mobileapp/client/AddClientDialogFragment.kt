@@ -80,7 +80,7 @@ class AddClientDialogFragment : Fragment() {
                 valid = false
                 return@setOnClickListener
             }
-            else if (!android.util.Patterns.PHONE.matcher(clientHp).matches()){
+            else if(!checkRegexhpNum(clientHp)){
                 input_layout_clientHp.error = getString(R.string.phone_format_error)
                 return@setOnClickListener
             }
@@ -124,6 +124,12 @@ class AddClientDialogFragment : Fragment() {
         btn_clientAddBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack("addClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
+    }
+
+    private fun checkRegexhpNum(hpNum: String): Boolean {
+        var hpNum: String = hpNum
+        var regex:Regex = Regex(pattern="""\d+""")
+        return regex.matches(input = hpNum) && hpNum.startsWith("01")
     }
 
 }
