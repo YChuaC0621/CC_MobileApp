@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Supplier
+import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_supplier.*
 import kotlinx.android.synthetic.main.fragment_edit_supplier.*
 import kotlinx.android.synthetic.main.fragment_edit_supplier.btn_Save
@@ -65,36 +66,64 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
             val supHpNum = editTxt_supHpNum.text.toString().trim()
             val supCmpName = editTxt_supCmpName.text.toString().trim()
             val supCmpLot = editTxt_supCmpLot.text.toString().trim()
-            when {
-                supName.isEmpty() -> {
-                    txtInputLayout_supName.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                supEmail.isEmpty() -> {
+            var valid = true
+            if(supName.isEmpty()) {
+                txtInputLayout_supName.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                txtInputLayout_supName.error = null
+            }
+                if(supEmail.isEmpty()) {
                     txtInputLayout_supEmail.error = getString(R.string.error_field_required)
+                    valid = false
                     return@setOnClickListener
                 }
-                !android.util.Patterns.EMAIL_ADDRESS.matcher(supEmail).matches() -> {
+                else{
+                    txtInputLayout_supEmail.error = null
+                }
+
+                if(!android.util.Patterns.EMAIL_ADDRESS.matcher(supEmail).matches()){
+                    valid = false
                     txtInputLayout_supEmail.error = getString(R.string.errorEmail)
                     return@setOnClickListener
                 }
-                supHpNum.isEmpty() -> {
+                else{
+                    txtInputLayout_supEmail.error = null
+                }
+
+                if(supHpNum.isEmpty()){
                     txtInputLayout_supHpNum.error = getString(R.string.error_field_required)
+                    valid = false
                     return@setOnClickListener
-                }
-                !android.util.Patterns.PHONE.matcher(supHpNum).matches() -> {
-                    txtInputLayout_supHpNum.error = getString(R.string.errorPhoneNum)
+                } else if(!checkRegexhpNum(supHpNum)){
+                    txtInputLayout_supHpNum.error = getString(R.string.phone_format_error)
+                    valid = false
                     return@setOnClickListener
+                }else{
+                    txtInputLayout_supHpNum.error = null
                 }
-                supCmpName.isEmpty() -> {
+
+                if(supCmpName.isEmpty()){
                     txtInputLayout_supCmpName.error = getString(R.string.error_field_required)
+                    valid = false
                     return@setOnClickListener
                 }
-                supCmpLot.isEmpty() -> {
+                else{
+                    txtInputLayout_supCmpName.error = null
+                }
+
+                if(supCmpLot.isEmpty()){
                     txtInputLayout_supCmpLot.error = getString(R.string.error_field_required)
+                    valid = false
                     return@setOnClickListener
                 }
-                else -> {
+                else{
+                    txtInputLayout_supCmpLot.error = null
+                }
+
+               if(valid){
                     supplier.supName = supName
                     supplier.supEmail = supEmail
                     supplier.supHpNum = supHpNum
@@ -104,14 +133,21 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
                     viewModel.updateSuppliers(supplier)
                 }
             }
-        }
+
 
         txtDelete.setOnClickListener{
             AlertDialog.Builder(requireContext()).also{
                 it.setTitle(getString(R.string.delete_confirmation))
                 it.setPositiveButton(getString(R.string.yes)){ dialog, which -> viewModel.deleteSupplier(supplier)
                 }
+                it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()
         }
+    }
+
+    private fun checkRegexhpNum(hpNum: String): Boolean {
+        var hpNum: String = hpNum
+        var regex: Regex = Regex(pattern = """\d+""")
+        return regex.matches(input = hpNum) && hpNum.startsWith("01")
     }
 }

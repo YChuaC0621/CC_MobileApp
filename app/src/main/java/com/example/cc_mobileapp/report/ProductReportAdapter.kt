@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportViewModel>() {
 
     private var prod_report = mutableListOf<Product>()
-    private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
+    private val dbStockDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
 
     var listener: ProdReportRecycleViewClickListener? = null
 
@@ -47,26 +47,30 @@ class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportVi
         Log.d("Check", "adapter bind view holder")
 
         GlobalScope.launch {
-            dbRack.get().addOnSuccessListener {
-                var racks = mutableListOf<Rack>()
-                Log.d("Check", "fetch racks")
+            dbStockDetail.get().addOnSuccessListener {
+                var stockDetail = mutableListOf<StockDetail>()
+                Log.d("Check", "fetch stock details")
                 var rackResults = ""
+                var qtyResults = ""
                 if (it.exists()) {
                     it.children.forEach { it ->
-                        val rackReport = Rack()
-                        val rack: Rack? = it.getValue(Rack::class.java)
-                        if (rack?.prodId.equals(prod_report[position].prodBarcode)) {
-                            rack?.rackId = it.key
-                            Log.d("Check", "fetch racks Info ${rack?.rackName}")
-                            rackResults += (rack?.rackName + "\t \t \t \t Current Quantity : " + rack?.currentQty + "\n")
+                        val stockReport = StockDetail()
+                        val stock: StockDetail? = it.getValue(StockDetail::class.java)
+                        if (stock?.stockDetailProdBarcode.equals(prod_report[position].prodBarcode)) {
+                            stock?.stockTypeId = it.key
+                            Log.d("Check", "fetch stock detail Info ${stock?.stockDetailRackId}")
+                            rackResults += (stock?.stockDetailRackId + "\n")
+                            qtyResults += (stock?.stockDetailQty.toString() + "\n")
 
                         }
                     }
                 }
-                if(rackResults.equals("")){
-                    rackResults = "No rack is storing this product"
+                if(rackResults.equals("") && qtyResults.equals("")){
+                    rackResults = "Empty"
+                    qtyResults = "Empty"
                 }
                 holder.view.txtStockInInfo.setText(rackResults)
+                holder.view.txtStockInInfo2.setText(qtyResults)
                 holder.view.txtProdName.text = prod_report[position].prodName
                 holder.view.txtProdBarcode.text = prod_report[position].prodBarcode
                 holder.view.txtProdSupName.text = prod_report[position].supplierName

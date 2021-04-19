@@ -39,6 +39,7 @@ class StaffFragment : Fragment(), StaffRecycleViewClickListener{
         recycler_view_staff.adapter = adapter
 
         viewModel.fetchStaff()
+        viewModel.getRealtimeUpdates()
 
         viewModel.staffs.observe(viewLifecycleOwner, Observer {
             adapter.setStaffs(it)

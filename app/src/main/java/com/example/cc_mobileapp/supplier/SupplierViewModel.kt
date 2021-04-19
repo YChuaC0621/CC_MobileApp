@@ -117,8 +117,7 @@ class SupplierViewModel(): ViewModel() {
 
     fun deleteSupplier(supplier: Supplier){
         Log.d("Check", "Delete view model $supplier")
-        supplier.supStatus = false
-        dbSupplier.child(supplier.supId.toString()).setValue(supplier)
+        dbSupplier.child(supplier.supId.toString()).setValue(null)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         _result.value = null

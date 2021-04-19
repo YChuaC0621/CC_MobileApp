@@ -74,7 +74,7 @@ class Registration : AppCompatActivity() {
             {
                 if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
-                    if(android.util.Patterns.PHONE.matcher(hp).matches())
+                    if(checkRegexhpNum(hp))
                     {
                         Toast.makeText(applicationContext, "Valid User Information",
                                 Toast.LENGTH_SHORT).show()
@@ -131,5 +131,11 @@ class Registration : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Failed to send verification email.", Toast.LENGTH_SHORT).show()
                     }
                 }
+    }
+
+    private fun checkRegexhpNum(hpNum: String): Boolean {
+        var hpNum: String = hpNum
+        var regex: Regex = Regex(pattern = """\d+""")
+        return regex.matches(input = hpNum) && hpNum.startsWith("01")
     }
 }

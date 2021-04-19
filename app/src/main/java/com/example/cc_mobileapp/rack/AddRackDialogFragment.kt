@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Rack
+import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_rack.*
 
 class AddRackDialogFragment  : Fragment() {
@@ -26,56 +27,82 @@ class AddRackDialogFragment  : Fragment() {
         return inflater.inflate(R.layout.fragment_add_rack, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?){
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.result.observe(viewLifecycleOwner, Observer{
-            val message = if(it == null) {// success
+        viewModel.result.observe(viewLifecycleOwner, Observer {
+            val message = if (it == null) {// success
                 getString(R.string.rack_added)
-            }else{
+            } else {
                 getString(R.string.error, it.message)
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         })
 
-        btn_Save.setOnClickListener{
+        btn_Save.setOnClickListener {
             val rackNum = editTxt_rackNum.text.toString().trim()
             val startLot = editTxt_startLot.text.toString().trim()
             val endLot = editTxt_endLot.text.toString().trim()
             val row_num = editTxt_rowNum.text.toString().trim()
+            var valid = true
+            if (rackNum.isEmpty()) {
+                txtInputLayout_rackName.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                txtInputLayout_rackName.error = null
+            }
+            if (startLot.isEmpty()) {
+                txtInputLayout_startLot.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                txtInputLayout_startLot.error = null
+            }
+            if (endLot.isEmpty()) {
+                txtInputLayout_endLot.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                txtInputLayout_endLot.error = null
+            }
+            if (row_num.isEmpty()) {
+                txtInputLayout_rowNum.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            } else if (!checkRegexRowNum(row_num)) {
+                txtInputLayout_rowNum.error = getString(R.string.only_integer_error)
+                valid = false
+                return@setOnClickListener
+            }
+            else{
+                txtInputLayout_rowNum.error = null
+            }
 
-            when {
-                rackNum.isEmpty() -> {
-                    txtInputLayout_rackName.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                startLot.isEmpty() -> {
-                    txtInputLayout_startLot.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                endLot.isEmpty() -> {
-                    txtInputLayout_endLot.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                row_num.isEmpty() -> {
-                    txtInputLayout_rowNum.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                else -> {
-                    val rackName = rackNum + "_Row" + row_num.toInt()
-                    val rack = Rack()
-                    rack.rackName = rackName
-                    rack.rackNum = rackNum
-                    rack.startLot = startLot
-                    rack.endLot = endLot
-                    rack.row_num = row_num.toInt()
-                    rack.prodId = "0"
-                    rack.currentQty = 0
-                    Log.d("Check", "rack data $rack")
-                    viewModel.addRack(rack)
-                    requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                }
+            if (valid) {
+                val rackName = rackNum + "_Row" + row_num.toInt()
+                val rack = Rack()
+                rack.rackName = rackName
+                rack.rackNum = rackNum
+                rack.startLot = startLot
+                rack.endLot = endLot
+                rack.row_num = row_num.toInt()
+                rack.prodId = "0"
+                rack.currentQty = 0
+                Log.d("Check", "rack data $rack")
+                viewModel.addRack(rack)
+                requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         }
     }
+
+    private fun checkRegexRowNum(RowNum: String): Boolean {
+        var RowNum: String = RowNum
+        var regex: Regex = Regex(pattern = """\d+""")
+        return regex.matches(input = RowNum)
+    }
 }
+

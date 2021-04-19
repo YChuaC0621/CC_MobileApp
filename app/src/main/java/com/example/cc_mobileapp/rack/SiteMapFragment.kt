@@ -12,6 +12,7 @@ import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.Rack
+import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.rack.RackViewModel
 import com.example.cc_mobileapp.supplier.AddSupplierDialogFragment
 import com.example.cc_mobileapp.supplier.SupplierViewModel
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 
 class SiteMapFragment: Fragment() {
     private lateinit var viewModel: RackViewModel
-    private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
+    private val dbStock = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -238,13 +239,13 @@ class SiteMapFragment: Fragment() {
                         prod.getValue(Product::class.java)
                     if (product?.prodName!!.equals(search_editText.text.toString())) {
                         val prodId = product?.prodBarcode.toString()
-                        dbRack.get().addOnSuccessListener {
-                            Log.d("Check", "fetch racks")
+                        dbStock.get().addOnSuccessListener {
+                            Log.d("Check", "fetch stock details")
                             if (it.exists()) {
                                 it.children.forEach { it ->
-                                    val rack: Rack? = it.getValue(Rack::class.java)
-                                    if (rack?.prodId == prodId) {
-                                        result += (rack?.rackName.toString() + " : " + rack?.currentQty.toString() + "Quantity \n")
+                                    val stock: StockDetail? = it.getValue(StockDetail::class.java)
+                                    if (stock?.stockDetailProdBarcode == prodId) {
+                                        result += (stock?.stockDetailRackId.toString() + " : " + stock?.stockDetailQty.toString() + "Quantity \n")
                                         counter = 1
                                         search_results.setText(result)
                                     }

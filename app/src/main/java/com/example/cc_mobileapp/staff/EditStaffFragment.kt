@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Users
+import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_edit_staff.*
 import kotlinx.android.synthetic.main.fragment_edit_supplier.*
 import kotlinx.android.synthetic.main.fragment_edit_supplier.btn_Save
@@ -35,7 +36,13 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
         editTxt_staffName.setText(staff.userName)
         editTxt_staffEmail.setText(staff.userEmail)
         editTxt_staffHpNum.setText(staff.userHpNum)
-        editTxt_working_position.setText(staff.workingPosition.toString())
+        if(staff.workingPosition == 1)
+        {
+            editTxt_working_position.setText("Staff")
+        }
+        else
+            editTxt_working_position.setText("Top Management")
+
         editTxt_working_status.setText(staff.workingStatus.toString())
         editTxt_staffName.isEnabled = false
         editTxt_staffEmail.isEnabled = false
@@ -55,24 +62,36 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
         })
 
         btn_Save.setOnClickListener {
-            val working_pos = editTxt_working_position.text.toString().trim()
-            when {
-                working_pos.isEmpty() -> {
-                    txtInputLayout_working_pos.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
+            val working_pos = editTxt_working_position.text.toString()
+            var valid = true
+            if (working_pos.isEmpty()) {
+                txtInputLayout_working_pos.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            } else {
+                txtInputLayout_working_pos.error = null
+            }
 
-                !(working_pos.equals("Staff") || working_pos.equals("Top Management")) -> {
-                    txtInputLayout_working_pos.error = getString(R.string.error_pos)
-                    return@setOnClickListener
+            if (!(working_pos.equals("Staff") || working_pos.equals("Top Management"))) {
+                txtInputLayout_working_pos.error = getString(R.string.error_pos)
+                valid = false
+                return@setOnClickListener
+            } else {
+                txtInputLayout_working_pos.error = null
+            }
+
+            if (valid) {
+                if(working_pos.equals("Staff"))
+                {
+                    staff.workingPosition = 1
                 }
-                else -> {
-                    staff.workingPosition = working_pos.toInt()
-                    Log.d("Check", "Update staff data $staff")
-                    viewModel.updateStaff(staff)
-                }
+                else
+                    staff.workingPosition = 2
+                Log.d("Check", "Update staff data $staff")
+                viewModel.updateStaff(staff)
             }
         }
+
 
         txtDelete.setOnClickListener {
             AlertDialog.Builder(requireContext()).also {
@@ -80,6 +99,7 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
                 it.setPositiveButton(getString(R.string.yes)) { dialog, which ->
                     viewModel.deleteStaff(staff)
                 }
+                it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()
         }
     }

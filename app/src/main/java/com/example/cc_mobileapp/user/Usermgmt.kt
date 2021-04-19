@@ -27,7 +27,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_usermgmt_display.*
+import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
+import kotlinx.android.synthetic.main.fragment_add_supplier.*
 import kotlinx.android.synthetic.main.fragment_edit_supplier.*
+import kotlinx.android.synthetic.main.fragment_edit_supplier.txtInputLayout_supHpNum
 
 class Usermgmt : AppCompatActivity() {
     lateinit var mDatabase : DatabaseReference
@@ -48,11 +51,11 @@ class Usermgmt : AppCompatActivity() {
         val positionTxt = findViewById<View>(R.id.editTxt_working_position) as TextView
 
         var uid = user!!.uid
-        emailTxt.text =  user!!.email.toString();
+        emailTxt.text = user!!.email.toString();
         mDatabase = FirebaseDatabase.getInstance().getReference("Users")
-        mDatabase.child(uid).child("userName").addValueEventListener( object : ValueEventListener {
+        mDatabase.child(uid).child("userName").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                nameTxt.text =  snapshot.value.toString()
+                nameTxt.text = snapshot.value.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -60,9 +63,9 @@ class Usermgmt : AppCompatActivity() {
             }
         })
 
-        mDatabase.child(uid).child("userHpNum").addValueEventListener( object : ValueEventListener {
+        mDatabase.child(uid).child("userHpNum").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                hpTxt.text =  snapshot.value.toString()
+                hpTxt.text = snapshot.value.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -70,15 +73,12 @@ class Usermgmt : AppCompatActivity() {
             }
         })
 
-        mDatabase.child(uid).child("workingPosition").addValueEventListener( object : ValueEventListener {
+        mDatabase.child(uid).child("workingPosition").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.value.toString().equals("1"))
-                {
-                    positionTxt.text =  "Staff"
-                }
-                else if(snapshot.value.toString().equals("2"))
-                {
-                    positionTxt.text =  "Top Management"
+                if (snapshot.value.toString().equals("1")) {
+                    positionTxt.text = "Staff"
+                } else if (snapshot.value.toString().equals("2")) {
+                    positionTxt.text = "Top Management"
                 }
 
                 positionTxt.isEnabled = false
@@ -89,15 +89,12 @@ class Usermgmt : AppCompatActivity() {
             }
         })
 
-        mDatabase.child(uid).child("workingStatus").addValueEventListener( object : ValueEventListener {
+        mDatabase.child(uid).child("workingStatus").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.value.toString().equals("1"))
-                {
-                    statusTxt.text =  "Employed"
-                }
-                else if(snapshot.value.toString().equals("0"))
-                {
-                    statusTxt.text =  "Resigned"
+                if (snapshot.value.toString().equals("1")) {
+                    statusTxt.text = "Employed"
+                } else if (snapshot.value.toString().equals("0")) {
+                    statusTxt.text = "Resigned"
                 }
                 statusTxt.isEnabled = false
             }
@@ -123,58 +120,71 @@ class Usermgmt : AppCompatActivity() {
             val userEmail = editTxt_userEmail.text.toString().trim()
             val userHpNum = editTxt_userHpNum.text.toString().trim()
             var uid = user!!.uid
+            var valid = true
             mDatabase = FirebaseDatabase.getInstance().getReference("Users")
-            when{
-                userName.isEmpty() -> {
-                    txtInputLayout_userName.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                userEmail.isEmpty() -> {
-                    txtInputLayout_userEmail.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                !android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches() -> {
-                    txtInputLayout_userEmail.error = getString(R.string.errorEmail)
-                    return@setOnClickListener
-                }
-                userHpNum.isEmpty() -> {
-                    txtInputLayout_userHpNum.error = getString(R.string.error_field_required)
-                    return@setOnClickListener
-                }
-                !android.util.Patterns.PHONE.matcher(userHpNum).matches() -> {
-                    txtInputLayout_userHpNum.error = getString(R.string.errorPhoneNum)
-                    return@setOnClickListener
-                }
-                else -> {
-                    mDatabase.child(uid).child("userName").setValue(userName)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Toast.makeText(this, "Update User Name Successfully:)", Toast.LENGTH_LONG).show()
-                                } else {
-                                    Toast.makeText(this, "Failed to update User Name", Toast.LENGTH_LONG).show()
-                                }
+            if (userName.isEmpty()) {
+                txtInputLayout_userName.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            } else {
+                txtInputLayout_userName.error = null
+            }
+            if (userEmail.isEmpty()) {
+                txtInputLayout_userEmail.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            } else {
+                txtInputLayout_userEmail.error = null
+            }
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
+                txtInputLayout_userEmail.error = getString(R.string.errorEmail)
+                valid = false
+                return@setOnClickListener
+            } else {
+                txtInputLayout_userEmail.error = null
+            }
+            if (userHpNum.isEmpty()) {
+                txtInputLayout_userHpNum.error = getString(R.string.error_field_required)
+                valid = false
+                return@setOnClickListener
+            } else if(!checkRegexhpNum(userHpNum)){
+                txtInputLayout_supHpNum.error = getString(R.string.phone_format_error)
+                valid = false
+                return@setOnClickListener
+            }  else {
+                txtInputLayout_userHpNum.error = null
+            }
+
+
+            if (valid) {
+                mDatabase.child(uid).child("userName").setValue(userName)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(this, "Update User Name Successfully:)", Toast.LENGTH_LONG).show()
+                            } else {
+                                Toast.makeText(this, "Failed to update User Name", Toast.LENGTH_LONG).show()
                             }
-                    mDatabase.child(uid).child("userHpNum").setValue(userHpNum)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Toast.makeText(this, "Update Phone Number Successfully:)", Toast.LENGTH_LONG).show()
-                                } else {
-                                    Toast.makeText(this, "Failed to update phone number", Toast.LENGTH_LONG).show()
-                                }
+                        }
+                mDatabase.child(uid).child("userHpNum").setValue(userHpNum)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(this, "Update Phone Number Successfully:)", Toast.LENGTH_LONG).show()
+                            } else {
+                                Toast.makeText(this, "Failed to update phone number", Toast.LENGTH_LONG).show()
                             }
-                    mDatabase.child(uid).child("userEmail").setValue(userEmail)
-                    user.updateEmail(userEmail).addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(this, "Update Email Successfully:)", Toast.LENGTH_LONG).show()
                         }
-                        else
-                        {
-                            Toast.makeText(this, "Failed to update email", Toast.LENGTH_LONG).show()
-                        }
+                mDatabase.child(uid).child("userEmail").setValue(userEmail)
+                user.updateEmail(userEmail).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Update Email Successfully:)", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this, "Failed to update email", Toast.LENGTH_LONG).show()
                     }
                 }
+
             }
         }
+
 
         val forgtPswBtn: TextView = findViewById(R.id.txtForgtPsw)
 
@@ -222,5 +232,11 @@ class Usermgmt : AppCompatActivity() {
             true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun checkRegexhpNum(hpNum: String): Boolean {
+        var hpNum: String = hpNum
+        var regex: Regex = Regex(pattern = """\d+""")
+        return regex.matches(input = hpNum) && hpNum.startsWith("01")
     }
 }

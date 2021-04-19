@@ -16,6 +16,7 @@ import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.Rack
+import com.example.cc_mobileapp.model.StockDetail
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.okhttp.Dispatcher
 import kotlinx.android.synthetic.main.fragment_add_rack.*
@@ -28,6 +29,7 @@ class DisplayRackDetailsFragment(private val rack_num : String) : Fragment() {
     private lateinit var viewModel: RackViewModel
     private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
     private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+    private val dbStock = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private var counterRack = 0
 
     override fun onCreateView(
@@ -62,73 +64,84 @@ class DisplayRackDetailsFragment(private val rack_num : String) : Fragment() {
                         txtRowNum.setText("2")
                         counterRack = 1
                         if (rack?.row_num == 1) {
-                            if (rack?.prodId.equals("0")) {
-                                txtRow1Prod.text = null
-                                txtRow1ProdQty.text = null
-                                Toast.makeText(
-                                        requireContext(),
-                                        "No product is stored under this " + rack?.rackName,
-                                        Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                dbProduct.get().addOnSuccessListener {
-                                    if (it.exists()) {
-                                        for (prod in it.children) {
-                                            var product: Product? =
-                                                    prod.getValue(Product::class.java)
-                                            if (product?.prodBarcode!!.equals(rack?.prodId)) {
-                                                txtRow1Prod.setText(product?.prodName.toString())
-                                                txtRow1ProdQty.setText(rack?.currentQty.toString())
-                                                Log.d(
-                                                        "Check",
-                                                        "fetch product ${product?.prodName.toString()}"
-                                                )
-                                                Log.d(
-                                                        "Check",
-                                                        "fetch product ${rack?.currentQty.toString()}"
-                                                )
+                            dbStock.get().addOnSuccessListener {
+                                if (it.exists()) {
+                                    for (stocks in it.children) {
+                                        var stock: StockDetail? =
+                                                stocks.getValue(StockDetail::class.java)
+                                        if (stock?.stockDetailRackId!!.equals(rack?.rackName)) {
+                                            dbProduct.get().addOnSuccessListener {
+                                                if (it.exists()) {
+                                                    for (prod in it.children) {
+                                                        var product: Product? =
+                                                                prod.getValue(Product::class.java)
+                                                        if (product?.prodBarcode!!.equals(stock?.stockDetailProdBarcode)) {
+                                                            txtRow1Prod.setText(product?.prodName.toString())
+                                                            txtRow1ProdQty.setText(stock?.stockDetailQty.toString())
+                                                            rack?.prodId = stock?.stockDetailProdBarcode
+                                                            rack?.currentQty = stock?.stockDetailQty
+                                                            Log.d(
+                                                                    "Check",
+                                                                    "fetch product ${product?.prodName.toString()}"
+                                                            )
+                                                            Log.d(
+                                                                    "Check",
+                                                                    "fetch product ${rack?.currentQty.toString()}"
+                                                            )
 
+                                                        }
+                                                    }
+                                                }
                                             }
+                                        } else {
+                                            txtRow1Prod.text = null
+                                            txtRow1ProdQty.text = null
+                                            rack?.prodId = "0"
+                                            rack?.currentQty = 0
                                         }
                                     }
                                 }
-
                             }
 
                         } else {
-                            if (rack?.prodId.equals("0")) {
-                                txtRow2Prod.text = null
-                                txtRow2ProdQty.text = null
-                                Toast.makeText(
-                                        requireContext(),
-                                        "No product is stored under this " + rack?.rackName,
-                                        Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                dbProduct.get().addOnSuccessListener {
-                                    if (it.exists()) {
-                                        for (prod in it.children) {
-                                            var product: Product? =
-                                                    prod.getValue(Product::class.java)
-                                            if (product?.prodBarcode!!.equals(rack?.prodId)) {
-                                                txtRow2Prod.setText(product?.prodName.toString())
-                                                txtRow2ProdQty.setText(rack?.currentQty.toString())
-                                                Log.d(
-                                                        "Check",
-                                                        "fetch product ${product?.prodName.toString()}"
-                                                )
-                                                Log.d(
-                                                        "Check",
-                                                        "fetch product ${rack?.currentQty.toString()}"
-                                                )
+                            dbStock.get().addOnSuccessListener {
+                                if (it.exists()) {
+                                    for (stocks in it.children) {
+                                        var stock: StockDetail? =
+                                                stocks.getValue(StockDetail::class.java)
+                                        if (stock?.stockDetailRackId!!.equals(rack?.rackName)) {
+                                            dbProduct.get().addOnSuccessListener {
+                                                if (it.exists()) {
+                                                    for (prod in it.children) {
+                                                        var product: Product? =
+                                                                prod.getValue(Product::class.java)
+                                                        if (product?.prodBarcode!!.equals(stock?.stockDetailProdBarcode)) {
+                                                            txtRow2Prod.setText(product?.prodName.toString())
+                                                            txtRow2ProdQty.setText(stock?.stockDetailQty.toString())
+                                                            rack?.prodId = stock?.stockDetailProdBarcode
+                                                            rack?.currentQty = stock?.stockDetailQty
+                                                            Log.d(
+                                                                    "Check",
+                                                                    "fetch product ${product?.prodName.toString()}"
+                                                            )
+                                                            Log.d(
+                                                                    "Check",
+                                                                    "fetch product ${rack?.currentQty.toString()}"
+                                                            )
 
+                                                        }
+                                                    }
+                                                }
                                             }
+                                        } else {
+                                            txtRow2Prod.text = null
+                                            txtRow2ProdQty.text = null
+                                            rack?.prodId = "0"
+                                            rack?.currentQty = 0
                                         }
                                     }
                                 }
                             }
-
-
                         }
                     }
                 }
