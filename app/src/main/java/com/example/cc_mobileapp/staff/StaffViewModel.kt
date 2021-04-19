@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class StaffViewModel (): ViewModel() {
+    //data declaration
     private val dbUser = FirebaseDatabase.getInstance().getReference(Constant.NODE_USERS)
 
     private val _staffs = MutableLiveData<List<Users>>()
@@ -26,6 +27,7 @@ class StaffViewModel (): ViewModel() {
 
     private lateinit var mAuth : FirebaseAuth;
 
+    //real time updated
     private val childEventListener = object: ChildEventListener {
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
             Log.d("Check", "childListener$snapshot")
@@ -62,6 +64,7 @@ class StaffViewModel (): ViewModel() {
         dbUser.addChildEventListener(childEventListener)
     }
 
+    //retrieve staff information from user database
     fun fetchStaff(){
         dbUser.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -72,6 +75,7 @@ class StaffViewModel (): ViewModel() {
                     for(staffSnapshot in snapshot.children){
                         val staff = staffSnapshot.getValue(Users::class.java)
                         staff?.userId = staffSnapshot.key
+                        //just display the employed staff
                         if(staff?.workingStatus == 1)
                         {
                             staff?.let {staffs.add(it)}
@@ -88,6 +92,7 @@ class StaffViewModel (): ViewModel() {
         })
     }
 
+    //update staff information to database
     fun updateStaff(staff: Users){
         // save inside the unique key
         Log.d("Check", "Update view model $staff")
@@ -101,6 +106,7 @@ class StaffViewModel (): ViewModel() {
                 }
     }
 
+    //delete staff information by changing the status to 0
     fun deleteStaff(staff: Users){
         Log.d("Check", "Delete view model $staff")
         staff.workingStatus = 0

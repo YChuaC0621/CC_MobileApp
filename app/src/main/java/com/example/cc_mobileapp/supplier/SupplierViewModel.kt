@@ -11,6 +11,7 @@ import com.google.firebase.database.*
 
 class SupplierViewModel(): ViewModel() {
 
+    //data declaration
     private val dbSupplier = FirebaseDatabase.getInstance().getReference(Constant.NODE_SUPPLIER)
 
     private val _result = MutableLiveData<Exception?>()
@@ -25,6 +26,7 @@ class SupplierViewModel(): ViewModel() {
     val supplier: LiveData<Supplier>
         get() = _supplier
 
+    //add supplier to database
     fun addSupplier(supplier: Supplier) {
         //create unique key
         supplier.supId = dbSupplier.push().key
@@ -40,6 +42,7 @@ class SupplierViewModel(): ViewModel() {
                 }
     }
 
+    //realtime update
     private val childEventListener = object: ChildEventListener {
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
             Log.d("Check", "childListener$snapshot")
@@ -76,6 +79,7 @@ class SupplierViewModel(): ViewModel() {
         dbSupplier.addChildEventListener(childEventListener)
     }
 
+    //retrieve all suppliers' data from supplier database
     fun fetchSuppliers(){
         dbSupplier.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -102,6 +106,7 @@ class SupplierViewModel(): ViewModel() {
         })
     }
 
+    //update edited information to database
     fun updateSuppliers(supplier: Supplier){
         // save inside the unique key
         Log.d("Check", "Update view model $supplier")
@@ -115,6 +120,7 @@ class SupplierViewModel(): ViewModel() {
                 }
     }
 
+    //delete the supplier from the database
     fun deleteSupplier(supplier: Supplier){
         Log.d("Check", "Delete view model $supplier")
         dbSupplier.child(supplier.supId.toString()).setValue(null)

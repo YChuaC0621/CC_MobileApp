@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_supplier.*
 
 class SupplierFragment: Fragment(), SupplierRecycleViewClickListener {
 
+    //data declaration
     private lateinit var viewModel: SupplierViewModel
     private val adapter = SupplierAdapter()
 
@@ -22,6 +23,7 @@ class SupplierFragment: Fragment(), SupplierRecycleViewClickListener {
         super.onCreate(savedInstanceState)
     }
 
+    //bind view model to view
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -40,9 +42,11 @@ class SupplierFragment: Fragment(), SupplierRecycleViewClickListener {
         adapter.listener = this
         recycler_view_supplier.adapter = adapter
 
+        //retrieve supplier data from supplier database
         viewModel.fetchSuppliers()
         viewModel.getRealtimeUpdates()
 
+        //observe the retrieved data results
         viewModel.suppliers.observe(viewLifecycleOwner, Observer {
             adapter.setSuppliers(it)
             Log.d("Check", "supplier fragment on activity created$it")
@@ -54,6 +58,7 @@ class SupplierFragment: Fragment(), SupplierRecycleViewClickListener {
             Log.d("Check", "realtime add  supplier fragment on activity created$it")
         })
 
+        //navigate to add supplier fragment
         button_add.setOnClickListener{
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()

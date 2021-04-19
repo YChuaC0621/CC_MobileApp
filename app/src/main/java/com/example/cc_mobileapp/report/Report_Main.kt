@@ -28,6 +28,7 @@ import com.google.firebase.database.*
 
 class Report_Main: AppCompatActivity() {
 
+    //data declaration for navigation drawer
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var navController : NavController
@@ -36,7 +37,7 @@ class Report_Main: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report_main)
 
-
+        //navigation drawer part
         navController = Navigation.findNavController(this,R.id.fragmentReport)
         drawerLayout = findViewById(R.id.report_drawer)
         navigationView = findViewById(R.id.report_nav_view)
@@ -44,6 +45,7 @@ class Report_Main: AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //hide the report and manage staff func for staff
         val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {

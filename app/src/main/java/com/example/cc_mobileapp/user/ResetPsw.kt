@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_signup.*
 
 class ResetPsw : AppCompatActivity() {
 
+    //data declaration
     private var mAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +22,7 @@ class ResetPsw : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
+        //assign activity to button
         val resetBtn: TextView = findViewById(R.id.btn_continue)
 
         resetBtn.setOnClickListener {
@@ -46,9 +48,12 @@ class ResetPsw : AppCompatActivity() {
             val emailTxt = findViewById<View>(R.id.txtVerification) as EditText
             var email = emailTxt.text.toString()
 
+        //validation
             if (email.isEmpty()) {
                 Toast.makeText(applicationContext, "Enter your email!", Toast.LENGTH_SHORT).show()
             } else {
+                //send email to user
+                    //user required to change the password through the email
                 mAuth!!.sendPasswordResetEmail(email)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {

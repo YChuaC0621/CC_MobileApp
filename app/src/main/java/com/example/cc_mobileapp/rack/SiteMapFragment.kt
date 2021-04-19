@@ -26,6 +26,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class SiteMapFragment: Fragment() {
+    //data declaration
     private lateinit var viewModel: RackViewModel
     private val dbStock = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
@@ -34,6 +35,7 @@ class SiteMapFragment: Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    //bind view model to view
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -49,6 +51,7 @@ class SiteMapFragment: Fragment() {
 
         super.onActivityCreated(savedInstanceState)
 
+        //call the add rack process
         button_add.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -57,6 +60,7 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
+        //call the display rack process
         btn_rack1.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -217,8 +221,12 @@ class SiteMapFragment: Fragment() {
             transaction.commit()
         }
 
+        //call the searching product process
         button_search.setOnClickListener {
+
+            //validation to prevent null pointer exception
             if (!search_editText.text.equals("")) {
+                //coroutine
                 GlobalScope.launch(Dispatchers.IO) {
                     searchResult()
                 }
@@ -230,6 +238,7 @@ class SiteMapFragment: Fragment() {
     }
 
     suspend fun searchResult() {
+        //retreive product data from product database
         dbProduct.get().addOnSuccessListener {
             if (it.exists()) {
                 var result = "Searching Results : \n"
@@ -237,6 +246,9 @@ class SiteMapFragment: Fragment() {
                 for (prod in it.children) {
                     var product: Product? =
                         prod.getValue(Product::class.java)
+
+                    //check the product is the one that user request or not
+                    //if yes find its stock details transaction
                     if (product?.prodName!!.equals(search_editText.text.toString())) {
                         val prodId = product?.prodBarcode.toString()
                         dbStock.get().addOnSuccessListener {
@@ -244,6 +256,8 @@ class SiteMapFragment: Fragment() {
                             if (it.exists()) {
                                 it.children.forEach { it ->
                                     val stock: StockDetail? = it.getValue(StockDetail::class.java)
+
+                                    //check this product is stored at which rack and the dtored quantity
                                     if (stock?.stockDetailProdBarcode == prodId) {
                                         result += (stock?.stockDetailRackId.toString() + " : " + stock?.stockDetailQty.toString() + "Quantity \n")
                                         counter = 1
@@ -255,6 +269,7 @@ class SiteMapFragment: Fragment() {
                         }
                     }
                 }
+
                 if(counter == 0)
                 {
                     Toast.makeText(

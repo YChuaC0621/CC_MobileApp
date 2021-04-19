@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 
 class RackViewModel () : ViewModel() {
 
+    //data declaration
     private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
     private val _result = MutableLiveData<Exception?>()
     val result: LiveData<Exception?>
@@ -31,8 +32,11 @@ class RackViewModel () : ViewModel() {
         get() = _rack
 
 
+    //add the rack into database
     fun addRack(rack: Rack)
     {
+        //retrieve a new key from rack database
+        //assign value under the new key
         rack.rackId = dbRack.push().key
         dbRack.child(rack.rackId.toString()).setValue(rack)
                 .addOnCompleteListener {

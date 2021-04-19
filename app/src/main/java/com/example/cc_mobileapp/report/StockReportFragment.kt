@@ -17,6 +17,7 @@ import java.util.*
 
 class StockReportFragment(private val startDate : String, private val endDate : String) : Fragment(), ProdReportRecycleViewClickListener {
 
+    //data declaration
     private lateinit var viewModel: ReportViewModel
     private val adapter = StockReportAdapter()
 
@@ -24,6 +25,7 @@ class StockReportFragment(private val startDate : String, private val endDate : 
         super.onCreate(savedInstanceState)
     }
 
+    //bind view model to view
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -41,12 +43,14 @@ class StockReportFragment(private val startDate : String, private val endDate : 
         adapter.listener = this
         recycler_view_stockreport.adapter = adapter
 
+        //retrieve related data
         viewModel.fetchProdReportDetails()
         viewModel.fetchStockInReportDetails()
         viewModel.fetchStockOutReportDetails()
         viewModel.fetchStockInDetailReportDetails()
         viewModel.fetchStockOutDetailReportDetails()
 
+        //set the value to each recycle view item
         viewModel.reports.observe(viewLifecycleOwner, Observer {
             val prodList = it
             viewModel.stockin_reports.observe(viewLifecycleOwner, Observer {

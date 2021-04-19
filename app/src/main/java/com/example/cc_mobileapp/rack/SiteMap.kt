@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class SiteMap: AppCompatActivity() {
 
+    //navigation drawer data declaration
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var navController : NavController
@@ -38,6 +39,7 @@ class SiteMap: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sitemap_main)
 
+        //navigation drawer part
         navController = Navigation.findNavController(this,R.id.fragmentSiteMap)
         drawerLayout = findViewById(R.id.sitemap_drawer)
         navigationView = findViewById(R.id.sitemap_nav_view)
@@ -45,6 +47,7 @@ class SiteMap: AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //hide the report and manage staff function for staff
         val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {
@@ -112,6 +115,7 @@ class SiteMap: AppCompatActivity() {
         }
     }
 
+    //support navigation back to last activity or fragment
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController,drawerLayout)
     }

@@ -21,8 +21,10 @@ import kotlinx.android.synthetic.main.fragment_edit_supplier.txtDelete
 
 class EditStaffFragment (private val staff: Users) : Fragment() {
 
+    //data declaration
     private lateinit var viewModel: StaffViewModel
 
+    //bind view model to view
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -33,6 +35,7 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        //display information in view
         editTxt_staffName.setText(staff.userName)
         editTxt_staffEmail.setText(staff.userEmail)
         editTxt_staffHpNum.setText(staff.userHpNum)
@@ -44,11 +47,13 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
             editTxt_working_position.setText("Top Management")
 
         editTxt_working_status.setText(staff.workingStatus.toString())
+        //top management only can change the working position
         editTxt_staffName.isEnabled = false
         editTxt_staffEmail.isEnabled = false
         editTxt_staffHpNum.isEnabled = false
         editTxt_working_status.isEnabled = false
 
+        //observe the edit results
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val message: String
             if (it == null) {
@@ -61,9 +66,11 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
 
         })
 
+        //save to database
         btn_Save.setOnClickListener {
             val working_pos = editTxt_working_position.text.toString()
             var valid = true
+            //validation
             if (working_pos.isEmpty()) {
                 txtInputLayout_working_pos.error = getString(R.string.error_field_required)
                 valid = false
@@ -93,6 +100,7 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
         }
 
 
+        //delete the staff
         txtDelete.setOnClickListener {
             AlertDialog.Builder(requireContext()).also {
                 it.setTitle(getString(R.string.delete_confirmation))

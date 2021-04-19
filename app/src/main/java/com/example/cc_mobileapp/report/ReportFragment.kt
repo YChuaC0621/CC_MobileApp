@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_report.*
 import kotlinx.android.synthetic.main.fragment_supplier.*
 
 class ReportFragment: Fragment() {
+    //data declaration
     private lateinit var viewModel: ReportViewModel
 
 
@@ -36,6 +37,7 @@ class ReportFragment: Fragment() {
 
     }
 
+    //bind view model to view
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -51,6 +53,7 @@ class ReportFragment: Fragment() {
 
         super.onActivityCreated(savedInstanceState)
 
+        //navigate to view product report
         btn_product.setOnClickListener{
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -59,6 +62,7 @@ class ReportFragment: Fragment() {
             transaction.commit()
         }
 
+        //navigate to cuztomize stock report
         btn_stocks.setOnClickListener{
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()

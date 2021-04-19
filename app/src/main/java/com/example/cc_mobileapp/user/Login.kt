@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_display_rackdetails.*
 
 class Login : AppCompatActivity() {
 
+    //data declaration
     private lateinit var mAuth : FirebaseAuth
     private val dbUser = FirebaseDatabase.getInstance().getReference(Constant.NODE_USERS)
 
@@ -30,7 +31,10 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        //link to firebase authentication
         mAuth = FirebaseAuth.getInstance()
+
+        //assign intent to every button
         val registerBtn: TextView = findViewById(R.id.txtRegister)
 
         registerBtn.setOnClickListener {
@@ -46,6 +50,7 @@ class Login : AppCompatActivity() {
 
         val viewPsw : CheckBox = findViewById(R.id.chk_showPsw)
 
+        //hide or show password
         viewPsw.setOnCheckedChangeListener{ buttonView, isChecked ->
             if (isChecked){
                 txtPsw.transformationMethod = HideReturnsTransformationMethod.getInstance()
@@ -66,25 +71,33 @@ class Login : AppCompatActivity() {
 
     private fun loginUser()
     {
+        //data initialization
         val emailTxt = findViewById<View>(R.id.txtEmail) as EditText
         val passwordTxt = findViewById<View>(R.id.txtPsw) as EditText
         var email = emailTxt.text.toString()
         var password = passwordTxt.text.toString()
 
-        if(!email.isEmpty() && !password.isEmpty())
+        //validation
+        if(!email.isEmpty() && !password.isEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
             Toast.makeText(applicationContext, "Valid User Information",
                     Toast.LENGTH_SHORT).show()
 
+            //retrieve all user information from database
             dbUser.get().addOnSuccessListener {
                 if (it.exists()) {
                     for (user in it.children) {
                         var user: Users? =
                                 user.getValue(Users::class.java)
                         if (user?.userEmail!!.equals(email)) {
+                            //check the user is resigned alr or not
+                                //if yes no login is allowed
                             if(user?.workingStatus == 1)
                             {
                                 var user_pos = user?.workingPosition
+
+                                //sign in firebase by using email and password
+                                //validate with the authentication in firebase
                                 mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, OnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         Toast.makeText(this, "Login Successfully:)", Toast.LENGTH_LONG).show()

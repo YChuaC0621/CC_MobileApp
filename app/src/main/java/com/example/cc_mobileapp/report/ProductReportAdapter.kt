@@ -15,11 +15,13 @@ import kotlinx.coroutines.launch
 
 class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportViewModel>() {
 
+    //data declaration
     private var prod_report = mutableListOf<Product>()
     private val dbStockDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
 
     var listener: ProdReportRecycleViewClickListener? = null
 
+    //bind one of the recycle view item with the view model
     override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
@@ -30,6 +32,7 @@ class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportVi
 
     override fun getItemCount() = prod_report.size
 
+    //receive product details and set to each recycle view item
     fun setProdReportDetails(prod: List<Product>) {
         Log.d("Check", "product report set: $prod")
         this.prod_report = prod as MutableList<Product>
@@ -42,10 +45,12 @@ class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportVi
     }
 
 
+    //assign value for each recycle view item
     override fun onBindViewHolder(holder: ReportViewModel, position: Int) {
 
         Log.d("Check", "adapter bind view holder")
 
+        //coroutine
         GlobalScope.launch {
             dbStockDetail.get().addOnSuccessListener {
                 var stockDetail = mutableListOf<StockDetail>()
@@ -56,6 +61,7 @@ class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportVi
                     it.children.forEach { it ->
                         val stockReport = StockDetail()
                         val stock: StockDetail? = it.getValue(StockDetail::class.java)
+                        //check the product is stored under which racks and its stored quantity
                         if (stock?.stockDetailProdBarcode.equals(prod_report[position].prodBarcode)) {
                             stock?.stockTypeId = it.key
                             Log.d("Check", "fetch stock detail Info ${stock?.stockDetailRackId}")
@@ -69,6 +75,7 @@ class ProductReportAdapter(): RecyclerView.Adapter<ProductReportAdapter.ReportVi
                     rackResults = "Empty"
                     qtyResults = "Empty"
                 }
+                //set the textfield
                 holder.view.txtStockInInfo.setText(rackResults)
                 holder.view.txtStockInInfo2.setText(qtyResults)
                 holder.view.txtProdName.text = prod_report[position].prodName

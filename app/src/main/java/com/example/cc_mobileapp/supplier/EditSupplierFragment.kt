@@ -30,8 +30,10 @@ import kotlinx.android.synthetic.main.fragment_edit_supplier.txtInputLayout_supN
 
 class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
 
+    //Data declaration
     private lateinit var  viewModel: SupplierViewModel
 
+    //Bind view model to view
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -42,12 +44,14 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        //set the text field and display for user
         editTxt_supName.setText(supplier.supName)
         editTxt_supEmail.setText(supplier.supEmail)
         editTxt_supHpNum.setText(supplier.supHpNum)
         editTxt_supCmpName.setText(supplier.supCmpName)
         editTxt_supCmpLot.setText(supplier.supCmpLot)
 
+        //check the update results
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val message:String
             if (it == null) {
@@ -60,12 +64,15 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
 
         })
 
+        //update the information to database
         btn_Save.setOnClickListener {
             val supName = editTxt_supName.text.toString().trim()
             val supEmail = editTxt_supEmail.text.toString().trim()
             val supHpNum = editTxt_supHpNum.text.toString().trim()
             val supCmpName = editTxt_supCmpName.text.toString().trim()
             val supCmpLot = editTxt_supCmpLot.text.toString().trim()
+
+            //validation
             var valid = true
             if(supName.isEmpty()) {
                 txtInputLayout_supName.error = getString(R.string.error_field_required)
@@ -123,6 +130,7 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
                     txtInputLayout_supCmpLot.error = null
                 }
 
+            //if all valid inputs update to database
                if(valid){
                     supplier.supName = supName
                     supplier.supEmail = supEmail
@@ -135,6 +143,7 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
             }
 
 
+        //delete the supplier from database
         txtDelete.setOnClickListener{
             AlertDialog.Builder(requireContext()).also{
                 it.setTitle(getString(R.string.delete_confirmation))
@@ -145,6 +154,7 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
         }
     }
 
+    //make sure the phone number is in valid format
     private fun checkRegexhpNum(hpNum: String): Boolean {
         var hpNum: String = hpNum
         var regex: Regex = Regex(pattern = """\d+""")

@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_staff.*
 
 class StaffFragment : Fragment(), StaffRecycleViewClickListener{
 
+    //data declaration
     private lateinit var viewModel: StaffViewModel
     private val adapter = StaffAdapter()
 
@@ -21,6 +22,7 @@ class StaffFragment : Fragment(), StaffRecycleViewClickListener{
         super.onCreate(savedInstanceState)
     }
 
+    //bind view model to view
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -38,9 +40,11 @@ class StaffFragment : Fragment(), StaffRecycleViewClickListener{
         adapter.listener = this
         recycler_view_staff.adapter = adapter
 
+        //retrieve staff information and keep update if any changes
         viewModel.fetchStaff()
         viewModel.getRealtimeUpdates()
 
+        //observe the results and set to each recycle view item
         viewModel.staffs.observe(viewLifecycleOwner, Observer {
             adapter.setStaffs(it)
             Log.d("Check", "staffs fragment on activity created$it")

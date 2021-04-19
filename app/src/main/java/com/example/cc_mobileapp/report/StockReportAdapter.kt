@@ -22,6 +22,7 @@ import java.util.*
 
 class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewModel>() {
 
+    //data declaration
     private var prod_report = mutableListOf<Product>()
     private var stockIn_report = mutableListOf<StockIn>()
     private var stockOut_report = mutableListOf<StockOut>()
@@ -30,16 +31,9 @@ class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewMo
     private lateinit var startDate :String
     private lateinit var endDate: String
 
-
-    private val dbStockIn = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKIN)
-    private val dbStockOut = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKOUT)
-    private val dbStockOutDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKOUTDETAIL)
-    private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_PERM_STOCKINDETAIL)
-
-
-
     var listener: ProdReportRecycleViewClickListener? = null
 
+    //bind each recycle view item to view model
     override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
@@ -50,6 +44,7 @@ class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewMo
 
     override fun getItemCount() = prod_report.size
 
+    //set the data for each variables
     fun setStockReportDetails(prod: List<Product>, startDate: String, endDate: String,
                               stockIn: List<StockIn>, stockOut: List<StockOut>,
                               stockInDetail: List<StockDetail>, stockOutDetail: List<StockOutDetail>) {
@@ -82,6 +77,7 @@ class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewMo
 
         Log.d("Check", "adapter bind view holder")
 
+            //check which stock in transaction is fall within the date range that set by user
             var stockin_results = ""
             for(child in stockInDetail_report)
             {
@@ -91,6 +87,7 @@ class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewMo
                     {
                         if(childStockIn.stockInId.equals(child.stockTypeId))
                         {
+                            //format the string to the date format for comparison
                             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH)
                             Log.d("Check", "start date: $startDate")
                             Log.d("Check", "end date: $endDate")
@@ -106,6 +103,7 @@ class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewMo
                 }
             }
 
+        //check which stock out transaction is fall within the date range that set by user
         var stockout_results = ""
         for(child in stockOutDetail_report)
         {
@@ -115,6 +113,7 @@ class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewMo
                 {
                     if(childStockOut.stockOutId.equals(child.stockTypeId))
                     {
+                        //format the string to the date format for comparison
                         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH)
                         Log.d("Check", "start date: $startDate")
                         Log.d("Check", "end date: $endDate")
@@ -146,6 +145,7 @@ class StockReportAdapter(): RecyclerView.Adapter<StockReportAdapter.ReportViewMo
             {
                 holder.view.txtStockOutInfo.setText(stockout_results)
             }
+        //set the text field for each recycle view item
             holder.view.txtQtyNum.setText(prod_report[position].prodQty.toString())
             holder.view.txtProdName.text = prod_report[position].prodName
             holder.view.txtProdBarcode.text = prod_report[position].prodBarcode

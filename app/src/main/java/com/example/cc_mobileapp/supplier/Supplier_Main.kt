@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.activity_supplier_main.view.*
 
 class Supplier_Main: AppCompatActivity() {
 
+    //data declaration for navigation drawer
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var navController : NavController
@@ -42,6 +43,7 @@ class Supplier_Main: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_supplier_main)
 
+        //navigation drawer
         navController = Navigation.findNavController(this,R.id.fragmentSupplier)
         drawerLayout = findViewById(R.id.supplier_drawer)
         navigationView = findViewById(R.id.supplier_nav_view)
@@ -49,6 +51,7 @@ class Supplier_Main: AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //hide the report and manage staff function from staff
         val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {

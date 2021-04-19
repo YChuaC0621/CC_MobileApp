@@ -21,6 +21,7 @@ import kotlinx.coroutines.GlobalScope
 
 class ProductReportFragment: Fragment(), ProdReportRecycleViewClickListener {
 
+    //data declaration
     private lateinit var viewModel: ReportViewModel
     private val adapter = ProductReportAdapter()
 
@@ -28,6 +29,7 @@ class ProductReportFragment: Fragment(), ProdReportRecycleViewClickListener {
         super.onCreate(savedInstanceState)
     }
 
+    //bind view model to view
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -45,9 +47,12 @@ class ProductReportFragment: Fragment(), ProdReportRecycleViewClickListener {
         adapter.listener = this
         recycler_view_prodreport.adapter = adapter
 
+        //retrieve product details from database
         viewModel.fetchProdReportDetails()
 
+        //retrieve the results
         viewModel.reports.observe(viewLifecycleOwner, Observer {
+            //set value to each recycle view item
             adapter.setProdReportDetails(it)
             Log.d("Check", "product report fragment on activity created$it")
         })

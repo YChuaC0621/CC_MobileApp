@@ -13,9 +13,11 @@ import kotlinx.android.synthetic.main.supplier_display_item.view.*
 
 class SupplierAdapter:RecyclerView.Adapter<SupplierAdapter.SupplierViewModel>(){
 
+    //data declaration
     private var sup = mutableListOf<Supplier>()
     var listener: SupplierRecycleViewClickListener? = null
 
+    //bind view model to view
     override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
@@ -26,6 +28,7 @@ class SupplierAdapter:RecyclerView.Adapter<SupplierAdapter.SupplierViewModel>(){
 
     override fun getItemCount() = sup.size
 
+    //set the value for each recycle view
     override fun onBindViewHolder(holder: SupplierViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
         holder.view.txtSupName.text = sup[position].supName
@@ -39,6 +42,7 @@ class SupplierAdapter:RecyclerView.Adapter<SupplierAdapter.SupplierViewModel>(){
         notifyDataSetChanged()
     }
 
+    //add to database
     fun addSupplier(supplier: Supplier) {
         Log.d("Check", "real time add supplier $supplier")
         if (!sup.contains(supplier)) {

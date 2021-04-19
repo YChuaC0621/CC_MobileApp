@@ -19,12 +19,14 @@ import java.util.*
 
 
 class StockReportFormFragment : Fragment() {
+    //data declaration
     private lateinit var viewModel: ReportViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
+    //bind view model to view
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -43,6 +45,7 @@ class StockReportFormFragment : Fragment() {
 
         val date: EditText
 
+        //make the date entered in only in dd/MM/yyyy format
         date = editTxt_startDate
         date.addTextChangedListener(object : TextWatcher {
             private var current = ""
@@ -145,9 +148,7 @@ class StockReportFormFragment : Fragment() {
             override fun afterTextChanged(s: Editable) {}
         })
 
-
-
-
+        //navigate to display stock report
         btn_continue2.setOnClickListener{
             val startDateString = editTxt_startDate.text.toString()
             val endDateString = editTxt_endDate.text.toString()

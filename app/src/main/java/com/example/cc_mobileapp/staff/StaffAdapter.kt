@@ -11,9 +11,11 @@ import kotlinx.android.synthetic.main.staff_display_item.view.*
 
 class StaffAdapter: RecyclerView.Adapter<StaffAdapter.StaffViewModel>(){
 
+    //data declaration
     private var staff = mutableListOf<Users>()
     var listener: StaffRecycleViewClickListener? = null
 
+    //bind view model to each recycle view
     override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
@@ -24,6 +26,7 @@ class StaffAdapter: RecyclerView.Adapter<StaffAdapter.StaffViewModel>(){
 
     override fun getItemCount() = staff.size
 
+    //set value to each recycle view item
     override fun onBindViewHolder(holder: StaffViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
         holder.view.txtStaffName.text = staff[position].userName

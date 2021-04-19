@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.fragment_edit_supplier.*
 import kotlinx.android.synthetic.main.fragment_edit_supplier.txtInputLayout_supHpNum
 
 class Usermgmt : AppCompatActivity() {
+    //data declaration
     lateinit var mDatabase : DatabaseReference
     var mAuth = FirebaseAuth.getInstance()
     var user = FirebaseAuth.getInstance().currentUser
@@ -50,6 +51,7 @@ class Usermgmt : AppCompatActivity() {
         val statusTxt = findViewById<View>(R.id.editTxt_workingp_status) as TextView
         val positionTxt = findViewById<View>(R.id.editTxt_working_position) as TextView
 
+        //get current login user information and display
         var uid = user!!.uid
         emailTxt.text = user!!.email.toString();
         mDatabase = FirebaseDatabase.getInstance().getReference("Users")
@@ -115,12 +117,14 @@ class Usermgmt : AppCompatActivity() {
 */
         val saveBtn: Button = findViewById(R.id.btn_Save)
 
+        //user request to update the profile information to database
         saveBtn.setOnClickListener {
             val userName = editTxt_userName.text.toString().trim()
             val userEmail = editTxt_userEmail.text.toString().trim()
             val userHpNum = editTxt_userHpNum.text.toString().trim()
             var uid = user!!.uid
             var valid = true
+            //validation
             mDatabase = FirebaseDatabase.getInstance().getReference("Users")
             if (userName.isEmpty()) {
                 txtInputLayout_userName.error = getString(R.string.error_field_required)
@@ -155,7 +159,7 @@ class Usermgmt : AppCompatActivity() {
                 txtInputLayout_userHpNum.error = null
             }
 
-
+            //update to database
             if (valid) {
                 mDatabase.child(uid).child("userName").setValue(userName)
                         .addOnCompleteListener { task ->
@@ -188,11 +192,13 @@ class Usermgmt : AppCompatActivity() {
 
         val forgtPswBtn: TextView = findViewById(R.id.txtForgtPsw)
 
+        //navigate to reset password page
         forgtPswBtn.setOnClickListener {
             val resetPswIntent = Intent(this, ResetPsw::class.java)
             startActivity(resetPswIntent)
         }
 
+        //navigation drawer
         drawerLayout = findViewById(R.id.userMgmt_drawer)
         navigationView = findViewById(R.id.nav_view)
 

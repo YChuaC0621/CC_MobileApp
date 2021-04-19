@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_login.txtPsw
 import kotlinx.android.synthetic.main.activity_signup.*
 
 class Registration : AppCompatActivity() {
+    //data declaration
     lateinit var mDatabase : DatabaseReference
     var mAuth = FirebaseAuth.getInstance()
 
@@ -25,7 +26,10 @@ class Registration : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
+        //find users database
         mDatabase = FirebaseDatabase.getInstance().getReference("Users")
+
+        //set activity for each button and clickable text field
         val continueBtn: Button = findViewById(R.id.btn_continue)
 
         continueBtn.setOnClickListener {
@@ -54,6 +58,7 @@ class Registration : AppCompatActivity() {
     }
 
     private fun registerUser () {
+        //data initialization
         val emailTxt = findViewById<View>(R.id.txtEmail) as EditText
         val passwordTxt = findViewById<View>(R.id.txtPsw) as EditText
         val repeatPasswordTxt = findViewById<View>(R.id.txtRepeatPsw) as EditText
@@ -69,6 +74,7 @@ class Registration : AppCompatActivity() {
         var working_status = 1
 
 
+        //validation
         if (!email.isEmpty() && !password.isEmpty() && !name.isEmpty()&& !repeatPassword.isEmpty() && !hp.isEmpty()) {
             if(password.equals(repeatPassword) && password.length > 6)
             {
@@ -79,6 +85,9 @@ class Registration : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Valid User Information",
                                 Toast.LENGTH_SHORT).show()
 
+                        //validate with firebase authentication
+                        //make sure no duplicate email
+                        //create a user account
                             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, OnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     val user = mAuth.currentUser
@@ -121,6 +130,7 @@ class Registration : AppCompatActivity() {
 
     }
 
+    //send email to user for verification purpose
     private fun sendEmailVerification() {
         val user = mAuth!!.currentUser
         user!!.sendEmailVerification()
@@ -133,6 +143,7 @@ class Registration : AppCompatActivity() {
                 }
     }
 
+    //make the input is in valid format
     private fun checkRegexhpNum(hpNum: String): Boolean {
         var hpNum: String = hpNum
         var regex: Regex = Regex(pattern = """\d+""")

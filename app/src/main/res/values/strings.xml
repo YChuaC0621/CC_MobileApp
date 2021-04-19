@@ -25,6 +25,7 @@
     <string name="errorPhoneNum">Invalid Phone Number</string>
     <string name="search">Search Product Name</string>
     <string name="searchbtn">Search</string>
+    <string name="rowNum_error">Only can type 1 or 2</string>
     <!-- all page title name -->
     <string name="add_client"><b>Add Client</b></string>
 

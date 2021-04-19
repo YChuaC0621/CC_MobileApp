@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class ReportViewModel(): ViewModel() {
+    //data declaration
     private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
     private val dbStockIn = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKIN)
     private val dbStockOut = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKOUT)
@@ -38,8 +39,7 @@ class ReportViewModel(): ViewModel() {
     val stockindetails_reports: LiveData<List<StockDetail>>
         get() = _stockindetails_reports
 
-
-
+    //retrieve product data from product database
     fun fetchProdReportDetails() {
         dbProduct.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -62,7 +62,7 @@ class ReportViewModel(): ViewModel() {
         })
 
     }
-
+    //retrieve stock in data from stock in database
     fun fetchStockInReportDetails() {
         dbStockIn.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -86,6 +86,7 @@ class ReportViewModel(): ViewModel() {
 
     }
 
+    //retrieve stock out data from stock out database
     fun fetchStockOutReportDetails() {
         dbStockOut.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -109,6 +110,7 @@ class ReportViewModel(): ViewModel() {
 
     }
 
+    //retrieve stock out details data from stock out detail database
     fun fetchStockOutDetailReportDetails() {
         dbStockOutDetail.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -132,6 +134,7 @@ class ReportViewModel(): ViewModel() {
 
     }
 
+    //retrieve stock in details data from stock in details database
     fun fetchStockInDetailReportDetails() {
         dbStockInDetail.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

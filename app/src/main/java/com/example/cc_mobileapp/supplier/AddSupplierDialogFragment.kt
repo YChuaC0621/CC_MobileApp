@@ -28,8 +28,10 @@ import kotlinx.android.synthetic.main.fragment_edit_supplier.*
 
 class AddSupplierDialogFragment  : Fragment() {
 
+    //data declaration
     private lateinit var viewModel: SupplierViewModel
 
+    //bind view model to view
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -42,6 +44,7 @@ class AddSupplierDialogFragment  : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        //check the adding results
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val message = if (it == null) {// success
                 getString(R.string.supplier_added)
@@ -51,12 +54,15 @@ class AddSupplierDialogFragment  : Fragment() {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         })
 
+        //add supplier to database
         btn_Save.setOnClickListener {
             val supName = editTxt_supName.text.toString().trim()
             val supEmail = editTxt_supEmail.text.toString().trim()
             val supHpNum = editTxt_supHpNum.text.toString().trim()
             val supCmpName = editTxt_supCmpName.text.toString().trim()
             val supCmpLot = editTxt_supCmpLot.text.toString().trim()
+
+            //validation
             var valid = true
             if (supName.isEmpty()) {
                 txtInputLayout_supName.error = getString(R.string.error_field_required)
@@ -109,6 +115,7 @@ class AddSupplierDialogFragment  : Fragment() {
                 txtInputLayout_supCmpLot.error = null
             }
 
+            //if all valid inputs then add to database
             if (valid) {
                 val sup = Supplier()
                 sup.supName = supName
@@ -123,6 +130,7 @@ class AddSupplierDialogFragment  : Fragment() {
         }
     }
 
+    //make sure is valid phone number format
     private fun checkRegexhpNum(hpNum: String): Boolean {
         var hpNum: String = hpNum
         var regex: Regex = Regex(pattern = """\d+""")
