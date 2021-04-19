@@ -33,20 +33,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class Product_Main: AppCompatActivity(R.layout.activity_product__main) {
 
+    // variable declaration
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var navController : NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-/*
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.product_nav_host_fragment)as NavHostFragment
-
-        navController = navHostFragment.navController
-
-        setupActionBarWithNavController(navController)*/
-
-
+        // Navigation drawer
         navController = Navigation.findNavController(this,R.id.product_nav_host_fragment)
         drawerLayout = findViewById(R.id.product_drawer)
         navigationView = findViewById(R.id.product_nav_view)
@@ -54,13 +48,14 @@ class Product_Main: AppCompatActivity(R.layout.activity_product__main) {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // check user position
         val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false
         }
-
+        // set the navigation drawer
         navigationView.setNavigationItemSelectedListener {
 
             when(it.itemId){

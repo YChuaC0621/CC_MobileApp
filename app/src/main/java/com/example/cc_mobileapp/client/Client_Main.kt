@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class Client_Main: AppCompatActivity() {
 
+    // variable
     lateinit var clientRepoRef: DatabaseReference
     lateinit var clientList: MutableList<Client>
     lateinit var listView: ListView
@@ -41,8 +42,10 @@ class Client_Main: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // set view
         setContentView(R.layout.activity_client__main)
 
+        // Navigation drawer
         navController = Navigation.findNavController(this,R.id.fragmentClient)
         drawerLayout = findViewById(R.id.client_drawer)
         navigationView = findViewById(R.id.client_nav_view)
@@ -50,6 +53,7 @@ class Client_Main: AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // check user position
         val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {
@@ -57,6 +61,7 @@ class Client_Main: AppCompatActivity() {
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false
         }
 
+        // set the navigation drawer
         navigationView.setNavigationItemSelectedListener {
 
             when(it.itemId){
@@ -117,6 +122,7 @@ class Client_Main: AppCompatActivity() {
         }
     }
 
+    // check on the fragment status, if no more fragment, back stack is not allowed
     override fun onBackPressed() {
         val fm: FragmentManager = supportFragmentManager
         if (fm.backStackEntryCount > 0) {
@@ -128,6 +134,7 @@ class Client_Main: AppCompatActivity() {
         }
     }
 
+    // Navigation drawer
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController,drawerLayout)
     }

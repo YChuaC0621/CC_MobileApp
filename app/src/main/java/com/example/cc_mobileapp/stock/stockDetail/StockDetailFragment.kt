@@ -29,6 +29,7 @@ import java.util.*
 
 class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
 
+    // variable declaration
     private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbPermanentStock = FirebaseDatabase.getInstance().getReference(Constant.NODE_PERM_STOCKINDETAIL)
     private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
@@ -38,38 +39,48 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
     private lateinit var stockViewModel: StockViewModel
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     private lateinit var rackViewModel: RackViewModel
+    private lateinit var productSnapshot: DataSnapshot
+    private var totalPrice: Double = 0.0
+    var productfromDB: Product? = null
+    var callBackCount: Int = 0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        // access the information from view model
         productViewModel = ViewModelProvider(this@StockDetailFragment).get(ProductViewModel::class.java)
         stockViewModel = ViewModelProvider(this@StockDetailFragment).get(StockViewModel::class.java)
         rackViewModel = ViewModelProvider(this@StockDetailFragment).get(RackViewModel::class.java)
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stock_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        // adapter and adapter listener set up on recycler view
         adapter.listener = this
         recycler_view_stockDetail.adapter = adapter
 
+        // get data from database
         productViewModel.fetchProduct()
-
         stockViewModel.fetchStockDetail()
 
+        // get real time updates
         stockViewModel.getRealtimeUpdates()
 
+        // observe the changes in stocks detail, if have changes, set the stocks in information and make changes on UI
         stockViewModel.stocksDetail.observe(viewLifecycleOwner, Observer {
             adapter.setStocksDetail(it)
             btn_stockDetailSave.isEnabled = adapter.itemCount > 0
         })
 
+        // observe the changes in stock detail, if have changes, set the stock in information and make changes on UI
         stockViewModel.stockDetail.observe(viewLifecycleOwner, Observer {
             adapter.addStockDetail(it)
             btn_stockDetailSave.isEnabled = adapter.itemCount > 0
         })
 
+        // button "+" is clicked, go to add fragment
         btn_stockDetailAdd.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -77,16 +88,15 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
             transaction.addToBackStack("addStockDetailFragment")
             transaction.commit()
         }
-
-
+        // when button "save" is click save the stock details
         btn_stockDetailSave.setOnClickListener {
             getProdsDetail()
         }
     }
 
-    private lateinit var productSnapshot: DataSnapshot
-    private var totalPrice: Double = 0.0
 
+
+    // get the current product details for update
     fun getProdsDetail(){
         readData(object : FirebaseCallback {
             override fun onCallBack(snapshot: DataSnapshot) {
@@ -94,12 +104,14 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                 Log.d("inside the on call back", snapshot.toString())
                 val numbers = mutableListOf(stockViewModel.stocksDetail)
                 var count: Int = 0
+                // iterate through each product for update
                 numbers.listIterator().forEach {
                     it.value?.forEach {
                         dbStockInDetail.push().setValue(it)
                         dbPermanentStock.push().setValue(it)
                         count += 1
                         stockUpdateProduct(it.stockDetailProdBarcode, it.stockDetailQty)
+                        // calculate total price for each transaction
                         if (!(productfromDB?.prodPrice == null || it?.stockDetailQty == null)) {
                             var price: Double = productfromDB?.prodPrice!!
                             var qty: Int? = it?.stockDetailQty
@@ -108,6 +120,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                         }
                     }
                 }
+                // remove all the temporary stock detail (for adding purpose)
                 dbTemp.removeValue()
                 updateStockInDetail()
             }
@@ -115,6 +128,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         })
     }
 
+    // update new stock detail transaction information and store to database
     private fun updateStockInDetail() {
         val stockIn = StockIn()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
@@ -132,7 +146,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         requireActivity().supportFragmentManager.popBackStack(getCallerFragment(), FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
-
+    // update for each of the product which carry out stock in
     private fun stockUpdateProduct(stockDetailBarcode: String?, stockDetailQty: Int?){
         productSnapshot.children.forEach {
             var tempProd: Product? = null
@@ -149,15 +163,11 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                                 Log.d("check", "update successfully")
                             }
                         }
-                //subtotal = (prodQty!! * product?.prodPrice!!).toDouble()
             }
         }
     }
 
-
-    var productfromDB: Product? = null
-    var callBackCount: Int = 0
-
+    // get all product information from database
     private fun readData(firebaseCallback: FirebaseCallback){
         dbProduct.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -175,19 +185,19 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         })
     }
 
+     // firebase callback interface
     private interface FirebaseCallback{
         fun onCallBack(snapshot: DataSnapshot);
     }
 
-//    var totalPrice = stockViewModel.storedIntoStockInDB()
-//
-
+    // get the previous fragment name
     fun getCallerFragment(): String? {
         val fm: FragmentManager = requireActivity().supportFragmentManager
         val count: Int = requireActivity().supportFragmentManager.backStackEntryCount
         return fm.getBackStackEntryAt(count - 2).name
     }
 
+    // when the "edit" button on the recycler view is click, go to edit stock detail fragment with passing parameter of stock detail
     override fun onRecyclerViewItemClicked(view: View, stockDetail: StockDetail) {
         when(view.id){
             R.id.btn_edit_stockDetail -> {

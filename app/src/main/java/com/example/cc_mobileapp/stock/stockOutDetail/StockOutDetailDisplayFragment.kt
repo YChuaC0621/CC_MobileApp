@@ -24,39 +24,41 @@ import java.util.*
 
 class StockOutDetailDisplayFragment(stockOut: StockOut) : Fragment(){
 
-    private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
-    private val dbPermanentStock = FirebaseDatabase.getInstance().getReference(Constant.NODE_PERM_STOCKINDETAIL)
-    private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
-    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+    // variable declaration
     private lateinit var productViewModel: ProductViewModel
     private val adapter = StockOutDetailDisplayAdapter()
     private lateinit var stockOutDetailViewModel: StockOutDetailViewModel
-    private val sharedStockOutViewModel: StockOutViewModel by activityViewModels()
     private lateinit var rackViewModel: RackViewModel
     var stockOutID: String = stockOut.stockOutId.toString()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        // access the information from view model
         productViewModel = ViewModelProvider(this@StockOutDetailDisplayFragment).get(ProductViewModel::class.java)
         stockOutDetailViewModel = ViewModelProvider(this@StockOutDetailDisplayFragment).get(StockOutDetailViewModel::class.java)
         rackViewModel = ViewModelProvider(this@StockOutDetailDisplayFragment).get(RackViewModel::class.java)
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stockout_detail_display, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        // adapter set up on recycler view
         recycler_view_stockOutDetail_display.adapter = adapter
 
+        // get data from database
         stockOutDetailViewModel.fetchStockOutDetailDisplay(stockOutID)
 
+        // get real time updates
         stockOutDetailViewModel.getRealtimeUpdates()
 
+        // observe the changes in stocks detail, if have changes, set the products information and make changes on UI
         stockOutDetailViewModel.stocksOutDetail.observe(viewLifecycleOwner, Observer {
             adapter.setStocksOutDetail(it)
         })
 
+        // observe the changes in stock detail, if have changes, set the products information and make changes on UI
         stockOutDetailViewModel.stockOutDetail.observe(viewLifecycleOwner, Observer {
             adapter.addStockOutDetail(it)
         })

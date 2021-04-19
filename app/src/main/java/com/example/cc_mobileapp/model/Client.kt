@@ -6,6 +6,7 @@ import com.google.firebase.database.Exclude
 
 data class Client (
     @get:Exclude
+    // client construction
     var clientId: String? = null,
     var clientCoName: String? = null,
     var clientEmail: String? = null,

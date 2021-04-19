@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_stock_in___main.*
 
 class StockIn_Fragment_Main : Fragment(), StockInRecyclerViewClickListener  {
 
+    // variable declaration
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     private val adapter = StockInAdapter()
 
@@ -28,28 +29,32 @@ class StockIn_Fragment_Main : Fragment(), StockInRecyclerViewClickListener  {
         savedInstanceState: Bundle?
     ): View? {
         //Inflate the layout for this fragment
-        //viewModel = ViewModelProvider(requireActivity()).get(StockInViewModel::class.java)
         return inflater.inflate(R.layout.fragment_stock_in___main, container, false)
 
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        // adapter and adapter listener set up on recycler view
         adapter.listener = this
         recycler_view_stockin.adapter = adapter
 
+        // get data from database
         sharedStockInViewModel.fetchStockIn()
+        // get real time updates
         sharedStockInViewModel.getRealtimeUpdates()
 
+        // observe the changes in stocks in, if have changes, set the stock in information and make changes on UI
         sharedStockInViewModel.stocksIn.observe(viewLifecycleOwner, Observer{
             adapter.setStocksIn(it)
         })
 
+        // observe the changes in stock in, if have changes, set the stock in information and make changes on UI
         sharedStockInViewModel.stockIn.observe(viewLifecycleOwner, Observer{
             adapter.addStockIn(it)
         })
 
+        // button "+" is clicked, go to add fragment
         btn_stockInDetail_add.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -59,6 +64,7 @@ class StockIn_Fragment_Main : Fragment(), StockInRecyclerViewClickListener  {
         }
     }
 
+    // when the "edit" button on the recycler view is click, go to edit stock in fragment with passing parameter of stock in
     override fun onRecyclerViewItemClicked(view: View, stockIn: StockIn) {
         when(view.id){
             R.id.btn_stockInSupplierId-> {

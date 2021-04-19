@@ -11,8 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.CC_MobileApp">
-        <activity android:name=".stock.Stock_Main"
-             >
+        <activity android:name=".stock.Stock_Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

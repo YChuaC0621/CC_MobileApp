@@ -21,24 +21,28 @@ import kotlinx.android.synthetic.main.fragment_edit_client.*
 
 class EditClientFragment(private val client: Client) : Fragment() {
 
+    // variable
     private lateinit var  viewModel: ClientViewModel
     private lateinit var oriClientName: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        // provide this class with client view model information
         viewModel = ViewModelProvider(this@EditClientFragment).get(ClientViewModel::class.java)
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_client, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // set the information from the clicked recycler item to the autocomplete input text
         edit_text_editClientCoName.setText(client.clientCoName)
         edit_text_editClientEmail.setText(client.clientEmail)
         edit_text_editClientHp.setText(client.clientHpNum)
         edit_text_editClientLocation.setText(client.clientLocation)
 
+        // observe if any changes on the view model result variable
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val message:String
             if (it == null) {
@@ -46,17 +50,22 @@ class EditClientFragment(private val client: Client) : Fragment() {
             } else {
                 message = getString(R.string.error, it.message)
             }
+            //after changes has been made, a toast of the status will be on text
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show().toString()
+            // go back to previous fragment
             requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         })
 
         btn_clientConfirmEdit.setOnClickListener {
+            // retrieve and update client information from input text
             val clientCoName = edit_text_editClientCoName.text.toString().trim()
             val clientEmail = edit_text_editClientEmail.text.toString().trim()
             val clientHp = edit_text_editClientHp.text.toString().trim()
             val clientLocation = edit_text_editClientLocation.text.toString().trim()
             var valid: Boolean = true
 
+            // validation
+            // validate client company name
             if(clientCoName.isEmpty()){
                 input_layout_editClientCoName.error = getString(R.string.error_field_required)
                 valid = false
@@ -66,6 +75,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
                 input_layout_editClientCoName.error = null
             }
 
+            // validate email
             if(clientEmail.isEmpty()){
                 input_layout_editClientEmail.error = getString(R.string.error_field_required)
                 valid = false
@@ -79,12 +89,13 @@ class EditClientFragment(private val client: Client) : Fragment() {
                 input_layout_editClientEmail.error = null
             }
 
+            // vaidate client contact number
             if(clientHp.isEmpty()){
                 input_layout_editClientHp.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
             }
-            else if (!android.util.Patterns.PHONE.matcher(clientHp).matches()){
+            else if(!checkRegexhpNum(clientHp)){
                 input_layout_editClientHp.error = getString(R.string.phone_format_error)
                 return@setOnClickListener
             }
@@ -92,6 +103,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
                 input_layout_editClientHp.error = null
             }
 
+            // validate client company location
             if(clientLocation.isEmpty()){
                 input_layout_editClientLocation.error = getString(R.string.error_field_required)
                 valid = false
@@ -102,12 +114,15 @@ class EditClientFragment(private val client: Client) : Fragment() {
             }
 
             if(valid) {
+                //construct new client with entered information
                 val newClient = Client()
                 newClient.clientId = client.clientId
                 newClient.clientCoName = clientCoName
                 newClient.clientEmail = clientEmail
                 newClient.clientHpNum = clientHp
                 newClient.clientLocation = clientLocation
+
+                // check the existance of the company name
                 var clientNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_CLIENT).orderByChild("clientCoName").equalTo(clientCoName)
                 clientNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -115,6 +130,8 @@ class EditClientFragment(private val client: Client) : Fragment() {
                             if(client.clientCoName != clientCoName){
                                 input_layout_editClientCoName.error = getString(R.string.exist_clientname_error)
                             }else{
+
+                                // check if all the text has been changed
                                 if(client.clientEmail != newClient.clientEmail || client.clientHpNum != newClient.clientHpNum || client.clientLocation != newClient.clientLocation ){
                                     viewModel.updateClient(newClient)
                                     Toast.makeText(requireContext(), getString(R.string.clientInfo_success), Toast.LENGTH_SHORT).show()
@@ -124,8 +141,10 @@ class EditClientFragment(private val client: Client) : Fragment() {
                                 requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                             }
                         } else {
+                            // update client information
                             viewModel.updateClient(newClient)
                             Toast.makeText(requireContext(), getString(R.string.clientInfo_success), Toast.LENGTH_SHORT).show()
+                            // go back to revious fragment
                             requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                         }
                     }
@@ -137,6 +156,7 @@ class EditClientFragment(private val client: Client) : Fragment() {
             }
         }
 
+        // when delete button ic clicked the alert dialog will show the infomation
         btn_dialog_clientDelete.setOnClickListener{
             AlertDialog.Builder(requireContext()).also{
                 it.setTitle(getString(R.string.delete_confirmation))
@@ -146,8 +166,16 @@ class EditClientFragment(private val client: Client) : Fragment() {
             }.create().show()
         }
 
+        // when the cancel button is clicked, go back to previous looks like
         btn_clientEditCancel.setOnClickListener{
             requireActivity().supportFragmentManager.popBackStack("editClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
+    }
+
+    // check phone number availability
+    private fun checkRegexhpNum(hpNum: String): Boolean {
+        var hpNum: String = hpNum
+        var regex:Regex = Regex(pattern="""\d+""")
+        return regex.matches(input = hpNum) && hpNum.startsWith("01")
     }
 }

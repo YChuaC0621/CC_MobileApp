@@ -6,5 +6,6 @@ import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.model.StockIn
 
 interface StockInRecyclerViewClickListener {
+    // interface to implement the on recycler view item clicked
     fun onRecyclerViewItemClicked(view: View, stockIn: StockIn)
 }

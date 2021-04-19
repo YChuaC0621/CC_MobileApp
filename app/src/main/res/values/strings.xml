@@ -55,7 +55,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- error string -->
-    <string name="error_field_required">This Field Required</string>
+    <string name="error_field_required">This Field is Required</string>
     <string name="error">Error: %15s</string>
     <string name="email_format_error">The email address format is incorrect</string>
     <string name="phone_format_error">The phone number format is incorrect</string>
@@ -68,6 +68,9 @@
     <string name="prodPrice_nonzero_error">Product Price cannot be zero</string>
     <string name="insufficientstock_error">Insufficient stock quantity</string>
     <string name="stock_nonzero_error">Stock Quantity cannot be zero</string>
+    <string name="exist_stockDetailProd_error">Product is already in stock detail</string>
+    <string name="supplier_noProd_error">The supplier do provide any product yet</string>
+    <string name="phone_format_10_11_error">Phone Number format required is 01xxxxxxxx(x)</string>
 
 
     <!-- update msg -->
@@ -203,8 +206,7 @@
     <string name="login">Login</string>
     <string name="registration">Registration</string>
     <string name="add_new_stock_in_detail">Add New Stock In Detail</string>
-    <string name="exist_stockDetailProd_error">Product is already in stock detail</string>
-    <string name="supplier_noProd_error">The supplier do provide any product yet</string>
+
 
     <!--staff-->
     <string name="staffName">Staff Name</string>

@@ -9,6 +9,7 @@ import com.example.cc_mobileapp.model.StockIn
 import com.google.firebase.database.*
 
 class StockInViewModel: ViewModel() {
+    // variable declaration with get and set
     private val dbStockIn = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKIN)
 
     private val _result = MutableLiveData<Exception?>()
@@ -39,14 +40,15 @@ class StockInViewModel: ViewModel() {
     val stockInSupplierId: LiveData<String>
         get() = _stockInSupplierId
 
+    // generate key id for stock in
     fun generateTypePushKey(){
         _stockTypePushKey.value = dbStockIn.push().key
     }
 
+    // add stock in
     fun addStockIn(stockIn: StockIn) {
         Log.d("Check", "view model add stock in $stockIn")
         //create unique key
-        // TODO if stock in then another push key
         stockIn.stockInId = stockTypePushKey.value
         // save inside the unique key
         dbStockIn.child(stockIn.stockInId!!).setValue(stockIn)
@@ -59,8 +61,10 @@ class StockInViewModel: ViewModel() {
                 }
     }
 
+    // check for realtime changes
     private val childEventListener = object: ChildEventListener {
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+            // add stock in
             Log.d("Check", "StockInListener$snapshot")
             val stockIn = snapshot.getValue(StockIn::class.java)
             stockIn?.stockInId = snapshot.key
@@ -81,11 +85,12 @@ class StockInViewModel: ViewModel() {
 
     }
 
+    // get real time updates
     fun getRealtimeUpdates(){
         Log.d("Check", "testgetRealtimeupdate")
         dbStockIn.addChildEventListener(childEventListener)
     }
-
+    // get stock in information from database
     fun fetchStockIn(){
         dbStockIn.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -107,12 +112,13 @@ class StockInViewModel: ViewModel() {
             }
         })
     }
-
+    // remove the listener when the fragment is cleared
     override fun onCleared() {
         super.onCleared()
         dbStockIn.removeEventListener(childEventListener)
     }
 
+    // set the stock in supplier id
     fun setStockInSupplierId(stockInSupplierId:String){
         _stockInSupplierId.value = stockInSupplierId
     }

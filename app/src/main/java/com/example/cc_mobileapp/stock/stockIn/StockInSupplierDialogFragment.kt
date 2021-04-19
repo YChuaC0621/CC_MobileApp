@@ -20,16 +20,16 @@ import kotlinx.android.synthetic.main.fragment_stock_in___main.*
 import kotlinx.android.synthetic.main.fragment_stock_in_supplier_dialog.*
 
 class StockInSupplierDialogFragment : Fragment(){
+    // variable declaration
     private val dbSupplier = FirebaseDatabase.getInstance().getReference(Constant.NODE_SUPPLIER)
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     lateinit var stockInSupplierName: String
-    //private var existSupplierName: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+            inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -39,9 +39,12 @@ class StockInSupplierDialogFragment : Fragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // button "next" is clicked, validation on the supplier name
         btn_continueAddStockInDetails.setOnClickListener {
             stockInSupplierName = edit_text_stockIn_supplierName.text.toString().trim()
             var valid: Boolean = true
+
+            // validation on supplier name
             if(stockInSupplierName.isNullOrEmpty()) {
                 input_layout_stockIn_supplierName.error = getString(R.string.error_field_required)
                 valid = false
@@ -52,6 +55,7 @@ class StockInSupplierDialogFragment : Fragment(){
             }
 
             if(valid){
+                // check if supplier name exist
                 var supplierNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_SUPPLIER).orderByChild("supCmpName").equalTo(stockInSupplierName)
                 supplierNameQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -73,11 +77,11 @@ class StockInSupplierDialogFragment : Fragment(){
                 })
             }
         }
-
+        // when "cancel" button is click, go back to previous fragment
         btn_cancelAddStockInDetails.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack("stockInSupplierDialogFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
-        // Autocomplete for product barcode
+        // Autocomplete for supplier name
         val supplierNameListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchSupplierName(snapshot)
@@ -90,6 +94,7 @@ class StockInSupplierDialogFragment : Fragment(){
         dbSupplier.addListenerForSingleValueEvent(supplierNameListener)
     }
 
+    // autocomplete for supplier name
     protected fun populateSearchSupplierName(snapshot: DataSnapshot) {
         var supplierNames: ArrayList<String> = ArrayList<String>()
         if(snapshot.exists()){

@@ -16,6 +16,7 @@ import com.example.cc_mobileapp.product.ProductViewModel
 import com.google.firebase.database.*
 
 class StockOutDetailViewModel : ViewModel() {
+    // variable declaration
     private val dbStockOutDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKOUTDETAIL)
     private val dbTempOut = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP_OUT)
 
@@ -35,6 +36,7 @@ class StockOutDetailViewModel : ViewModel() {
     val stockOutTypeKey: LiveData<String>
         get() = _stockOutTypeKey
 
+    // add stock out detail
     fun addStockOutDetail(stockOutDetail: StockOutDetail) {
         //create unique key
         // TODO if stock in then another push key
@@ -50,21 +52,22 @@ class StockOutDetailViewModel : ViewModel() {
                     }
                 }
     }
-
+    // check for realtime changes
     private val childEventListener = object : ChildEventListener {
+        // add stock detail
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
             Log.d("Check", "StockOutDetailListener$snapshot")
             val stockOutDetail = snapshot.getValue(StockOutDetail::class.java)
             stockOutDetail?.stockOutDetailId = snapshot.key
             _stockOutDetail.value = stockOutDetail!!
         }
-
+        // update stock detail
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
             val stockOutDetail = snapshot.getValue(StockOutDetail::class.java)
             stockOutDetail?.stockOutDetailId = snapshot.key
             _stockOutDetail.value = stockOutDetail!!
         }
-
+        // delete stock detail
         override fun onChildRemoved(snapshot: DataSnapshot) {
             val stockOutDetail = snapshot.getValue(StockOutDetail::class.java)
             stockOutDetail?.stockOutDetailId = snapshot.key
@@ -79,11 +82,12 @@ class StockOutDetailViewModel : ViewModel() {
         }
 
     }
-
+    // get realtime updates
     fun getRealtimeUpdates() {
         dbTempOut.addChildEventListener(childEventListener)
     }
 
+    // get stock out detail information from database
     fun fetchStockOutDetail() {
         dbTempOut.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -104,6 +108,7 @@ class StockOutDetailViewModel : ViewModel() {
         })
     }
 
+    // get stock out detail information from database with specific stockTypeId
     fun fetchStockOutDetailDisplay(stockOutID: String) {
         dbStockOutDetail.orderByChild("stockTypeId").equalTo(stockOutID).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -124,12 +129,14 @@ class StockOutDetailViewModel : ViewModel() {
         })
     }
 
+    // remove the listener when the fragment is cleared
     override fun onCleared() {
         super.onCleared()
         dbTempOut.removeEventListener(childEventListener)
         dbStockOutDetail.removeEventListener(childEventListener)
     }
 
+    // update the stock out detail
     fun updateStockOutDetail(stockOutDetail: StockOutDetail) {
         dbTempOut.child(stockOutDetail.stockOutDetailId!!).setValue(stockOutDetail)
                 .addOnCompleteListener {
@@ -141,6 +148,7 @@ class StockOutDetailViewModel : ViewModel() {
                 }
     }
 
+    // delete the stock out detail
     fun deleteStockOutDetail(stockOutDetail: StockOutDetail) {
         dbTempOut.child(stockOutDetail.stockOutDetailId!!).setValue(null)
                 .addOnCompleteListener {

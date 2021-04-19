@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 
 
 class StockOutDetailAdapter(): RecyclerView.Adapter<StockOutDetailAdapter.StockOutDetailViewModel>(){
+    // variable declaration
     private var stocksOutDetail = mutableListOf<StockOutDetail>()
     var listener: StockOutDetailRecyclerViewClickListener? = null
 
@@ -27,12 +28,15 @@ class StockOutDetailAdapter(): RecyclerView.Adapter<StockOutDetailAdapter.StockO
         parent: ViewGroup,
         viewType: Int
     ) = StockOutDetailViewModel(
-        LayoutInflater.from(parent.context)
+            // inflate the stockoutdetail_display_item layout
+            LayoutInflater.from(parent.context)
             .inflate(R.layout.stockoutdetail_display_item, parent, false)
     )
 
+    // get total stocks out detail count
     override fun getItemCount() = stocksOutDetail.size
 
+    // bind the information to the user interface
     override fun onBindViewHolder(holder: StockOutDetailViewModel, position: Int) {
         if(position < stocksOutDetail.size && position != stocksOutDetail.size){
             holder.view.stockOutDetail_prodBarcode.text = stocksOutDetail[position].stockOutDetailProdBarcode.toString()
@@ -60,24 +64,25 @@ class StockOutDetailAdapter(): RecyclerView.Adapter<StockOutDetailAdapter.StockO
 
     }
 
-    private lateinit var productSnapshot: DataSnapshot
-
+    // set the stocks out detail information
     fun setStocksOutDetail(stocksOutDetail: List<StockOutDetail>){
         this.stocksOutDetail = stocksOutDetail as MutableList<StockOutDetail>
         notifyDataSetChanged()
     }
 
+    // add stocks out detail information
     fun addStockOutDetail(stockOutDetail: StockOutDetail) {
         if (!stocksOutDetail.contains(stockOutDetail)) {
             stocksOutDetail.add(stockOutDetail)
         }else{
             val index = stocksOutDetail.indexOf(stockOutDetail)
-            if(stockOutDetail.isDeleted){
+            if(stockOutDetail.isDeleted){ // delete stock detail
                 stocksOutDetail.removeAt(index)
             }else{ // for update product
                 stocksOutDetail[index] = stockOutDetail
             }
         }
+        // real time changes
         notifyDataSetChanged()
     }
 

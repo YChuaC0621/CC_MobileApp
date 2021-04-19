@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.fragment_stock_detail.*
 
 
 class AddStockOutDetailFragment : Fragment() {
-
+    // variable declaration
     private lateinit var stockInDetailViewModel: StockViewModel
     private lateinit var stockOutDetailViewModel: StockOutDetailViewModel
     private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
@@ -47,20 +47,21 @@ class AddStockOutDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // provide this product with stock detail view model information
         stockInDetailViewModel =
             ViewModelProvider(this@AddStockOutDetailFragment).get(StockViewModel::class.java)
         stockOutDetailViewModel =
             ViewModelProvider(this@AddStockOutDetailFragment).get(StockOutDetailViewModel::class.java)
         prodViewModel =
             ViewModelProvider(this@AddStockOutDetailFragment).get(ProductViewModel::class.java)
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_stockout_detail, container, false)
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        // observe if any changes on the view model result variable
         stockOutDetailViewModel.result.observe(viewLifecycleOwner, Observer {
             val message = if (it == null) {
                 getString(R.string.prodAddSuccess)
@@ -70,12 +71,15 @@ class AddStockOutDetailFragment : Fragment() {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         })
 
+        // if "+" button is clicked
         btn_stockOutDetail_add.setOnClickListener {
+            // variable declaration and information from textbox is load
             var stockQty: Int? = null
             var prodBarcode: String = edit_text_stockOutDetail_ProdBarcode.text.toString().trim()
             stockQty = edit_text_stockOutDetail_qty.text.toString().toIntOrNull()
             var valid: Boolean = true
 
+            // validate product barcode
             if (prodBarcode.isNullOrEmpty()) {
                 input_layout_stockOutDetail_ProdBarcode.error = getString(R.string.error_field_required)
                 valid = false
@@ -88,6 +92,7 @@ class AddStockOutDetailFragment : Fragment() {
                 input_layout_stockOutDetail_ProdBarcode.error = null
             }
 
+            // validate stock quantity
             if (stockQty == null) {
                 input_layout_stockOutDetail_qty.error = getString(R.string.error_field_required)
                 valid = false
@@ -105,11 +110,14 @@ class AddStockOutDetailFragment : Fragment() {
             }
 
             if (valid) {
+                // construct new stock out detail with the information from input text
                 val stockOutDetail = StockOutDetail()
                 stockOutDetail.stockOutDetailProdBarcode = prodBarcode.trim()
                 stockOutDetail.stockOutDetailQty = stockQty
                 stockOutDetail.stockTypeId = sharedStockOutViewModel.stockOutTypePushKey.value
                 var availableStockDB: Int = 0
+
+                // validate on availability of the product barcode
                 var checkExistProdBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(NODE_TEMP_OUT).orderByChild("stockOutDetailProdBarcode").equalTo(prodBarcode.toString())
                 checkExistProdBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -117,6 +125,7 @@ class AddStockOutDetailFragment : Fragment() {
                             valid = false
                             input_layout_stockOutDetail_ProdBarcode.error = getString(R.string.exist_stockDetailProd_error)
                         } else {
+                            // check the availability of quantity of particular product
                             var prodBarcodeQuery: Query =
                                     FirebaseDatabase.getInstance().reference.child(NODE_PRODUCT)
                                             .orderByChild("prodBarcode").equalTo(prodBarcode.toString())
@@ -140,6 +149,7 @@ class AddStockOutDetailFragment : Fragment() {
                                             }
                                         }
                                         if (availableStock) {
+                                            //check the pending stock out product quantity
                                             var tempStockOutQuery: Query =
                                                     FirebaseDatabase.getInstance().reference.child(NODE_TEMP_OUT)
                                                             .orderByChild("stockOutDetailProdBarcode")
@@ -205,12 +215,14 @@ class AddStockOutDetailFragment : Fragment() {
             }
         }
 
+        // when "cancel" button is click, go back to previous fragment
         btn_stockOutDetail_cancel.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack(
                 "addStockOutDetailFragment",
                 FragmentManager.POP_BACK_STACK_INCLUSIVE
             )}
 
+        // if scan barcode is click, go to scan barcode fragment
         btn_stockOutDetail_scanBarcode.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -233,6 +245,7 @@ class AddStockOutDetailFragment : Fragment() {
     }
 
 
+    // vallidation on barcode
     private fun checkRegexBarcode(prodBarcode: String): Boolean {
         var prodBarcode: String = prodBarcode
         var regex:Regex = Regex(pattern="""\d+""")
@@ -240,6 +253,7 @@ class AddStockOutDetailFragment : Fragment() {
     }
 
 
+    // Autocomplete for product barcode
     protected fun populateSearchProdBarcode(snapshot: DataSnapshot) {
         var prodBarcodes: ArrayList<String> = ArrayList<String>()
         if (snapshot.exists()) {
@@ -254,6 +268,7 @@ class AddStockOutDetailFragment : Fragment() {
         }
     }
 
+    // when returned from the scanning product, retrieve the information from the shared barcode view model to bind on the text box
     override fun onResume() {
         super.onResume()
         if(!sharedStockBarcodeViewModel.scannedProductCode.value.isNullOrEmpty()){

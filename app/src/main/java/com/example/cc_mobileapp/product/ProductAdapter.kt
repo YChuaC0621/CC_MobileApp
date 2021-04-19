@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.product_display_item.view.*
 
 class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewModel>() {
 
+    // variable declaration
     private var products = mutableListOf<Product>()
     var listener: ProductRecyclerViewClickListener? = null
 
@@ -18,12 +19,15 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewModel>() {
             parent: ViewGroup,
             viewType: Int
     ) = ProductViewModel(
+            // inflate the product_display_item layout
             LayoutInflater.from(parent.context)
                     .inflate(R.layout.product_display_item, parent, false)
     )
 
+    // get total products count
     override fun getItemCount() = products.size
 
+    // bind the information to the user interface
     override fun onBindViewHolder(holder: ProductViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
         holder.view.txtView_productName.text = products[position].prodName
@@ -33,12 +37,14 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewModel>() {
         holder.view.btn_productEdit.setOnClickListener { listener?.onRecyclerViewItemClicked(it, products[position])}
     }
 
+    // set the products information
     fun setProducts(products: List<Product>){
         Log.d("Check", "client set: $products")
         this.products = products as MutableList<Product>
         notifyDataSetChanged()
     }
 
+    // add product information
     fun addProduct(product: Product) {
         Log.d("Check", "real time add client $product")
         if (!products.contains(product)) {
@@ -51,6 +57,7 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewModel>() {
                 products[productUpdateIndex] = product
             }
         }
+        // get real time changes
         notifyDataSetChanged()
     }
 

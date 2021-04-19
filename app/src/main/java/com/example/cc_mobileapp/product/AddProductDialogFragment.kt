@@ -24,10 +24,15 @@ import kotlinx.android.synthetic.main.product_display_item.*
 
 class AddProductDialogFragment : Fragment() {
 
+    // variable
     private lateinit var viewModel: ProductViewModel
     private val sharedBarcodeViewModel: ProductBarcodeViewModel by activityViewModels()
     private val dbSupplier = FirebaseDatabase.getInstance().getReference(Constant.NODE_SUPPLIER)
-
+    lateinit var prodName: String
+    lateinit var supplierName: String
+    lateinit var prodDesc: String
+    var prodPrice: Double? = null
+    lateinit var prodBarcode: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,20 +42,16 @@ class AddProductDialogFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // provide this product with client view model information
         viewModel = ViewModelProvider(this@AddProductDialogFragment).get(ProductViewModel::class.java)
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_product_dialog, container, false)
     }
-
-    lateinit var prodName: String
-    lateinit var supplierName: String
-    lateinit var prodDesc: String
-    var prodPrice: Double? = null
-    lateinit var prodBarcode: String
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // observe if any changes on the view model result variable
         viewModel.result.observe(viewLifecycleOwner, Observer{
             val message = if(it==null){
                 getString(R.string.prodAddSuccess)
@@ -60,13 +61,17 @@ class AddProductDialogFragment : Fragment() {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         })
 
+        // if " +" button is clicked,
         btn_addProdInDialog.setOnClickListener {
             prodName = edit_text_prodName.text.toString().trim()
             supplierName = edit_text_prodSupplierName.text.toString().trim()
             prodDesc = edit_text_prodDesc.text.toString().trim()
             prodPrice = edit_text_prodPrice.text.toString().trim().toDoubleOrNull()
             prodBarcode = edit_text_prodBarcode.text.toString().trim()
+
+            // validation on input data
             var valid: Boolean = true
+            // products company name validation
             if(prodName.isNullOrEmpty()){
                 input_layout_prodName.error = getString(R.string.error_field_required)
                 valid = false
@@ -76,6 +81,7 @@ class AddProductDialogFragment : Fragment() {
                 input_layout_prodName.error = null
             }
 
+            // validation on product description
             if(prodDesc.isNullOrEmpty()){
                 input_layout_prodDesc.error = getString(R.string.error_field_required)
                 valid = false
@@ -85,7 +91,7 @@ class AddProductDialogFragment : Fragment() {
                 input_layout_prodDesc.error = null
             }
 
-            // TODO check exists
+            // check supplier name validation
             if(supplierName.isNullOrEmpty()){
                 input_layout_prodSupplierName.error = getString(R.string.error_field_required)
                 valid = false
@@ -95,6 +101,7 @@ class AddProductDialogFragment : Fragment() {
                 input_layout_prodSupplierName.error = null
             }
 
+            // check product price destination
             if(prodPrice == null){
                 input_layout_prodPrice.error = getString(R.string.error_field_required)
                 valid = false
@@ -112,7 +119,7 @@ class AddProductDialogFragment : Fragment() {
                 input_layout_prodPrice.error = null
             }
 
-            // TODO cannot exits
+            // validation on product barcode
             if(prodBarcode.isNullOrEmpty()){
                 input_layout_prodBarcode.error = getString(R.string.error_field_required)
                 valid = false
@@ -128,18 +135,21 @@ class AddProductDialogFragment : Fragment() {
             }
 
             if(valid){
-
+                // retrieve data from supplier with match supplier entered
                 var supplierNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_SUPPLIER).orderByChild("supCmpName").equalTo(supplierName)
                 supplierNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
+                        // if no record found
                         if(!snapshot.exists()){
                             valid = false
                             input_layout_prodSupplierName.error = getString(R.string.invalid_nonexist_error)
                         }else{
+                            // retrieve product barcode
                             var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode)
                             prodBarcodeQuery.addListenerForSingleValueEvent(object: ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
                                     if(!snapshot.exists()){
+                                        // construct a new product
                                         val product = Product()
                                         product.prodName = prodName
                                         product.supplierName = supplierName
@@ -147,7 +157,9 @@ class AddProductDialogFragment : Fragment() {
                                         product.prodPrice = prodPrice!!.toDouble()
                                         product.prodBarcode = prodBarcode
                                         product.prodQty = 0
+                                        // add product
                                         viewModel.addProduct(product)
+                                        // pop backstack
                                         requireActivity().supportFragmentManager.popBackStack("addProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                                     }else {
                                         valid = false
@@ -168,6 +180,7 @@ class AddProductDialogFragment : Fragment() {
             }
         }
 
+        // if "scan barcode" is clicked, redirect user to using scanning to input value
         btn_addProdScanBarcode.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -176,6 +189,7 @@ class AddProductDialogFragment : Fragment() {
             transaction.commit()
         }
 
+        // if click "cancel" button, pop user back to previous fragment
         btn_addProdBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack("addProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
@@ -193,19 +207,23 @@ class AddProductDialogFragment : Fragment() {
         dbSupplier.addListenerForSingleValueEvent(supplierNameListener)
     }
 
+    // validation on product price
     private fun checkRegexPrice(prodPrice: String): Boolean {
         var prodPrice: String = prodPrice
         var regex:Regex = Regex(pattern="^\\d{0,9}\\.\\d{1,2}$")
         return regex.matches(input = prodPrice)
     }
 
+    // validation on barcode entered
     private fun checkRegexBarcode(prodBarcode: String): Boolean {
         var prodBarcode: String = prodBarcode
         var regex:Regex = Regex(pattern="""\d+""")
         return regex.matches(input = prodBarcode)
     }
 
+    // validation on check the availability
     protected fun populateSearchSupplierName(snapshot: DataSnapshot) {
+        // check name availability
         var supplierNames: ArrayList<String> = ArrayList<String>()
         if(snapshot.exists()){
             snapshot.children.forEach{
@@ -219,8 +237,7 @@ class AddProductDialogFragment : Fragment() {
         }
     }
 
-
-
+    // when returned from the scanning product, retrieve the information from the shared barcode view model to bind on the text box
     override fun onResume() {
         super.onResume()
         if(!sharedBarcodeViewModel.scannedCode.value.isNullOrEmpty()){

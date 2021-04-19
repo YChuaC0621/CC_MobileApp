@@ -14,6 +14,7 @@ import kotlinx.coroutines.*
 
 
 class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewModel>(){
+    // variable declaration
     private var stocksDetail = mutableListOf<StockDetail>()
     var listener: StockDetailRecyclerViewClickListener? = null
 
@@ -21,12 +22,15 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
         parent: ViewGroup,
         viewType: Int
     ) = StockViewModel(
-        LayoutInflater.from(parent.context)
+            // inflate the stockdetail_display_item layout
+            LayoutInflater.from(parent.context)
             .inflate(R.layout.stockdetail_display_item, parent, false)
     )
 
+    // get total stocks detail count
     override fun getItemCount() = stocksDetail.size
 
+    // bind the information to the user interface
     override fun onBindViewHolder(holder: StockViewModel, position: Int) {
         if(position < stocksDetail.size && stocksDetail.size!= position){
             holder.view.stockDetail_prodBarcode.text = stocksDetail[position].stockDetailProdBarcode.toString()
@@ -52,24 +56,25 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
         }
     }
 
-    private lateinit var productSnapshot: DataSnapshot
-
+    // set the stocks detail information
     fun setStocksDetail(stocksDetail: List<StockDetail>){
         this.stocksDetail = stocksDetail as MutableList<StockDetail>
         notifyDataSetChanged()
     }
 
+    // add stocks detail information
     fun addStockDetail(stockDetail: StockDetail) {
         if (!stocksDetail.contains(stockDetail)) {
             stocksDetail.add(stockDetail)
         }else{
             val index = stocksDetail.indexOf(stockDetail)
-            if(stockDetail.isDeleted){
+            if(stockDetail.isDeleted){ // delete stocks detail
                 stocksDetail.remove(stockDetail)
-            }else{ // for update product
+            }else{ // for update stocks detail
                 stocksDetail[index] = stockDetail
             }
         }
+        // real time changes
         notifyDataSetChanged()
     }
 

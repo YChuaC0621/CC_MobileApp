@@ -16,6 +16,7 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_stock_out_client.*
 
 class StockOutClientFragment : Fragment() {
+    // variable declaration
     private val dbClient = FirebaseDatabase.getInstance().getReference(Constant.NODE_CLIENT)
     private val sharedStockOutViewModel: StockOutViewModel by activityViewModels()
     lateinit var stockOutClientName: String
@@ -35,9 +36,11 @@ class StockOutClientFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // button "next" is clicked, validation on the client name
         btn_continueAddStockOutDetails.setOnClickListener {
             stockOutClientName = edit_text_stockOut_clientName.text.toString().trim()
             var valid: Boolean = true
+            // validation on client name
             if(stockOutClientName.isNullOrEmpty()) {
                 input_layout_stockOut_clientName.error = getString(R.string.error_field_required)
                 valid = false
@@ -48,6 +51,7 @@ class StockOutClientFragment : Fragment() {
             }
 
             if(valid){
+                // check if client name exist
                 var clientNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_CLIENT).orderByChild("clientCoName").equalTo(stockOutClientName)
                 clientNameQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -70,10 +74,11 @@ class StockOutClientFragment : Fragment() {
             }
         }
 
+        // when "cancel" button is click, go back to previous fragment
         btn_cancelAddStockOutDetails.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack("stockOutClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
-        // Autocomplete for product barcode
+        // Autocomplete for client name
         val clientNameListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchClientName(snapshot)
@@ -85,7 +90,7 @@ class StockOutClientFragment : Fragment() {
         }
         dbClient.addListenerForSingleValueEvent(clientNameListener)
     }
-
+    // Autocomplete for client name
     protected fun populateSearchClientName(snapshot: DataSnapshot) {
         var clientNames: ArrayList<String> = ArrayList<String>()
         if(snapshot.exists()){

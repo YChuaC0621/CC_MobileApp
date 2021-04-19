@@ -17,6 +17,7 @@ import kotlinx.coroutines.*
 
 
 class StockDetailDisplayAdapter(): RecyclerView.Adapter<StockDetailDisplayAdapter.StockViewModel>(){
+    // variable declaration
     private var stocksDetailDisplay = mutableListOf<StockDetail>()
     var listener: StockDetailRecyclerViewClickListener? = null
 
@@ -24,12 +25,15 @@ class StockDetailDisplayAdapter(): RecyclerView.Adapter<StockDetailDisplayAdapte
         parent: ViewGroup,
         viewType: Int
     ) = StockViewModel(
-        LayoutInflater.from(parent.context)
+            // inflate the stockdetail_display_item layout
+            LayoutInflater.from(parent.context)
             .inflate(R.layout.stockdetaildisplay_display_item, parent, false)
     )
 
+    // get total stocks detail count
     override fun getItemCount() = stocksDetailDisplay.size
 
+    // bind the information to the user interface
     override fun onBindViewHolder(holder: StockViewModel, position: Int) {
         holder.view.stockDetailDisplay_prodBarcode.text = stocksDetailDisplay[position].stockDetailProdBarcode.toString()
         holder.view.stockDetailDisplay_rackId.text = stocksDetailDisplay[position].stockDetailRackId
@@ -51,16 +55,20 @@ class StockDetailDisplayAdapter(): RecyclerView.Adapter<StockDetailDisplayAdapte
         }
     }
 
+    // set the stocks detail information
     fun setStocksDetail(stocksDetail: List<StockDetail>){
         this.stocksDetailDisplay = stocksDetail as MutableList<StockDetail>
+        //get real time updates
         notifyDataSetChanged()
     }
 
+    // add stock detail
     fun addStockDetail(stockDetail: StockDetail) {
         if (!stocksDetailDisplay.contains(stockDetail)) {
             stocksDetailDisplay.add(stockDetail)
         }else{
         }
+        //get real time updates
         notifyDataSetChanged()
     }
 
