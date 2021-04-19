@@ -211,14 +211,14 @@ class EditStockOutDetailFragment(
                             }
                         })
                     }
+                }else
+                {
+                    // stock out detail information remain unchanged
+                    Toast.makeText(requireActivity(),getString(R.string.stockedit_info_remain), Toast.LENGTH_SHORT).show()
+                    requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 }
             }
-            else
-            {
-                // stock out detail information remain unchanged
-                Toast.makeText(requireActivity(),getString(R.string.stockedit_info_remain), Toast.LENGTH_SHORT).show()
-                requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            }
+
         }
 
         // if "cancel" button is click, go back to previous fragment

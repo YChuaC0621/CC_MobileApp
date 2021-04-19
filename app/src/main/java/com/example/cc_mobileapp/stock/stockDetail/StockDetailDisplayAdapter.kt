@@ -47,7 +47,7 @@ class StockDetailDisplayAdapter(): RecyclerView.Adapter<StockDetailDisplayAdapte
                         var prod: Product? = it.getValue(Product::class.java)
                         if (prod?.prodBarcode == stocksDetailDisplay[position].stockDetailProdBarcode) {
                             var price: Double? = prod?.prodPrice!! * stocksDetailDisplay[position].stockDetailQty!!
-                            holder.view.stockDetailDisplay_totalPrice.text = price.toString()
+                            holder.view.stockDetailDisplay_totalPrice.text = String.format("%.2f",price)
                         }
                     }
                 }

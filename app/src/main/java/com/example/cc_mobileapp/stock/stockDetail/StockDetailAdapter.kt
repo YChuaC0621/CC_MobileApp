@@ -10,7 +10,10 @@ import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.stockdetail_display_item.view.*
+import kotlinx.android.synthetic.main.stockdetaildisplay_display_item.view.*
 import kotlinx.coroutines.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 
 class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewModel>(){
@@ -46,7 +49,9 @@ class StockDetailAdapter(): RecyclerView.Adapter<StockDetailAdapter.StockViewMod
                                 var prod: Product? = it.getValue(Product::class.java)
                                 if (prod?.prodBarcode == stocksDetail[position].stockDetailProdBarcode) {
                                     var price: Double? = prod?.prodPrice!! * stocksDetail[position].stockDetailQty!!
-                                    holder.view.stockDetail_totalPrice.text = price.toString().trim()
+                                    val df = DecimalFormat("#.##")
+                                    df.roundingMode = RoundingMode.FLOOR
+                                    holder.view.stockDetail_totalPrice.text  = String.format("%.2f",price)
                                 }
                             }
                         }

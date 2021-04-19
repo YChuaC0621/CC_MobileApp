@@ -67,7 +67,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
             //after changes has been made, a toast of the status will be on text
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show().toString()
             // go back to previous fragment
-            requireActivity().supportFragmentManager.popBackStack("editBarcodeFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            requireActivity().supportFragmentManager.popBackStack("editProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         })
 
         // when user click on "+" button
@@ -76,7 +76,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
             prodName = edit_text_editProductName.text.toString().trim()
             supplierName = edit_text_editSupplierName.text.toString().trim()
             prodDesc = edit_text_editProdDesc.text.toString().trim()
-            prodPrice = edit_text_editProdPrice.text.toString().trim().toDoubleOrNull()
+            prodPrice = edit_text_editProdPrice.text.toString().format("%.2f").toDoubleOrNull()
             prodBarcode = edit_text_editProdBarcode.text.toString().trim()
             var valid: Boolean = true
 
@@ -122,7 +122,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 return@setOnClickListener
             }
             else if(!checkRegexPrice(prodPrice.toString())){
-                input_layout_prodPrice.error = getString(R.string.only_priceformat_error)
+                input_layout_editProdPrice.error = getString(R.string.only_priceformat_error)
                 valid = false
                 return@setOnClickListener
             }
@@ -224,7 +224,6 @@ class EditProductFragment(private val product: Product) : Fragment() {
                 }
                 it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()
-            requireActivity().supportFragmentManager.popBackStack("editProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         // go to the scan barcode fragment

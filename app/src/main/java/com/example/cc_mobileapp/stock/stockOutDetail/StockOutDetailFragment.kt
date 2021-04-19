@@ -181,7 +181,7 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         val timeFormat = SimpleDateFormat("HH:mm:ss")
         var today = Calendar.getInstance().getTime()
         var malaysiaTime = Calendar.getInstance()
-        malaysiaTime.add(Calendar.HOUR, 8)
+        //malaysiaTime.add(Calendar.HOUR, 8)
         var todayTime = malaysiaTime.time
         stockOut.stockOutDate = dateFormat.format(today)
         stockOut.stockOutTime = timeFormat.format(todayTime)
@@ -238,7 +238,6 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
     fun getCallerFragment(): String? {
         val fm: FragmentManager = requireActivity().supportFragmentManager
         val count: Int = requireActivity().supportFragmentManager.backStackEntryCount
-        Toast.makeText(requireContext(), fm.getBackStackEntryAt(count - 2).name, Toast.LENGTH_SHORT).show()
         return fm.getBackStackEntryAt(count - 2).name
     }
 

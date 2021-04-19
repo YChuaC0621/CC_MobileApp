@@ -196,10 +196,10 @@ class EditStockDetailFragment(
                                                                                 if (stockDetailEdit.stockDetailProdBarcode != stockDetail.stockDetailProdBarcode || stockDetailEdit.stockDetailQty != stockDetail.stockDetailQty || stockDetailEdit.stockDetailRackId != stockDetail.stockDetailRackId) {
                                                                                     // edit stock detail information
                                                                                     stockViewModel.updateStockDetail(stockDetailEdit)
-                                                                                    makeText(requireContext(), getString(R.string.stockdetail_success), Toast.LENGTH_SHORT).show()
+                                                                                    Toast.makeText(requireContext(), getString(R.string.stockdetail_success), Toast.LENGTH_SHORT).show()
                                                                                 } else {
                                                                                     // stock detail remain unchange
-                                                                                    makeText(requireContext(), getString(R.string.stockedit_info_remain), Toast.LENGTH_SHORT).show()
+                                                                                    Toast.makeText(requireContext(), getString(R.string.stockedit_info_remain), Toast.LENGTH_SHORT).show()
                                                                                 }
                                                                                 requireActivity().supportFragmentManager.popBackStack("editStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                                                                             }

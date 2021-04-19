@@ -38,7 +38,8 @@ class StockOutAdapter : RecyclerView.Adapter<StockOutAdapter.StockOutViewModel>(
         holder.view.txtView_stockOutDate.text = stocksOut[position].stockOutDate
         holder.view.txtView_stockOutTime.text = stocksOut[position].stockOutTime
         holder.view.btn_stockOutClientId.text = stocksOut[position].stockOutClientId
-        holder.view.txtView_txtTotalPriceStockOut.text = stocksOut[position].totalProdPrice.toString().trim()
+        var price = stocksOut[position].totalProdPrice
+        holder.view.txtView_txtTotalPriceStockOut.text = String.format("%.2f",price)
         holder.view.btn_stockOutClientId.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksOut[position])}
 
     }

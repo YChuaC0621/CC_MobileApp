@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail_display.*
+import java.security.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -113,9 +114,9 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
                         stockUpdateProduct(it.stockDetailProdBarcode, it.stockDetailQty)
                         // calculate total price for each transaction
                         if (!(productfromDB?.prodPrice == null || it?.stockDetailQty == null)) {
-                            var price: Double = productfromDB?.prodPrice!!
+                            var price: Double? = productfromDB?.prodPrice!!.toString().format("%.2f").toDoubleOrNull()
                             var qty: Int? = it?.stockDetailQty
-                            var subtotal: Double = price.times(qty!!)
+                            var subtotal: Double = price!!.times(qty!!)
                             totalPrice = totalPrice.plus(subtotal)
                         }
                     }
@@ -133,14 +134,17 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         val stockIn = StockIn()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         val timeFormat = SimpleDateFormat("HH:mm:ss")
-        var today = Calendar.getInstance().getTime()
+        var today = Calendar.getInstance()
         var malaysiaTime = Calendar.getInstance()
-        malaysiaTime.add(Calendar.HOUR, 8)
+        //malaysiaTime.add(Calendar.HOUR, 8)
         var todayTime =malaysiaTime.time
         stockIn.stockInDate = dateFormat.format(today)
         stockIn.stockInTime = timeFormat.format(todayTime)
+
+
+
         stockIn.stockInSupplierId = sharedStockInViewModel.stockInSupplierId.value
-        stockIn.totalProdPrice = totalPrice
+        stockIn.totalProdPrice = totalPrice.toString().format("%.2f").toDoubleOrNull()
         sharedStockInViewModel.addStockIn(stockIn)
         viewModelStore.clear()
         requireActivity().supportFragmentManager.popBackStack(getCallerFragment(), FragmentManager.POP_BACK_STACK_INCLUSIVE)

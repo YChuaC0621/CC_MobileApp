@@ -66,7 +66,7 @@ class AddProductDialogFragment : Fragment() {
             prodName = edit_text_prodName.text.toString().trim()
             supplierName = edit_text_prodSupplierName.text.toString().trim()
             prodDesc = edit_text_prodDesc.text.toString().trim()
-            prodPrice = edit_text_prodPrice.text.toString().trim().toDoubleOrNull()
+            prodPrice = edit_text_prodPrice.text.toString().format("%.2f").toDoubleOrNull()
             prodBarcode = edit_text_prodBarcode.text.toString().trim()
 
             // validation on input data

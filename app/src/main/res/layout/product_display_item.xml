@@ -42,7 +42,7 @@
         android:maxLines="1"/>
 
     <TextView
-        android:id="@+id/txtView_productDesc"
+        android:id="@+id/txtView_productPrice"
         android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -61,7 +61,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/prod_supplier"
         app:layout_constraintStart_toEndOf="@+id/product_icon"
-        app:layout_constraintTop_toBottomOf="@+id/txtView_productDesc"
+        app:layout_constraintTop_toBottomOf="@+id/txtView_productPrice"
         android:ellipsize="end"
         android:maxLines="1"/>
 

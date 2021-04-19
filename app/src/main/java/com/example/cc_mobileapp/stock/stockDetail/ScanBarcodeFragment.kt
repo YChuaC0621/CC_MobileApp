@@ -147,7 +147,6 @@ class ScanBarcodeFragment( btnName:String) : Fragment() {
      fun getCallerFragment(): String? {
         val fm: FragmentManager = requireActivity().supportFragmentManager
         val count: Int = requireActivity().supportFragmentManager.backStackEntryCount
-        Toast.makeText(requireContext(), fm.getBackStackEntryAt(count - 2).name, Toast.LENGTH_SHORT).show()
         return fm.getBackStackEntryAt(count - 2).name
     }
 }

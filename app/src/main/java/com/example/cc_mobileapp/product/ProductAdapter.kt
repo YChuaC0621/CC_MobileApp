@@ -31,7 +31,8 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewModel>() {
     override fun onBindViewHolder(holder: ProductViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
         holder.view.txtView_productName.text = products[position].prodName
-        holder.view.txtView_productDesc.text = products[position].prodDesc
+        var price = products[position].prodPrice
+        holder.view.txtView_productPrice.text = String.format("%.2f",price)
         holder.view.txtView_productSupplier.text = products[position].supplierName
         holder.view.txtView_prodBarcode.text = products[position].prodBarcode
         holder.view.btn_productEdit.setOnClickListener { listener?.onRecyclerViewItemClicked(it, products[position])}
