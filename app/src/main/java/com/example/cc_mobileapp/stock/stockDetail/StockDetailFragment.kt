@@ -16,6 +16,7 @@ import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Product
 import com.example.cc_mobileapp.model.StockDetail
 import com.example.cc_mobileapp.model.StockIn
+import com.example.cc_mobileapp.model.StockOut
 import com.example.cc_mobileapp.product.ProductViewModel
 import com.example.cc_mobileapp.rack.RackViewModel
 import com.example.cc_mobileapp.stock.stockIn.StockInViewModel
@@ -24,7 +25,6 @@ import kotlinx.android.synthetic.main.fragment_add_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import kotlinx.android.synthetic.main.fragment_stock_detail.*
 import kotlinx.android.synthetic.main.fragment_stock_detail_display.*
-import java.security.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -134,14 +134,12 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         val stockIn = StockIn()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         val timeFormat = SimpleDateFormat("HH:mm:ss")
-        var today = Calendar.getInstance()
+        var today = Calendar.getInstance().time
         var malaysiaTime = Calendar.getInstance()
         //malaysiaTime.add(Calendar.HOUR, 8)
         var todayTime =malaysiaTime.time
         stockIn.stockInDate = dateFormat.format(today)
         stockIn.stockInTime = timeFormat.format(todayTime)
-
-
 
         stockIn.stockInSupplierId = sharedStockInViewModel.stockInSupplierId.value
         stockIn.totalProdPrice = totalPrice.toString().format("%.2f").toDoubleOrNull()

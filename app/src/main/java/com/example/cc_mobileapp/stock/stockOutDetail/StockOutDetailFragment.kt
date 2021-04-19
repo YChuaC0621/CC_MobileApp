@@ -179,7 +179,7 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         val stockOut = StockOut()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         val timeFormat = SimpleDateFormat("HH:mm:ss")
-        var today = Calendar.getInstance().getTime()
+        var today = Calendar.getInstance().time
         var malaysiaTime = Calendar.getInstance()
         //malaysiaTime.add(Calendar.HOUR, 8)
         var todayTime = malaysiaTime.time
