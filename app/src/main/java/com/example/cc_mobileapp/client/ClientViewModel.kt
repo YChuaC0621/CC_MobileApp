@@ -11,8 +11,8 @@ import com.google.firebase.database.*
 
 class ClientViewModel(): ViewModel() {
 
+    // variable
     private val dbClient = FirebaseDatabase.getInstance().getReference(NODE_CLIENT)
-
 
     private val _result = MutableLiveData<Exception?>()
     val result: LiveData<Exception?>
@@ -26,10 +26,10 @@ class ClientViewModel(): ViewModel() {
     val client: LiveData<Client>
         get() = _client
 
+    // add client information
     fun addClient(client: Client) {
         //create unique key
         client.clientId = dbClient.push().key
-
         // save inside the unique key
         dbClient.child(client.clientId.toString()).setValue(client)
             .addOnCompleteListener {
@@ -41,7 +41,9 @@ class ClientViewModel(): ViewModel() {
             }
     }
 
+    // check for realtime changes
     private val childEventListener = object: ChildEventListener {
+        // add client
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
             Log.d("Check", "childListener$snapshot")
             val client = snapshot.getValue(Client::class.java)
@@ -49,12 +51,14 @@ class ClientViewModel(): ViewModel() {
             _client.value = client!!
         }
 
+        // edit client
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
             val client = snapshot.getValue(Client::class.java)
             client?.clientId = snapshot.key
             _client.value = client!!
         }
 
+        // delete client
         override fun onChildRemoved(snapshot: DataSnapshot) {
             val client = snapshot.getValue(Client::class.java)
             client?.clientId = snapshot.key
@@ -70,10 +74,12 @@ class ClientViewModel(): ViewModel() {
 
     }
 
+    // listen to the information in the database
     fun getRealtimeUpdates(){
         dbClient.addChildEventListener(childEventListener)
     }
 
+    // get all the client information from database
     fun fetchClients(){
         dbClient.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -94,6 +100,8 @@ class ClientViewModel(): ViewModel() {
         })
     }
 
+
+    // update client information to database
     fun updateClient(client: Client){
     // save inside the unique key
         dbClient.child(client.clientId.toString()).setValue(client)
@@ -106,6 +114,7 @@ class ClientViewModel(): ViewModel() {
         }
     }
 
+    // delete client information to database
     fun deleteClient(client:Client){
         dbClient.child(client.clientId.toString()).setValue(null)
             .addOnCompleteListener {
@@ -117,6 +126,7 @@ class ClientViewModel(): ViewModel() {
             }
         }
 
+    // when the fragment is cleared the listener of client database in this fragment is cleared
     override fun onCleared() {
         super.onCleared()
         dbClient.removeEventListener(childEventListener)

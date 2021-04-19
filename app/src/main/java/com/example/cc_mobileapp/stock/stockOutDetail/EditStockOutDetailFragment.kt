@@ -39,7 +39,7 @@ import kotlinx.coroutines.currentCoroutineContext
 class EditStockOutDetailFragment(
         private val stockOutDetail: StockOutDetail
 ) : Fragment() {
-
+    // variable declaration
     private lateinit var stockOutDetailViewModel: StockOutDetailViewModel
     private val sharedStockBarcodeViewModel: StockOutBarcodeViewModel by activityViewModels()
     private val sharedStockOutDetailViewModel: StockOutDetailViewModel by activityViewModels()
@@ -49,34 +49,41 @@ class EditStockOutDetailFragment(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // provide this stock with client view model information
         stockOutDetailViewModel = ViewModelProvider(this@EditStockOutDetailFragment).get(StockOutDetailViewModel::class.java)
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_stockout_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        // set the information from the clicked recycler item to the autocomplete input text
         edit_text_editStockOutDetail_ProdBarcode.setText(stockOutDetail.stockOutDetailProdBarcode.toString().trim())
         edit_text_editStockOutDetail_qty.setText(stockOutDetail.stockOutDetailQty.toString())
 
         Log.e("Error", "check 1st stock out detail$stockOutDetail")
 
-
+        // observe if any changes on the view model result variable
         stockOutDetailViewModel.result.observe(viewLifecycleOwner, Observer {
             val message = if (it == null) {
                 getString(R.string.stockdetail_delete_success)
             } else {
                 getString(R.string.error, it.message)
             }
+            //after changes has been made, a toast of the status will be on text
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         })
 
+        // when user click on "+" button
         btn_editStockOutDetail_edit.setOnClickListener {
+            // retrieve and update client information from input text
             val prodBarcode = edit_text_editStockOutDetail_ProdBarcode.text.toString().trim()
             val stockQty: Int? = edit_text_editStockOutDetail_qty.text.toString().toIntOrNull()
             var valid: Boolean = true
 
+            // validation
+            // validate product barcode
             if (prodBarcode.isNullOrEmpty()) {
                 input_layout_editStockOutDetail_ProdBarcode.error = getString(R.string.error_field_required)
                 valid = false
@@ -89,6 +96,7 @@ class EditStockOutDetailFragment(
                 input_layout_editStockOutDetail_ProdBarcode.error = null
             }
 
+            // validate stock quantity
             if (stockQty == null) {
                 input_layout_editStockOutDetail_qty.error = getString(R.string.error_field_required)
                 valid = false
@@ -105,6 +113,7 @@ class EditStockOutDetailFragment(
                 input_layout_editStockOutDetail_qty.error = null
             }
 
+            // further validation on product availability to be create with information from database
             if (valid) {
                 val stockOutDetailEdit = StockOutDetail()
                 stockOutDetailEdit.stockOutDetailProdBarcode = prodBarcode
@@ -113,8 +122,10 @@ class EditStockOutDetailFragment(
                 stockOutDetailEdit.stockOutDetailId = stockOutDetail.stockOutDetailId
                 var availableStockDB: Int = 0
 
+                // check the save information is update
                 if (stockOutDetailEdit.stockOutDetailProdBarcode != stockOutDetail.stockOutDetailProdBarcode || stockOutDetailEdit.stockOutDetailQty != stockOutDetail.stockOutDetailQty)
                 {
+                    // check if the entered product barcode is already in pending stock out detail
                     var checkExistProdBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_TEMP_OUT).orderByChild("stockOutDetailProdBarcode").equalTo(prodBarcode.toString()).also {
                         it.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
@@ -122,6 +133,7 @@ class EditStockOutDetailFragment(
                                     valid = false
                                     input_layout_editStockOutDetail_ProdBarcode.error = getString(R.string.exist_stockDetailProd_error)
                                 } else {
+                                    // check availability of the product barcode
                                     var prodBarcodeQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_PRODUCT).orderByChild("prodBarcode").equalTo(prodBarcode.toString())
                                     prodBarcodeQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                                         override fun onDataChange(snapshot: DataSnapshot) {
@@ -140,6 +152,7 @@ class EditStockOutDetailFragment(
                                                         input_layout_editStockOutDetail_qty.error = getString(R.string.insufficientstock_error)
                                                     }
                                                 }
+                                                // check availability of the product stocks
                                                 if (availableStock) {
                                                     var tempStockOutQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_TEMP_OUT).orderByChild("stockOutDetailProdBarcode").equalTo(prodBarcode.toString())
                                                     tempStockOutQuery.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -160,11 +173,13 @@ class EditStockOutDetailFragment(
                                                                     }
                                                                 }
                                                                 if (valid) {
+                                                                    // edit stock out detail
                                                                     stockOutDetailViewModel.updateStockOutDetail(stockOutDetailEdit)
                                                                     Toast.makeText(requireActivity(), getString(R.string.stockdetail_success), Toast.LENGTH_SHORT).show()
                                                                     requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                                                                 }
                                                             } else {
+                                                                // edit stock out detail
                                                                 stockOutDetailViewModel.updateStockOutDetail(stockOutDetailEdit)
                                                                 Toast.makeText(requireActivity(), getString(R.string.stockdetail_success), Toast.LENGTH_SHORT).show()
                                                                 requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
@@ -200,15 +215,18 @@ class EditStockOutDetailFragment(
             }
             else
             {
+                // stock out detail information remain unchanged
                 Toast.makeText(requireActivity(),getString(R.string.stockedit_info_remain), Toast.LENGTH_SHORT).show()
                 requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
             }
         }
 
-                btn_editStockOutDetail_cancel.setOnClickListener {
+        // if "cancel" button is click, go back to previous fragment
+        btn_editStockOutDetail_cancel.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack("editStockOutDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
+        // go to the scan barcode fragment
         btn_editStockOutDetail_scanBarcode.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -217,6 +235,7 @@ class EditStockOutDetailFragment(
             transaction.commit()
         }
 
+        // if "delete" button is click, display alert dialog and delete the stock out detail if yes has been selected
         btn_editStockOutDetail_delete.setOnClickListener{
             AlertDialog.Builder(requireContext()).also {
                 it.setTitle(getString(R.string.delete_confirmation))
@@ -240,12 +259,14 @@ class EditStockOutDetailFragment(
         dbProd.addListenerForSingleValueEvent(barcodeListener)
     }
 
+    // check validity of barcode
     private fun checkRegexBarcode(prodBarcode: String): Boolean {
         var prodBarcode: String = prodBarcode
         var regex:Regex = Regex(pattern="""\d+""")
         return regex.matches(input = prodBarcode)
     }
 
+    // Autocomplete for product barcode
     protected fun populateSearchProdBarcode(snapshot: DataSnapshot) {
         var prodBarcodes: ArrayList<String> = ArrayList<String>()
         if(snapshot.exists()){
@@ -259,7 +280,7 @@ class EditStockOutDetailFragment(
             Log.d("checkAuto", "No match found")
         }
     }
-
+    // when returned from the scanning product, retrieve the information from the shared barcode view model to bind on the text box
     override fun onResume() {
         super.onResume()
         if(!sharedStockBarcodeViewModel.scannedProductCode.value.isNullOrEmpty()){

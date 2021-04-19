@@ -24,13 +24,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 
-
-//var uri = MongoClientURI("mongodb+srv://CYC:cyc1234@cluster0.zyrbf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-//var mongoClient = MongoClient(uri)
-//var db = mongoClient.getDatabase(uri.database)
-
 class MainActivity: AppCompatActivity() {
 
+    // variable declaration
     lateinit var toggle:ActionBarDrawerToggle
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
@@ -38,6 +34,7 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Navigation drawer
         drawerLayout = findViewById(R.id.main_drawer)
         navigationView = findViewById(R.id.nav_view)
 
@@ -52,7 +49,7 @@ class MainActivity: AppCompatActivity() {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false
         }
-
+        // set navigation drawer
         navigationView.setNavigationItemSelectedListener {
 
             when(it.itemId){
@@ -112,6 +109,7 @@ class MainActivity: AppCompatActivity() {
             true
         }
 
+        // button navigation on click
         val clientBtn: Button = findViewById(R.id.btn_client)
 
         clientBtn.setOnClickListener {
@@ -162,6 +160,7 @@ class MainActivity: AppCompatActivity() {
 
     }
 
+    // toggle to the specific module when the item on the navigation bar is clicked
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item))
         {

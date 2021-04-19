@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_edit_client.*
 
 class ClientFragment : Fragment(), ClientRecyclerViewClickListener {
 
+    // variable
     private lateinit var viewModel: ClientViewModel
     private val adapter = ClientAdapter()
 
@@ -27,9 +28,9 @@ class ClientFragment : Fragment(), ClientRecyclerViewClickListener {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // access the information from client view model
         viewModel = ViewModelProvider(this@ClientFragment).get(ClientViewModel::class.java)
-
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_client, container, false)
     }
 
@@ -38,23 +39,30 @@ class ClientFragment : Fragment(), ClientRecyclerViewClickListener {
 
         super.onActivityCreated(savedInstanceState)
 
+        // to be use for the listener on the button for each item on the listener
         adapter.listener = this
         recycler_view_client.adapter = adapter
 
+        // get the clients information
         viewModel.fetchClients()
+
+        // get real time updates
         viewModel.getRealtimeUpdates()
 
+        // observe the changes in clients, if have changes, set the clients information and make changes on UI
         viewModel.clients.observe(viewLifecycleOwner, Observer {
             adapter.setClients(it)
             Log.d("Check", "client fragment on activity created$it")
         })
 
+        // observe the changes in clients, if have changes, set the client information and make changes on UI
         viewModel.client.observe(viewLifecycleOwner, Observer {
             Log.d("Check", "B4 realtime add  client fragment on activity created$it")
             adapter.addClient(it)
             Log.d("Check", "realtime add  client fragment on activity created$it")
         })
 
+        // when add button is click, go the add client fragment
         button_add.setOnClickListener{
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -64,6 +72,7 @@ class ClientFragment : Fragment(), ClientRecyclerViewClickListener {
         }
     }
 
+    // get the particular recycler view information, pass to the next edit fragment which require the information
     override fun onRecycleViewItemClicked(view: View, client: Client) {
         val currentView = (requireView().parent as ViewGroup).id
         val transaction = requireActivity().supportFragmentManager.beginTransaction()

@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_scan_barcode.*
 
 class ScanBarcodeFragment( btnName:String) : Fragment() {
 
+    // variable declaration
     private val calledBtnName: String = btnName
     private lateinit var codeScanner: CodeScanner
     private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
@@ -37,6 +38,7 @@ class ScanBarcodeFragment( btnName:String) : Fragment() {
         setupPermission()
         codeScanner()
 
+        // check if any result is stored into the scannedcode
         sharedStockBarcodeViewModel.scannedProductCode.observe(viewLifecycleOwner, Observer {
             if(!sharedStockBarcodeViewModel.scannedProductCode.value.isNullOrEmpty())
             {
@@ -72,11 +74,7 @@ class ScanBarcodeFragment( btnName:String) : Fragment() {
                     requireActivity().runOnUiThread {   // it = result
                         Log.e("Main", "require context successful $it")
 
-//                        if(calledBtnName == "rack"){
-//                            sharedStockBarcodeViewModel.rackBarcode(it.text)
-//                        }else{
                             sharedStockBarcodeViewModel.productBarcode(it.text)
-//                        }
                     }
                 }catch (e: Exception){
                     Toast.makeText(requireContext(), "Error on decode call back", Toast.LENGTH_SHORT).show()

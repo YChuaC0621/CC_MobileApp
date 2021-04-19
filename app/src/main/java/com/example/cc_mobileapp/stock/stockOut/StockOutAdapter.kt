@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.stockin_display_item.view.*
 import kotlinx.android.synthetic.main.stockout_display_item.view.*
 
 class StockOutAdapter : RecyclerView.Adapter<StockOutAdapter.StockOutViewModel>(){
-
+    // variable declaration
     private var stocksOut = mutableListOf<StockOut>()
     var listener: StockOutRecyclerViewClickListener? = null
 
@@ -26,12 +26,13 @@ class StockOutAdapter : RecyclerView.Adapter<StockOutAdapter.StockOutViewModel>(
             parent: ViewGroup,
             viewType: Int
     ) = StockOutViewModel(
+            // inflate the stockout_display_item layout
             LayoutInflater.from(parent.context)
                     .inflate(R.layout.stockout_display_item, parent, false)
     )
-
+    // get total stocks out count
     override fun getItemCount() = stocksOut.size
-
+    // bind the information to the user interface
     override fun onBindViewHolder(holder: StockOutViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
         holder.view.txtView_stockOutDate.text = stocksOut[position].stockOutDate
@@ -42,18 +43,22 @@ class StockOutAdapter : RecyclerView.Adapter<StockOutAdapter.StockOutViewModel>(
 
     }
 
+    // set the stocks out information
     fun setStocksOut(stocksOut: List<StockOut>){
         Log.d("Check", "stock Out set: $stocksOut")
         this.stocksOut = stocksOut as MutableList<StockOut>
+        // real time changes
         notifyDataSetChanged()
     }
 
+    // add stocks out information
     fun addStockOut(stockOut: StockOut) {
         Log.d("Check", "real time add stock Out $stockOut")
         if (!stocksOut.contains(stockOut)) {
             stocksOut.add(stockOut)
         }else{  // only can perform add
         }
+        // real time changes
         notifyDataSetChanged()
     }
 

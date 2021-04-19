@@ -14,7 +14,7 @@ import com.example.cc_mobileapp.stock.stockOutDetail.StockOutDetailDisplayFragme
 import kotlinx.android.synthetic.main.fragment_stock_out___main.*
 
 class StockOut_Fragment_Main : Fragment(), StockOutRecyclerViewClickListener {
-
+    // variable declaration
     private val sharedStockOutViewModel: StockOutViewModel by activityViewModels()
     private val adapter = StockOutAdapter()
 
@@ -33,21 +33,24 @@ class StockOut_Fragment_Main : Fragment(), StockOutRecyclerViewClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        // adapter and adapter listener set up on recycler view
         adapter.listener = this
         recycler_view_stockout.adapter = adapter
-
+        // get data from database
         sharedStockOutViewModel.fetchStockOut()
+        // get real time updates
         sharedStockOutViewModel.getRealtimeUpdates()
 
+        // observe the changes in stocks out, if have changes, set the stock out information and make changes on UI
         sharedStockOutViewModel.stocksOut.observe(viewLifecycleOwner, Observer{
             adapter.setStocksOut(it)
         })
-
+        // observe the changes in stock out, if have changes, set the stock out information and make changes on UI
         sharedStockOutViewModel.stockOut.observe(viewLifecycleOwner, Observer{
             adapter.addStockOut(it)
         })
 
+        // button "+" is clicked, go to add fragment
         btn_stockOutDetail_add.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -57,6 +60,7 @@ class StockOut_Fragment_Main : Fragment(), StockOutRecyclerViewClickListener {
         }
     }
 
+    // when the "edit" button on the recycler view is click, go to edit stock out fragment with passing parameter of stock out
     override fun onRecyclerViewItemClicked(view: View, stockOut: StockOut) {
         when(view.id){
             R.id.btn_stockOutClientId-> {

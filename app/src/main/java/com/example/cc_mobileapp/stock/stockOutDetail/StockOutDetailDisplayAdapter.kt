@@ -19,6 +19,7 @@ import kotlinx.coroutines.*
 
 
 class StockOutDetailDisplayAdapter(): RecyclerView.Adapter<StockOutDetailDisplayAdapter.StockOutDetailViewModel>(){
+    // variable declaration
     private var stocksOutDetailDisplay = mutableListOf<StockOutDetail>()
     var listener: StockOutDetailRecyclerViewClickListener? = null
 
@@ -26,12 +27,15 @@ class StockOutDetailDisplayAdapter(): RecyclerView.Adapter<StockOutDetailDisplay
         parent: ViewGroup,
         viewType: Int
     ) = StockOutDetailViewModel(
-        LayoutInflater.from(parent.context)
+            // inflate the stockoutdetail_display_item layout
+            LayoutInflater.from(parent.context)
             .inflate(R.layout.stockoutdetaildisplay_display_item, parent, false)
     )
 
+    // get total stocks out detail count
     override fun getItemCount() = stocksOutDetailDisplay.size
 
+    // bind the information to the user interface
     override fun onBindViewHolder(holder: StockOutDetailViewModel, position: Int) {
         holder.view.stockOutDetailDisplay_prodBarcode.text = stocksOutDetailDisplay[position].stockOutDetailProdBarcode.toString()
         holder.view.stockOutDetailDisplay_qty.text = stocksOutDetailDisplay[position].stockOutDetailQty.toString()
@@ -52,16 +56,20 @@ class StockOutDetailDisplayAdapter(): RecyclerView.Adapter<StockOutDetailDisplay
         }
     }
 
+    // set the stocks out detail information
     fun setStocksOutDetail(stocksOutDetail: List<StockOutDetail>){
         this.stocksOutDetailDisplay = stocksOutDetail as MutableList<StockOutDetail>
+        //get real time updates
         notifyDataSetChanged()
     }
 
+    // add stock out detail
     fun addStockOutDetail(stockOutDetail: StockOutDetail) {
         if (!stocksOutDetailDisplay.contains(stockOutDetail)) {
             stocksOutDetailDisplay.add(stockOutDetail)
         }else{
         }
+        //get real time updates
         notifyDataSetChanged()
     }
 

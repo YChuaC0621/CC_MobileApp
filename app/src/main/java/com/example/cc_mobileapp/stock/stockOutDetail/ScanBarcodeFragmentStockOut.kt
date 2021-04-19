@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_scan_barcode.*
 
 class ScanBarcodeFragmentStockOut( btnName:String) : Fragment() {
 
+    // variable declaration
     private val calledBtnName: String = btnName
     private lateinit var codeScanner: CodeScanner
     private val sharedStockOutBarcodeViewModel: StockOutBarcodeViewModel by activityViewModels()
@@ -38,7 +39,7 @@ class ScanBarcodeFragmentStockOut( btnName:String) : Fragment() {
         setupPermission()
         codeScanner()
 
-
+        // check if any result is stored into the scannedProductcode
         sharedStockOutBarcodeViewModel.scannedProductCode.observe(viewLifecycleOwner, Observer {
             if(!sharedStockOutBarcodeViewModel.scannedProductCode.value.isNullOrEmpty())
             {

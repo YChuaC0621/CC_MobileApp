@@ -28,6 +28,7 @@ import java.util.*
 
 class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListener {
 
+    // variable declaration
     private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbStockOutDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKOUTDETAIL)
     private val dbTempOut = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP_OUT)
@@ -38,38 +39,49 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
     private val sharedStockOutViewModel: StockOutViewModel by activityViewModels()
     private lateinit var rackViewModel: RackViewModel
     private lateinit var stockViewModel: StockViewModel
+    private lateinit var productSnapshot: DataSnapshot
+    private var totalPrice: Double = 0.0
+    var productfromDB: Product? = null
+    var callBackCount: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        // access the information from view model
         stockViewModel = ViewModelProvider(this@StockOutDetailFragment).get(StockViewModel::class.java)
         productViewModel = ViewModelProvider(this@StockOutDetailFragment).get(ProductViewModel::class.java)
         stockOutDetailViewModel = ViewModelProvider(this@StockOutDetailFragment).get(StockOutDetailViewModel::class.java)
         rackViewModel = ViewModelProvider(this@StockOutDetailFragment).get(RackViewModel::class.java)
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stockout_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        // adapter and adapter listener set up on recycler view
         adapter.listener = this
         recycler_view_stockOutDetail.adapter = adapter
 
+        // get data from database
         productViewModel.fetchProduct()
-
         stockOutDetailViewModel.fetchStockOutDetail()
 
+        // get real time updates
         stockOutDetailViewModel.getRealtimeUpdates()
 
+        // observe the changes in stocks out detail, if have changes, set the stocks out information and make changes on UI
         stockOutDetailViewModel.stocksOutDetail.observe(viewLifecycleOwner, Observer {
             adapter.setStocksOutDetail(it)
             btn_stockOutDetailAdd.isEnabled = adapter.itemCount > 0
         })
 
+        // observe the changes in stock out detail, if have changes, set the stocks out information and make changes on UI
         stockOutDetailViewModel.stockOutDetail.observe(viewLifecycleOwner, Observer {
             adapter.addStockOutDetail(it)
             btn_stockOutDetailSave.isEnabled = adapter.itemCount > 0
         })
 
+        // button "+" is clicked, go to add fragment
         btn_stockOutDetailAdd.setOnClickListener {
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -78,15 +90,13 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
             transaction.commit()
         }
 
-
+        // when button "save" is click save the stock out details
         btn_stockOutDetailSave.setOnClickListener {
             getProdsDetail()
         }
     }
 
-    private lateinit var productSnapshot: DataSnapshot
-    private lateinit var stockSnapshot: DataSnapshot
-    private var totalPrice: Double = 0.0
+    // get the current product details for update
     fun getProdsDetail() {
         readData(object : FirebaseCallback {
             override fun onCallBack(snapshot: DataSnapshot) {
@@ -94,11 +104,13 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
                 Log.d("inside the on call back", snapshot.toString())
                 var count: Int = 0
                 var stockOutDetails = mutableListOf(stockOutDetailViewModel.stocksOutDetail)
+                // iterate through each product for update
                 stockOutDetails.listIterator().forEach {
                     it.value?.forEach {
                         dbStockOutDetail.push().setValue(it)
                         count += 1
                         stockUpdateProduct(it.stockOutDetailProdBarcode, it.stockOutDetailQty)
+                        // calculate total price for each transaction
                         if (!(productfromDB?.prodPrice == null || it.stockOutDetailQty == null)) {
                             var price: Double = productfromDB?.prodPrice!!
                             var qty: Int? = it.stockOutDetailQty
@@ -108,13 +120,14 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
                         }
                     }
                 }
+                // remove all the temporary stock details (for adding purpose)
                 dbTempOut.removeValue()
                 updateStockOutDetail()
             }
         })
-
     }
 
+    // update the quantity for each of the product and the stock details
     private fun stockUpdateQty() {
     var stockOutDetails = mutableListOf(stockOutDetailViewModel.stocksOutDetail)
     stockOutDetails.listIterator().forEach {
@@ -131,13 +144,16 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
                                 var stockInDetail = stockInInfo.getValue(StockDetail::class.java)
                                 stockInDetail?.stockDetailId = stockInInfo.key
                                 if (stockOutQty!! != 0) {
+                                    // stock in detail has more quantity than stock out detail
                                     if (stockOutQty!! <= stockInDetail?.stockDetailQty!!) {
                                         stockInDetail.stockDetailQty = stockInDetail.stockDetailQty!! - stockOutQty!!
                                         stockOutQty = 0
                                     } else {
+                                        // stock in detail has more quantity than stock out detail
                                         stockOutQty = stockOutQty!! - stockInDetail.stockDetailQty!!
                                         stockInDetail.stockDetailQty = 0
                                     }
+                                    // if stock in detail quantity =0, delete the stock in detail, else update the information
                                     if (stockInDetail.stockDetailQty == 0) {
                                         stockViewModel.deleteStockDetailinDB(stockInDetail)
                                     } else {
@@ -158,6 +174,7 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         }
     }
 }
+    // update new stock out detail transaction information and store to database
     private fun updateStockOutDetail() {
         val stockOut = StockOut()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
@@ -175,7 +192,7 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         requireActivity().supportFragmentManager.popBackStack(getCallerFragment(), FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
-
+    // update for each of the product which carry out stock out
     private fun stockUpdateProduct(stockOutDetailBarcode: String?, stockOutDetailQty: Int?){
         productSnapshot.children.forEach {
             var tempProd: Product? = null
@@ -196,9 +213,7 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         }
     }
 
-    var productfromDB: Product? = null
-    var callBackCount: Int = 0
-
+    // get all product information from database
     private fun readData(firebaseCallback: FirebaseCallback){
         dbProduct.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -214,11 +229,12 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         })
     }
 
-
+    // firebase callback interface
     private interface FirebaseCallback{
         fun onCallBack(snapshot: DataSnapshot)
     }
 
+    // get the previous fragment name
     fun getCallerFragment(): String? {
         val fm: FragmentManager = requireActivity().supportFragmentManager
         val count: Int = requireActivity().supportFragmentManager.backStackEntryCount
@@ -226,6 +242,7 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         return fm.getBackStackEntryAt(count - 2).name
     }
 
+    // when the "edit" button on the recycler view is click, go to edit stock out detail fragment with passing parameter of stock out detail
     override fun onRecyclerViewItemClicked(view: View, stockOutDetail: StockOutDetail) {
         when(view.id){
             R.id.btn_edit_stockOutDetail -> {

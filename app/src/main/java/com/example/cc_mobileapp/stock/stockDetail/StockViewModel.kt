@@ -13,6 +13,7 @@ import com.example.cc_mobileapp.product.ProductViewModel
 import com.google.firebase.database.*
 
 class StockViewModel : ViewModel() {
+    // variable declaration
     private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
     private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
     private val dbPermanent = FirebaseDatabase.getInstance().getReference(Constant.NODE_PERM_STOCKINDETAIL)
@@ -33,6 +34,7 @@ class StockViewModel : ViewModel() {
     val stockTypeKey: LiveData<String>
         get() = _stockTypeKey
 
+    // add stock detail
     fun addStockDetail(stockDetail: StockDetail) {
         //create unique key
         // TODO if stock in then another push key
@@ -48,8 +50,9 @@ class StockViewModel : ViewModel() {
                     }
                 }
     }
-
+    // check for realtime changes
     private val childEventListener = object : ChildEventListener {
+        // add stock detail
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
             Log.d("Check", "StockDetailListener$snapshot")
             val stockDetail = snapshot.getValue(StockDetail::class.java)
@@ -57,12 +60,14 @@ class StockViewModel : ViewModel() {
             _stockDetail.value = stockDetail!!
         }
 
+        // update stock detail
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
             val stockDetail = snapshot.getValue(StockDetail::class.java)
             stockDetail?.stockDetailId = snapshot.key
             _stockDetail.value = stockDetail!!
         }
 
+        // delete stock detail
         override fun onChildRemoved(snapshot: DataSnapshot) {
             val stockDetail = snapshot.getValue(StockDetail::class.java)
             stockDetail?.stockDetailId = snapshot.key
@@ -78,10 +83,12 @@ class StockViewModel : ViewModel() {
 
     }
 
+    // get realtime updates
     fun getRealtimeUpdates() {
         dbTemp.addChildEventListener(childEventListener)
     }
 
+    // get stock detail information from database
     fun fetchStockDetail() {
         dbTemp.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -102,6 +109,7 @@ class StockViewModel : ViewModel() {
         })
     }
 
+    // get stock detail information from database with specific stockTypeId
     fun fetchStockDetailDisplay(stockDetailTypeId: String){
         dbPermanent.orderByChild("stockTypeId").equalTo(stockDetailTypeId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -122,12 +130,14 @@ class StockViewModel : ViewModel() {
         })
     }
 
+    // remove the listener when the fragment is cleared
     override fun onCleared() {
         super.onCleared()
         dbTemp.removeEventListener(childEventListener)
         dbStockInDetail.removeEventListener(childEventListener)
     }
 
+    // update the stock detail
     fun updateStockDetail(stockDetail: StockDetail) {
         dbTemp.child(stockDetail.stockDetailId!!).setValue(stockDetail)
                 .addOnCompleteListener {
@@ -139,6 +149,7 @@ class StockViewModel : ViewModel() {
                 }
     }
 
+    // delete the stock detail
     fun deleteStockDetail(stockDetail: StockDetail) {
         dbTemp.child(stockDetail.stockDetailId!!).setValue(null)
                 .addOnCompleteListener {
@@ -150,6 +161,7 @@ class StockViewModel : ViewModel() {
                 }
     }
 
+    // update the stock detail for display fragment use
     fun updateStockDetailinDB(stockDetail: StockDetail) {
         dbStockInDetail.child(stockDetail.stockDetailId!!).setValue(stockDetail)
                 .addOnCompleteListener {
@@ -161,6 +173,7 @@ class StockViewModel : ViewModel() {
                 }
     }
 
+    // delete stock detail for display fragment use
     fun deleteStockDetailinDB(stockDetail: StockDetail) {
         dbStockInDetail.child(stockDetail.stockDetailId!!).setValue(null)
                 .addOnCompleteListener {

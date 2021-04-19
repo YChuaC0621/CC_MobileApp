@@ -10,6 +10,7 @@ import com.example.cc_mobileapp.model.StockOut
 import com.google.firebase.database.*
 
 class StockOutViewModel: ViewModel() {
+    // variable declaration with get and set
     private val dbStockOut = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKOUT)
 
     private val _result = MutableLiveData<Exception?>()
@@ -39,15 +40,15 @@ class StockOutViewModel: ViewModel() {
     private val _stockOutClientId = MutableLiveData<String>()
     val stockOutClientId: LiveData<String>
         get() = _stockOutClientId
-
+    // generate key id for stock out
     fun generateTypePushKey(){
         _stockOutTypePushKey.value = dbStockOut.push().key
     }
 
+    // add stock out
     fun addStockOut(stockOut: StockOut) {
         Log.d("Check", "view model add stock out $stockOut")
         //create unique key
-        // TODO if stock out then another push key
         stockOut.stockOutId = stockOutTypePushKey.value
         // save inside the unique key
         dbStockOut.child(stockOut.stockOutId!!).setValue(stockOut)
@@ -59,9 +60,10 @@ class StockOutViewModel: ViewModel() {
                     }
                 }
     }
-
+    // check for realtime changes
     private val childEventListener = object: ChildEventListener {
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+            // add stock out
             Log.d("Check", "StockOutListener$snapshot")
             val stockOut = snapshot.getValue(StockOut::class.java)
             stockOut?.stockOutId = snapshot.key
@@ -82,11 +84,13 @@ class StockOutViewModel: ViewModel() {
 
     }
 
+    // get real time updates
     fun getRealtimeUpdates(){
         Log.d("Check", "testgetRealtimeupdate")
         dbStockOut.addChildEventListener(childEventListener)
     }
 
+    // get stock out information from database
     fun fetchStockOut(){
         dbStockOut.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -109,11 +113,13 @@ class StockOutViewModel: ViewModel() {
         })
     }
 
+    // remove the listener when the fragment is cleared
     override fun onCleared() {
         super.onCleared()
         dbStockOut.removeEventListener(childEventListener)
     }
 
+    // set the stock out client id
     fun setStockOutClientId(stockOutClientId:String){
         _stockOutClientId.value = stockOutClientId
     }

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.stockdetail_display_item.view.*
 import kotlinx.android.synthetic.main.stockin_display_item.view.*
 
 class StockInAdapter : RecyclerView.Adapter<StockInAdapter.StockInViewModel>(){
-
+    // variable declaration
     private var stocksIn = mutableListOf<StockIn>()
     var listener: StockInRecyclerViewClickListener? = null
 
@@ -23,12 +23,15 @@ class StockInAdapter : RecyclerView.Adapter<StockInAdapter.StockInViewModel>(){
         parent: ViewGroup,
         viewType: Int
     ) = StockInViewModel(
-        LayoutInflater.from(parent.context)
+            // inflate the stockin_display_item layout
+            LayoutInflater.from(parent.context)
             .inflate(R.layout.stockin_display_item, parent, false)
     )
 
+    // get total stocks in count
     override fun getItemCount() = stocksIn.size
 
+    // bind the information to the user interface
     override fun onBindViewHolder(holder: StockInViewModel, position: Int) {
         Log.d("Check", "adapter bind view holder")
         holder.view.txtView_stockInDate.text = stocksIn[position].stockInDate
@@ -38,18 +41,22 @@ class StockInAdapter : RecyclerView.Adapter<StockInAdapter.StockInViewModel>(){
         holder.view.btn_stockInSupplierId.setOnClickListener { listener?.onRecyclerViewItemClicked(it, stocksIn[position])}
     }
 
+    // set the stocks in information
     fun setStocksIn(stocksIn: List<StockIn>){
         Log.d("Check", "stock in set: $stocksIn")
         this.stocksIn = stocksIn as MutableList<StockIn>
+        // real time changes
         notifyDataSetChanged()
     }
 
+    // add stocks in information
     fun addStockIn(stockIn: StockIn) {
             Log.d("Check", "real time add stock in $stockIn")
             if (!stocksIn.contains(stockIn)) {
                 stocksIn.add(stockIn)
             }else{  // only can perform add
         }
+        // real time changes
         notifyDataSetChanged()
     }
 

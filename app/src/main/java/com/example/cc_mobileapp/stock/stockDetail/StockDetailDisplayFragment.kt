@@ -30,40 +30,40 @@ import java.util.*
 
 class StockDetailDisplayFragment(stockIn:StockIn) : Fragment(){
 
-    private val dbStockInDetail = FirebaseDatabase.getInstance().getReference(Constant.NODE_STOCKDETAIL)
-    private val dbPermanentStock = FirebaseDatabase.getInstance().getReference(Constant.NODE_PERM_STOCKINDETAIL)
-    private val dbTemp = FirebaseDatabase.getInstance().getReference(Constant.NODE_TEMP)
-    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+    // variable declaration
     private lateinit var productViewModel: ProductViewModel
     private val adapter = StockDetailDisplayAdapter()
     private lateinit var stockViewModel: StockViewModel
-    private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     private lateinit var rackViewModel: RackViewModel
     var stockDetailID: String = stockIn.stockInId.toString()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        // access the information from view model
         productViewModel = ViewModelProvider(this@StockDetailDisplayFragment).get(ProductViewModel::class.java)
         stockViewModel = ViewModelProvider(this@StockDetailDisplayFragment).get(StockViewModel::class.java)
         rackViewModel = ViewModelProvider(this@StockDetailDisplayFragment).get(RackViewModel::class.java)
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stock_detail_display, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        // adapter set up on recycler view
         recycler_view_stockDetail_display.adapter = adapter
 
+        // get data from database
         stockViewModel.fetchStockDetailDisplay(stockDetailID)
 
+        // get real time updates
         stockViewModel.getRealtimeUpdates()
 
+        // observe the changes in stocks detail, if have changes, set the products information and make changes on UI
         stockViewModel.stocksDetail.observe(viewLifecycleOwner, Observer {
             adapter.setStocksDetail(it)
         })
-
+        // observe the changes in stock detail, if have changes, set the products information and make changes on UI
         stockViewModel.stockDetail.observe(viewLifecycleOwner, Observer {
             adapter.addStockDetail(it)
         })

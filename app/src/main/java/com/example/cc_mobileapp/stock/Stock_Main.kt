@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_stock__main.*
 
 class Stock_Main : AppCompatActivity() {
 
+    // variable
     lateinit var toggle:ActionBarDrawerToggle
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
@@ -35,6 +36,7 @@ class Stock_Main : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock__main)
+        // Navigation drawer
         drawerLayout = findViewById(R.id.stock_drawer)
         navigationView = findViewById(R.id.nav_view)
 
@@ -52,13 +54,14 @@ class Stock_Main : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // check user position
         val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false
         }
-
+        // set the navigation drawer
         navigationView.setNavigationItemSelectedListener {
 
             when(it.itemId){

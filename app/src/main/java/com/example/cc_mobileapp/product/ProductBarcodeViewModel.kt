@@ -6,11 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.example.cc_mobileapp.Constant
 import com.google.firebase.database.FirebaseDatabase
 
+// use to store scanned product barcode through shared view model
 class ProductBarcodeViewModel: ViewModel() {
 
-    private val dbProduct = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
-
-
+    // get and set of scanned barcode
     private val _scannedCode = MutableLiveData<String?>()
     val scannedCode: LiveData<String?>
         get() = _scannedCode
@@ -19,6 +18,7 @@ class ProductBarcodeViewModel: ViewModel() {
         _scannedCode.value = retrievedCode
     }
 
+    // clear scannned information after bind to user interface to allow next scanning
     fun clearBarcode(){
         _scannedCode.value = null
     }

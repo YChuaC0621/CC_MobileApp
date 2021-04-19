@@ -14,6 +14,7 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 
 class ProductViewModel: ViewModel() {
+    // variable declaration
     private val dbProduct = FirebaseDatabase.getInstance().getReference(NODE_PRODUCT)
 
     private val _result = MutableLiveData<Exception?>()
@@ -32,10 +33,6 @@ class ProductViewModel: ViewModel() {
     val validInput: LiveData<Boolean>
         get() = _validInput
 
-//    private var _productFromDB = MutableLiveData<Product>()
-//    val productFromDB: LiveData<Product>
-//        get() = _productFromDB
-
     fun addProduct(product: Product) {
         Log.d("Check", "view model add prod $product")
         //create unique key
@@ -51,21 +48,22 @@ class ProductViewModel: ViewModel() {
             }
         }
     }
-
+    // check for realtime changes
     private val childEventListener = object: ChildEventListener {
+        // add product
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
             Log.d("Check", "productListener$snapshot")
             val product = snapshot.getValue(Product::class.java)
             product?.prodId = snapshot.key
             _product.value = product!!
         }
-
+        // update product information
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
             val product = snapshot.getValue(Product::class.java)
             product?.prodId = snapshot.key
             _product.value = product!!
         }
-
+        // delete product
         override fun onChildRemoved(snapshot: DataSnapshot) {
             Log.d("Check", "onchildremove $snapshot")
 
@@ -83,11 +81,13 @@ class ProductViewModel: ViewModel() {
 
     }
 
+    // get realtime update on changes
     fun getRealtimeUpdates(){
         Log.d("Check", "testgetRealtimeupdate")
         dbProduct.addChildEventListener(childEventListener)
     }
 
+    // retrieve all the products from database
     fun fetchProduct(){
         dbProduct.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -110,6 +110,7 @@ class ProductViewModel: ViewModel() {
         })
     }
 
+    // update product to database
     fun updateProduct(product: Product){
         dbProduct.child(product.prodId!!).setValue(product)
             .addOnCompleteListener {
@@ -121,6 +122,7 @@ class ProductViewModel: ViewModel() {
             }
     }
 
+    // delete product from database
     fun deleteProduct(product: Product){
         dbProduct.child(product.prodId!!).setValue(null)
             .addOnCompleteListener {
@@ -132,6 +134,7 @@ class ProductViewModel: ViewModel() {
             }
     }
 
+    // clear the listener from fragment to product database
     override fun onCleared() {
         super.onCleared()
         dbProduct.removeEventListener(childEventListener)

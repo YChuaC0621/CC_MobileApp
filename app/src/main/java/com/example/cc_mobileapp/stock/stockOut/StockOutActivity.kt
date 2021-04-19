@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class StockOutActivity : AppCompatActivity() {
+    // variable declaration
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var navController : NavController
@@ -32,20 +33,21 @@ class StockOutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock_out_main)
 
+        // Navigation drawer
         navController = Navigation.findNavController(this,R.id.stockout_nav_host_fragment)
         drawerLayout = findViewById(R.id.stock_out_drawer)
         navigationView = findViewById(R.id.stockout_nav_view)
         NavigationUI.setupWithNavController(navigationView,navController)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        // check user position
         val user_pos = intent.getStringExtra("user_position")
         if(user_pos.equals("1"))
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false
         }
-
+        // set the navigation drawer
         navigationView.setNavigationItemSelectedListener {
 
             when(it.itemId){

@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_product.*
 
 class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
 
+    // variable
     private lateinit var viewModel: ProductViewModel
     private val adapter = ProductAdapter()
     private var binding: ProductFragment? = null
@@ -30,35 +31,36 @@ class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-         //Inflate the layout for this fragment
+        // access the information from product view model
         viewModel = ViewModelProvider(this@ProductFragment).get(ProductViewModel::class.java)
+        //Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_product, container, false)
-
-//        val fragmentBinding = ProductFragment.inflate(inflater, container, false)
-//        binding = fragmentBinding
-//        return fragmentBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // to be use for the listener on the button for each item on the listener
         adapter.listener = this
         recycler_view_product.adapter = adapter
 
+        // get the products information
         viewModel.fetchProduct()
+        // get real time updates
         viewModel.getRealtimeUpdates()
 
+        // observe the changes in products, if have changes, set the products information and make changes on UI
         viewModel.products.observe(viewLifecycleOwner, Observer{
             adapter.setProducts(it)
         })
 
+        // observe the changes in product, if have changes, set the products information and make changes on UI
         viewModel.product.observe(viewLifecycleOwner, Observer{
             adapter.addProduct(it)
         })
 
+        // get the particular recycler view information, pass to the next edit fragment which require the information
         btn_productAdd.setOnClickListener {
-//            AddProductDialogFragment()
-//                .show(childFragmentManager,"")
             val currentView = (requireView().parent as ViewGroup).id
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(currentView, AddProductDialogFragment())
@@ -67,6 +69,7 @@ class ProductFragment : Fragment(), ProductRecyclerViewClickListener {
         }
     }
 
+    // check on which recycler view's item has been clicked
     override fun onRecyclerViewItemClicked(view: View, product: Product) {
         val currentView = (requireView().parent as ViewGroup).id
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
