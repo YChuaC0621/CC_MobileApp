@@ -10,13 +10,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
 import com.example.cc_mobileapp.model.Rack
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_rack.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class AddRackDialogFragment  : Fragment() {
     private lateinit var viewModel: RackViewModel
+    private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
 
     //link view model with the view
     override fun onCreateView(
@@ -31,16 +38,6 @@ class AddRackDialogFragment  : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        //observe the results for add rack process
-        viewModel.result.observe(viewLifecycleOwner, Observer {
-            val message = if (it == null) {// success
-                getString(R.string.rack_added)
-            } else {
-                getString(R.string.error, it.message)
-            }
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        })
-
         //Add Rack
         btn_Save.setOnClickListener {
             val rackNum = editTxt_rackNum.text.toString().trim()
@@ -54,24 +51,21 @@ class AddRackDialogFragment  : Fragment() {
                 txtInputLayout_rackName.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
-            }
-            else{
+            } else {
                 txtInputLayout_rackName.error = null
             }
             if (startLot.isEmpty()) {
                 txtInputLayout_startLot.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
-            }
-            else{
+            } else {
                 txtInputLayout_startLot.error = null
             }
             if (endLot.isEmpty()) {
                 txtInputLayout_endLot.error = getString(R.string.error_field_required)
                 valid = false
                 return@setOnClickListener
-            }
-            else{
+            } else {
                 txtInputLayout_endLot.error = null
             }
             if (row_num.isEmpty()) {
@@ -82,14 +76,11 @@ class AddRackDialogFragment  : Fragment() {
                 txtInputLayout_rowNum.error = getString(R.string.only_integer_error)
                 valid = false
                 return@setOnClickListener
-            }
-            else if(!row_num.equals("1") || !row_num.equals("2"))
-            {
+            } else if (row_num != "1" && row_num != "2") {
                 txtInputLayout_rowNum.error = getString(R.string.rowNum_error)
                 valid = false
                 return@setOnClickListener
-            }
-            else{
+            } else {
                 txtInputLayout_rowNum.error = null
             }
 
@@ -106,12 +97,12 @@ class AddRackDialogFragment  : Fragment() {
                 rack.currentQty = 0
                 Log.d("Check", "rack data $rack")
 
-                //pass to view model to add
-                viewModel.addRack(rack)
-
-                //allow the fragment navigate back to activity
-                requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            }
+                viewModel.fetchRackDetails()
+                viewModel.racks.observe(viewLifecycleOwner, Observer {
+                        Log.d("Check", "reach checking")
+                        checkRack(rack, it)
+                })
+}
         }
     }
 
@@ -121,5 +112,42 @@ class AddRackDialogFragment  : Fragment() {
         var regex: Regex = Regex(pattern = """\d+""")
         return regex.matches(input = RowNum)
     }
+
+    private fun checkRack(rack: Rack, racks: List<Rack>) {
+        //access rack database
+        var found = 0
+        for (checking in racks) {
+            if (checking?.rackName == rack?.rackName) {
+                Log.d("Check", "reach checking name ${checking?.rackName}, ${rack?.rackName}")
+                txtInputLayout_rackName.error = getString(R.string.existRackMsg)
+                txtInputLayout_startLot.error = null
+                found = 1
+            } else if ((checking?.startLot == rack?.startLot) && (checking?.endLot == rack?.endLot) && (checking?.rackNum != rack?.rackNum)) {
+                Log.d("Check", "reach checking location ${checking?.startLot}, ${rack?.startLot}")
+                Log.d("Check", "reach checking location ${checking?.endLot}, ${rack?.endLot}")
+                txtInputLayout_startLot.error = getString(R.string.existRackLotMsg)
+                txtInputLayout_rackName.error = null
+                found = 1
+            }
+        }
+        if (found == 0) {
+            //pass to view model to add
+            viewModel.addRack(rack)
+            //allow the fragment navigate back to activity
+            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            //observe the results for add rack process
+            viewModel.result.observe(viewLifecycleOwner, Observer {
+                val message = if (it == null) {// success
+                    getString(R.string.rack_added)
+                } else {
+                    getString(R.string.error, it.message)
+                }
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            })
+
+        }
+    }
+
 }
 

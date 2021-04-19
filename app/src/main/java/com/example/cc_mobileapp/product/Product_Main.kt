@@ -49,8 +49,10 @@ class Product_Main: AppCompatActivity(R.layout.activity_product__main) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // check user position
-        val user_pos = intent.getStringExtra("user_position")
-        if(user_pos.equals("1"))
+        var user_pos = intent.getIntExtra("user_position",1)
+        Log.d("Check", "user position ${intent.extras}")
+        Log.d("Check", "user position ${user_pos}")
+        if(user_pos == 1)
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false

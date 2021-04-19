@@ -97,11 +97,13 @@ class Registration : AppCompatActivity() {
                                     mDatabase.child(uid).child("userHpNum").setValue(hp)
                                     mDatabase.child(uid).child("workingStatus").setValue(working_status)
                                     mDatabase.child(uid).child("workingPosition").setValue(working_pos)
+
+                                    Toast.makeText(this, "Successfully registered :) Please verify your email.", Toast.LENGTH_LONG).show()
+                                    sendEmailVerification();
+
                                     var intent: Intent = Intent(this, MainActivity::class.java)
                                     intent.putExtra("user_position", working_pos)
                                     startActivity(intent)
-                                    Toast.makeText(this, "Successfully registered :) Please verify your email.", Toast.LENGTH_LONG).show()
-                                    sendEmailVerification();
                                 }else {
                                     Toast.makeText(this, "Error registering, try again later :(", Toast.LENGTH_LONG).show()
                                 }

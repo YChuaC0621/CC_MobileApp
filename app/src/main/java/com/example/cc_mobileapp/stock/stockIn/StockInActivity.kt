@@ -41,8 +41,8 @@ class StockInActivity: AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         // check user position
-        val user_pos = intent.getStringExtra("user_position")
-        if(user_pos.equals("1"))
+        var user_pos = intent.getIntExtra("user_position",1)
+        if(user_pos == 1)
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false

@@ -103,6 +103,7 @@ class Login : AppCompatActivity() {
                                         Toast.makeText(this, "Login Successfully:)", Toast.LENGTH_LONG).show()
                                         var intent:Intent = Intent(this, MainActivity::class.java)
                                         intent.putExtra("user_position", user_pos)
+                                        Log.d("Check", "intent ${intent.extras}")
                                         startActivity(intent)
 
                                     }else {

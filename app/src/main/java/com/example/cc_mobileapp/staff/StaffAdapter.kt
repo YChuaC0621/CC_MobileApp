@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.Supplier
 import com.example.cc_mobileapp.model.Users
 import kotlinx.android.synthetic.main.staff_display_item.view.*
 
@@ -37,6 +38,22 @@ class StaffAdapter: RecyclerView.Adapter<StaffAdapter.StaffViewModel>(){
     fun setStaffs(staffs: List<Users>){
         Log.d("Check", "staff set: $staffs")
         this.staff = staffs as MutableList<Users>
+        notifyDataSetChanged()
+    }
+
+    //add to database
+    fun addStaff(staff: Users) {
+        Log.d("Check", "real time add supplier $staff")
+        if (!this.staff.contains(staff)) {
+            this.staff.add(staff)
+        }else{  // delete supplier
+            val staffUpdateIndex = this.staff.indexOf(staff)
+            if(staff.workingStatus == 0){
+                this.staff.removeAt(staffUpdateIndex)
+            }else{ // for update client
+                this.staff[staffUpdateIndex] = staff
+            }
+        }
         notifyDataSetChanged()
     }
 

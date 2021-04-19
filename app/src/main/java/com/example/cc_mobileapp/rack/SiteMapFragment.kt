@@ -266,18 +266,21 @@ class SiteMapFragment: Fragment() {
 
                                 }
                             }
+                            if(counter == 0)
+                            {
+                                Toast.makeText(
+                                        requireContext(),
+                                        "No result is found ",
+                                        Toast.LENGTH_SHORT
+                                ).show()
+                                search_results.setText("")
+
+                            }
                         }
                     }
                 }
 
-                if(counter == 0)
-                {
-                    Toast.makeText(
-                        requireContext(),
-                        "No result is found ",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+
 
 
             }

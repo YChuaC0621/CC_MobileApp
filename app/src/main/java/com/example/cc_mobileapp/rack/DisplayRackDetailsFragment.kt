@@ -174,7 +174,7 @@ class DisplayRackDetailsFragment(private val rack_num : String) : Fragment() {
             if (counterRack == 0) {
                 Toast.makeText(
                         requireContext(),
-                        "No information is placed under this " + rack_num,
+                        getString(R.string.NoResults) + rack_num,
                         Toast.LENGTH_SHORT
                 ).show()
             }

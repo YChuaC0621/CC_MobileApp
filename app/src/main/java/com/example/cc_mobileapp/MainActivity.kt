@@ -2,6 +2,7 @@ package com.example.cc_mobileapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -43,8 +44,10 @@ class MainActivity: AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val user_pos = intent.getStringExtra("user_position")
-        if(user_pos.equals("1"))
+        var userPos = intent.getIntExtra("user_position",1)
+        Log.d("Check", "user position ${intent.extras}")
+        Log.d("Check", "user position ${userPos}")
+        if(userPos == 1)
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false
@@ -55,52 +58,52 @@ class MainActivity: AppCompatActivity() {
             when(it.itemId){
                 R.id.item_homepage -> {
                     var intent: Intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_userMgmt ->  {
                     var intent: Intent = Intent(this, Usermgmt::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_product ->  {
                     var intent: Intent = Intent(this, Product_Main::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_stockIn ->  {
                     var intent: Intent = Intent(this, StockInActivity::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_stockOut ->  {
                     var intent: Intent = Intent(this, StockOutActivity::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_sitemap ->  {
                     var intent: Intent = Intent(this, SiteMap::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_client ->  {
                     var intent: Intent = Intent(this, Client_Main::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_supplier ->  {
                     var intent: Intent = Intent(this, Supplier_Main::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_manageStaff ->  {
                     var intent: Intent = Intent(this, Staff_Main::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_report ->  {
                     var intent: Intent = Intent(this, Report_Main::class.java)
-                    intent.putExtra("user_position", user_pos)
+                    intent.putExtra("user_position", userPos)
                     startActivity(intent)
                 }
                 R.id.item_logout -> startActivity(Intent(this, Login::class.java))
@@ -114,7 +117,7 @@ class MainActivity: AppCompatActivity() {
 
         clientBtn.setOnClickListener {
             var intent: Intent = Intent(this, Client_Main::class.java)
-            intent.putExtra("user_position", user_pos)
+            intent.putExtra("user_position", userPos)
             startActivity(intent)
         }
 
@@ -122,7 +125,7 @@ class MainActivity: AppCompatActivity() {
 
         supplierBtn.setOnClickListener {
             var intent: Intent = Intent(this, Supplier_Main::class.java)
-            intent.putExtra("user_position", user_pos)
+            intent.putExtra("user_position", userPos)
             startActivity(intent)
         }
 
@@ -130,7 +133,7 @@ class MainActivity: AppCompatActivity() {
 
         sitemapBtn.setOnClickListener {
             var intent: Intent = Intent(this, SiteMap::class.java)
-            intent.putExtra("user_position", user_pos)
+            intent.putExtra("user_position", userPos)
             startActivity(intent)
         }
 
@@ -138,7 +141,7 @@ class MainActivity: AppCompatActivity() {
 
         reportBtn.setOnClickListener {
             var intent: Intent = Intent(this, StockOutActivity::class.java)
-            intent.putExtra("user_position", user_pos)
+            intent.putExtra("user_position", userPos)
             startActivity(intent)
         }
 
@@ -146,7 +149,7 @@ class MainActivity: AppCompatActivity() {
 
         productBtn.setOnClickListener {
             var intent: Intent = Intent(this, Product_Main::class.java)
-            intent.putExtra("user_position", user_pos)
+            intent.putExtra("user_position", userPos)
             startActivity(intent)
         }
 
@@ -154,7 +157,7 @@ class MainActivity: AppCompatActivity() {
 
         stockInBtn.setOnClickListener {
             var intent: Intent = Intent(this, StockInActivity::class.java)
-            intent.putExtra("user_position", user_pos)
+            intent.putExtra("user_position", userPos)
             startActivity(intent)
         }
 

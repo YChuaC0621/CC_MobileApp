@@ -207,24 +207,68 @@ class Usermgmt : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        if(positionTxt.text.equals("Staff"))
+        var userPos = intent.getIntExtra("user_position",1)
+        Log.d("Check", "user position ${intent.extras}")
+        Log.d("Check", "user position ${userPos}")
+        if(userPos == 1)
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false
         }
 
         navigationView.setNavigationItemSelectedListener {
+
             when(it.itemId){
-                R.id.item_homepage -> startActivity(Intent(this, MainActivity::class.java))
-                R.id.item_userMgmt -> startActivity(Intent(this, Usermgmt::class.java))
-                R.id.item_product -> startActivity(Intent(this, Product_Main::class.java))
-                R.id.item_stockIn -> startActivity(Intent(this, StockInActivity::class.java))
-                R.id.item_stockOut -> startActivity(Intent(this, StockOutActivity::class.java))
-                R.id.item_sitemap -> startActivity(Intent(this, SiteMap::class.java))
-                R.id.item_client -> startActivity(Intent(this, Client_Main::class.java))
-                R.id.item_supplier-> startActivity(Intent(this, Supplier_Main::class.java))
-                R.id.item_manageStaff -> startActivity(Intent(this, Staff_Main::class.java))
-                R.id.item_report -> startActivity(Intent(this, Report_Main::class.java))
+                R.id.item_homepage -> {
+                    var intent: Intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
+                R.id.item_userMgmt ->  {
+                    var intent: Intent = Intent(this, Usermgmt::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
+                R.id.item_product ->  {
+                    var intent: Intent = Intent(this, Product_Main::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
+                R.id.item_stockIn ->  {
+                    var intent: Intent = Intent(this, StockInActivity::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
+                R.id.item_stockOut ->  {
+                    var intent: Intent = Intent(this, StockOutActivity::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
+                R.id.item_sitemap ->  {
+                    var intent: Intent = Intent(this, SiteMap::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
+                R.id.item_client ->  {
+                    var intent: Intent = Intent(this, Client_Main::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
+                R.id.item_supplier ->  {
+                    var intent: Intent = Intent(this, Supplier_Main::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
+                R.id.item_manageStaff ->  {
+                    var intent: Intent = Intent(this, Staff_Main::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
+                R.id.item_report ->  {
+                    var intent: Intent = Intent(this, Report_Main::class.java)
+                    intent.putExtra("user_position", userPos)
+                    startActivity(intent)
+                }
                 R.id.item_logout -> startActivity(Intent(this, Login::class.java))
 
             }

@@ -52,8 +52,8 @@ class Supplier_Main: AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //hide the report and manage staff function from staff
-        val user_pos = intent.getStringExtra("user_position")
-        if(user_pos.equals("1"))
+        var user_pos = intent.getIntExtra("user_position",1)
+        if(user_pos == 1)
         {
             navigationView.menu.findItem(R.id.item_report).isVisible = false
             navigationView.menu.findItem(R.id.item_manageStaff).isVisible = false

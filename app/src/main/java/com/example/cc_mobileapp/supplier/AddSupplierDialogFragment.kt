@@ -10,8 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.cc_mobileapp.Constant
 import com.example.cc_mobileapp.R
+import com.example.cc_mobileapp.model.Client
 import com.example.cc_mobileapp.model.Supplier
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_add_client_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_supplier.*
 import kotlinx.android.synthetic.main.fragment_add_supplier.btn_Save
 import kotlinx.android.synthetic.main.fragment_add_supplier.editTxt_supCmpLot
@@ -117,16 +121,30 @@ class AddSupplierDialogFragment  : Fragment() {
 
             //if all valid inputs then add to database
             if (valid) {
-                val sup = Supplier()
-                sup.supName = supName
-                sup.supEmail = supEmail
-                sup.supHpNum = supHpNum
-                sup.supCmpName = supCmpName
-                sup.supCmpLot = supCmpLot
-                Log.d("Check", "supplier data $sup")
-                viewModel.addSupplier(sup)
-                requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            }
+                // check duplication of client company name
+                var supCmpNameQuery: Query = FirebaseDatabase.getInstance().reference.child(Constant.NODE_SUPPLIER).orderByChild("supCmpName").equalTo(supCmpName)
+                supCmpNameQuery.addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.childrenCount > 0) {
+                            txtInputLayout_supCmpName.error = getString(R.string.existSupMsg)
+                        } else {
+                            val sup = Supplier()
+                            sup.supName = supName
+                            sup.supEmail = supEmail
+                            sup.supHpNum = supHpNum
+                            sup.supCmpName = supCmpName
+                            sup.supCmpLot = supCmpLot
+                            Log.d("Check", "supplier data $sup")
+                            viewModel.addSupplier(sup)
+                            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+               }
         }
     }
 

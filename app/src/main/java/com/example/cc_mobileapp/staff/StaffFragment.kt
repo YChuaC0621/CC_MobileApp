@@ -50,6 +50,12 @@ class StaffFragment : Fragment(), StaffRecycleViewClickListener{
             Log.d("Check", "staffs fragment on activity created$it")
         })
 
+        viewModel.staff.observe(viewLifecycleOwner, Observer {
+            Log.d("Check", "B4 realtime add  supplier fragment on activity created$it")
+            adapter.addStaff(it)
+            Log.d("Check", "realtime add  supplier fragment on activity created$it")
+        })
+
 
 
     }
