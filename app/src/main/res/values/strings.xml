@@ -207,6 +207,9 @@
     <string name="login">Login</string>
     <string name="registration">Registration</string>
     <string name="add_new_stock_in_detail">Add New Stock In Detail</string>
+    <string name="staff">Staff Management</string>
+    <string name="reports">Data Visualization</string>
+    <string name="logout">Log Out</string>
 
 
     <!--staff-->
