@@ -189,6 +189,7 @@ class StockOutDetailFragment : Fragment(), StockOutDetailRecyclerViewClickListen
         stockOut.totalProdPrice = totalPrice
         sharedStockOutViewModel.addStockOut(stockOut)
         viewModelStore.clear()
+        Toast.makeText(requireContext(), "Successfully Add Stock Out", Toast.LENGTH_SHORT).show()
         requireActivity().supportFragmentManager.popBackStack(getCallerFragment(), FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 

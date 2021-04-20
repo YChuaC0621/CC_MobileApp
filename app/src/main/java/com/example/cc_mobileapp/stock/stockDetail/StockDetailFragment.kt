@@ -145,6 +145,7 @@ class StockDetailFragment : Fragment(), StockDetailRecyclerViewClickListener {
         stockIn.totalProdPrice = totalPrice.toString().format("%.2f").toDoubleOrNull()
         sharedStockInViewModel.addStockIn(stockIn)
         viewModelStore.clear()
+        Toast.makeText(requireContext(), "Successfully Add Stock In", Toast.LENGTH_SHORT).show()
         requireActivity().supportFragmentManager.popBackStack(getCallerFragment(), FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 

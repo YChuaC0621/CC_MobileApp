@@ -24,6 +24,8 @@ class StockInSupplierDialogFragment : Fragment(){
     private val dbSupplier = FirebaseDatabase.getInstance().getReference(Constant.NODE_SUPPLIER)
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     lateinit var stockInSupplierName: String
+    private lateinit var supplierNameListener:ValueEventListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -82,7 +84,7 @@ class StockInSupplierDialogFragment : Fragment(){
             requireActivity().supportFragmentManager.popBackStack("stockInSupplierDialogFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
         // Autocomplete for supplier name
-        val supplierNameListener = object : ValueEventListener {
+        supplierNameListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchSupplierName(snapshot)
             }
@@ -107,6 +109,11 @@ class StockInSupplierDialogFragment : Fragment(){
         }else{
             Log.d("checkAuto", "No match found")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbSupplier.removeEventListener(supplierNameListener)
     }
 
 }

@@ -43,6 +43,8 @@ class EditStockDetailFragment(
     private val sharedStockInViewModel: StockInViewModel by activityViewModels()
     private val dbProd = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
     private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
+    private lateinit var barcodeListener:ValueEventListener
+    private lateinit var rackListener:ValueEventListener
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -140,9 +142,6 @@ class EditStockDetailFragment(
                             valid = false
                             input_layout_editStockDetail_ProdBarcode.error = getString(R.string.supplier_noProd_error)
                         } else {
-                            if(stockDetailEdit.stockDetailProdBarcode == stockDetail.stockDetailProdBarcode){
-
-                            }
                             // check if the entered product barcode is valid
                             var availableProd = false
                             for (prodSnapshot in snapshot.children) {
@@ -266,7 +265,7 @@ class EditStockDetailFragment(
         }
 
         // Autocomplete for product barcode
-        val barcodeListener = object : ValueEventListener {
+        barcodeListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchProdBarcode(snapshot)
             }
@@ -278,7 +277,7 @@ class EditStockDetailFragment(
         dbProd.addListenerForSingleValueEvent(barcodeListener)
 
         // autocomplate for rack name
-        val rackListener = object : ValueEventListener {
+        rackListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchRack(snapshot)
             }
@@ -335,5 +334,11 @@ class EditStockDetailFragment(
             edit_text_editStockDetail_ProdBarcode.setText(sharedStockBarcodeViewModel.scannedProductCode.value)
             sharedStockBarcodeViewModel.clearBarcode()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbProd.removeEventListener(barcodeListener)
+        dbRack.removeEventListener(rackListener)
     }
 }

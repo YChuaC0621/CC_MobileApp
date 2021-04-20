@@ -20,6 +20,8 @@ class StockOutClientFragment : Fragment() {
     private val dbClient = FirebaseDatabase.getInstance().getReference(Constant.NODE_CLIENT)
     private val sharedStockOutViewModel: StockOutViewModel by activityViewModels()
     lateinit var stockOutClientName: String
+    private lateinit var clientNameListener:ValueEventListener
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +81,7 @@ class StockOutClientFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack("stockOutClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
         // Autocomplete for client name
-        val clientNameListener = object : ValueEventListener {
+        clientNameListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchClientName(snapshot)
             }
@@ -103,5 +105,10 @@ class StockOutClientFragment : Fragment() {
         }else{
             Log.d("checkAuto", "No match found")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbClient.removeEventListener(clientNameListener)
     }
 }

@@ -160,6 +160,7 @@ class AddProductDialogFragment : Fragment() {
                                         // add product
                                         viewModel.addProduct(product)
                                         // pop backstack
+                                        Toast.makeText(requireContext(), "Successfully Add Product", Toast.LENGTH_SHORT).show()
                                         requireActivity().supportFragmentManager.popBackStack("addProductFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                                     }else {
                                         valid = false

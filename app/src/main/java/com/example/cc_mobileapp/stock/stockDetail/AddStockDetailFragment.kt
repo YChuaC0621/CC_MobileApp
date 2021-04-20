@@ -37,6 +37,8 @@ class AddStockDetailFragment : Fragment() {
     private val dbProd = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
     private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
     private lateinit var prodViewModel: ProductViewModel
+    private lateinit var barcodeListener:ValueEventListener
+    private lateinit var rackListener:ValueEventListener
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -175,6 +177,7 @@ class AddStockDetailFragment : Fragment() {
                                                                             } else {
                                                                                 // add the stock detail
                                                                                 stockViewModel.addStockDetail(stockDetail)
+                                                                                Toast.makeText(requireContext(), "Successfully Add Stock Detail", Toast.LENGTH_SHORT).show()
                                                                                 // go back to previous fragment
                                                                                 requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                                                                             }
@@ -231,7 +234,7 @@ class AddStockDetailFragment : Fragment() {
         }
 
         // Autocomplete for product barcode
-        val barcodeListener = object : ValueEventListener {
+        barcodeListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchProdBarcode(snapshot)
             }
@@ -243,7 +246,7 @@ class AddStockDetailFragment : Fragment() {
         dbProd.addListenerForSingleValueEvent(barcodeListener)
 
         // autocomplete for rack barcode
-        val rackBarcodeListener = object : ValueEventListener {
+        rackListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.d("check", "go into listener")
                 populateSearchRackBarcode(snapshot)
@@ -254,7 +257,7 @@ class AddStockDetailFragment : Fragment() {
                 TODO("Not yet implemented")
             }
         }
-        dbRack.addListenerForSingleValueEvent(rackBarcodeListener)
+        dbRack.addListenerForSingleValueEvent(rackListener)
 
     }
 
@@ -303,5 +306,11 @@ class AddStockDetailFragment : Fragment() {
             edit_text_stockDetail_ProdBarcode.setText(sharedStockBarcodeViewModel.scannedProductCode.value)
             sharedStockBarcodeViewModel.clearBarcode()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbProd.removeEventListener(barcodeListener)
+        dbRack.removeEventListener(rackListener)
     }
 }

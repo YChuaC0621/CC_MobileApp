@@ -124,7 +124,7 @@ class AddClientDialogFragment : Fragment() {
                             client.clientLocation = clientLocation
                             // add client
                             viewModel.addClient(client)
-
+                            Toast.makeText(requireContext(), "Successfully Add Client", Toast.LENGTH_SHORT).show()
                             // pop back to previous fragment
                             requireActivity().supportFragmentManager.popBackStack("addClientFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                         }
