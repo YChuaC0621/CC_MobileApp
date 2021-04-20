@@ -142,9 +142,6 @@ class EditStockDetailFragment(
                             valid = false
                             input_layout_editStockDetail_ProdBarcode.error = getString(R.string.supplier_noProd_error)
                         } else {
-                            if(stockDetailEdit.stockDetailProdBarcode == stockDetail.stockDetailProdBarcode){
-
-                            }
                             // check if the entered product barcode is valid
                             var availableProd = false
                             for (prodSnapshot in snapshot.children) {

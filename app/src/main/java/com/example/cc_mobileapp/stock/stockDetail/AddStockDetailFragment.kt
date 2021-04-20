@@ -177,6 +177,7 @@ class AddStockDetailFragment : Fragment() {
                                                                             } else {
                                                                                 // add the stock detail
                                                                                 stockViewModel.addStockDetail(stockDetail)
+                                                                                Toast.makeText(requireContext(), "Successfully Add Stock Detail", Toast.LENGTH_SHORT).show()
                                                                                 // go back to previous fragment
                                                                                 requireActivity().supportFragmentManager.popBackStack("addStockDetailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                                                                             }

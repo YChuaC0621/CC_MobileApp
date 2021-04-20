@@ -174,6 +174,7 @@ class AddStockOutDetailFragment : Fragment() {
                                                             stockOutDetailViewModel.addStockOutDetail(
                                                                     stockOutDetail
                                                             )
+                                                            Toast.makeText(requireContext(), "Successfully Add Stock Out Detail", Toast.LENGTH_SHORT).show()
                                                             requireActivity().supportFragmentManager.popBackStack(
                                                                     "addStockOutDetailFragment",
                                                                     FragmentManager.POP_BACK_STACK_INCLUSIVE
@@ -181,6 +182,7 @@ class AddStockOutDetailFragment : Fragment() {
                                                         }
                                                     } else {
                                                         stockOutDetailViewModel.addStockOutDetail(stockOutDetail)
+                                                        Toast.makeText(requireContext(), "Successfully Add Stock Out Detail", Toast.LENGTH_SHORT).show()
                                                         requireActivity().supportFragmentManager.popBackStack(
                                                                 "addStockOutDetailFragment",
                                                                 FragmentManager.POP_BACK_STACK_INCLUSIVE
