@@ -129,7 +129,7 @@ class StockReportFormFragment : Fragment() {
                         var year = clean.substring(4, 8).toInt()
                         if (mon > 12) mon = 12
                         cal[Calendar.MONTH] = mon - 1
-                        year = if (year < 1900) 1900 else if (year > 2100) 2100 else year
+                        year = if (year < 2010) 2010 else if (year > 2100) 2100 else year
                         cal[Calendar.YEAR] = year
                         // ^ first set year for the line below to work correctly
                         //with leap years - otherwise, date e.g. 29/02/2012
@@ -183,7 +183,9 @@ class StockReportFormFragment : Fragment() {
     //check the input is only integer
     private fun checkRegexdate(Date: String): Boolean {
         var Date: String = Date
-        var regex: Regex = Regex(pattern = """^([0-9]{2})\\([0-9]{2})\\([0-9]{4})""")
-        return regex.matches(input = Date)
+        var regex: Regex = Regex(pattern="^\\d{2}/\\d{2}/\\d{4}\$")
+        var result = regex.matches(input = Date)
+        Log.d("Check", "end date string: ${result}")
+        return result
     }
 }

@@ -241,6 +241,7 @@ class SiteMapFragment: Fragment() {
         //retreive product data from product database
         dbProduct.get().addOnSuccessListener {
             var counter = 0
+            var prodcounter = 0
             if (it.exists()) {
                 var result = "Searching Results : \n"
 
@@ -252,6 +253,7 @@ class SiteMapFragment: Fragment() {
                     //if yes find its stock details transaction
                     if (product?.prodName!!.equals(search_editText.text.toString())) {
                         val prodId = product?.prodBarcode.toString()
+                        prodcounter = 1
                         dbStock.get().addOnSuccessListener {
                             Log.d("Check", "fetch stock details")
                             if (it.exists()) {
@@ -266,17 +268,21 @@ class SiteMapFragment: Fragment() {
                                     }
 
                                 }
+                                if(counter == 0)
+                                {
+                                    Toast.makeText(requireContext(), getString(R.string.search_not_found), Toast.LENGTH_SHORT).show()
+                                }
                             }
                         }
 
                     }
 
                 }
+                if(prodcounter == 0 )
+                {
+                    Toast.makeText(requireContext(), getString(R.string.search_not_found), Toast.LENGTH_SHORT).show()
+                }
 
-            }
-            if(search_results.text.isNullOrBlank() && counter == 0)
-            {
-                Toast.makeText(requireContext(), getString(R.string.search_not_found), Toast.LENGTH_SHORT).show()
             }
 
         }
