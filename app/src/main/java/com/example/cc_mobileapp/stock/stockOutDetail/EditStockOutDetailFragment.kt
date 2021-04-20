@@ -120,7 +120,7 @@ class EditStockOutDetailFragment(
                 val stockOutDetailEdit = StockOutDetail()
                 stockOutDetailEdit.stockOutDetailProdBarcode = prodBarcode
                 stockOutDetailEdit.stockOutDetailQty = stockQty
-                stockOutDetailEdit.stockTypeId = sharedStockOutDetailViewModel.stockOutTypeKey.value
+                stockOutDetailEdit.stockTypeId = stockOutDetail.stockTypeId
                 stockOutDetailEdit.stockOutDetailId = stockOutDetail.stockOutDetailId
                 var availableStockDB: Int = 0
 
