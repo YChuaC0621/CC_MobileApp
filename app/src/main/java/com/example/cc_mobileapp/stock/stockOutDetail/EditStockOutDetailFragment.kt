@@ -44,6 +44,8 @@ class EditStockOutDetailFragment(
     private val sharedStockBarcodeViewModel: StockOutBarcodeViewModel by activityViewModels()
     private val sharedStockOutDetailViewModel: StockOutDetailViewModel by activityViewModels()
     private val dbProd = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
+    private lateinit var barcodeListener:ValueEventListener
+
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -247,7 +249,7 @@ class EditStockOutDetailFragment(
         }
 
         // Autocomplete for product barcode
-        val barcodeListener = object : ValueEventListener {
+        barcodeListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchProdBarcode(snapshot)
             }
@@ -287,5 +289,10 @@ class EditStockOutDetailFragment(
             edit_text_editStockOutDetail_ProdBarcode.setText(sharedStockBarcodeViewModel.scannedProductCode.value)
             sharedStockBarcodeViewModel.clearBarcode()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbProd.removeEventListener(barcodeListener)
     }
 }

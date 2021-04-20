@@ -40,8 +40,8 @@ class AddStockOutDetailFragment : Fragment() {
     private val sharedStockBarcodeViewModel: StockBarcodeViewModel by activityViewModels()
     private val sharedStockOutViewModel: StockOutViewModel by activityViewModels()
     private val dbProd = FirebaseDatabase.getInstance().getReference(Constant.NODE_PRODUCT)
-    private val dbRack = FirebaseDatabase.getInstance().getReference(Constant.NODE_RACK)
     private lateinit var prodViewModel: ProductViewModel
+    private lateinit var barcodeListener:ValueEventListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -232,7 +232,7 @@ class AddStockOutDetailFragment : Fragment() {
         }
 
         // Autocomplete for product barcode
-        val barcodeListener = object : ValueEventListener {
+        barcodeListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchProdBarcode(snapshot)
             }
@@ -275,5 +275,10 @@ class AddStockOutDetailFragment : Fragment() {
             edit_text_stockOutDetail_ProdBarcode.setText(sharedStockBarcodeViewModel.scannedProductCode.value)
             sharedStockBarcodeViewModel.clearBarcode()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbProd.removeEventListener(barcodeListener)
     }
 }
