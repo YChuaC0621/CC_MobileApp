@@ -131,7 +131,7 @@ class EditStockDetailFragment(
                 stockDetailEdit.stockDetailProdBarcode = prodBarcode
                 stockDetailEdit.stockDetailRackId = rackId
                 stockDetailEdit.stockDetailQty = stockQty.toInt()
-                stockDetailEdit.stockTypeId = sharedStockInViewModel.stockTypePushKey.value
+                stockDetailEdit.stockTypeId = stockDetail.stockTypeId
                 stockDetailEdit.stockDetailId = stockDetail.stockDetailId
 
                 // check if the supplier provide any products

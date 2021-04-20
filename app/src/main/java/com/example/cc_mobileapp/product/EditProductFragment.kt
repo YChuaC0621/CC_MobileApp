@@ -27,6 +27,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
     private lateinit var viewModel: ProductViewModel
     private val sharedBarcodeViewModel: ProductBarcodeViewModel by activityViewModels()
     private val dbSupplier = FirebaseDatabase.getInstance().getReference(Constant.NODE_SUPPLIER)
+    private lateinit var supplierNameListener:ValueEventListener
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -236,7 +237,7 @@ class EditProductFragment(private val product: Product) : Fragment() {
         }
 
         // Autocomplete for product barcode
-        val supplierNameListener = object : ValueEventListener {
+        supplierNameListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchSupplierName(snapshot)
             }
@@ -284,6 +285,11 @@ class EditProductFragment(private val product: Product) : Fragment() {
             edit_text_editProdBarcode.setText(sharedBarcodeViewModel.scannedCode.value)
             sharedBarcodeViewModel.clearBarcode()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbSupplier.removeEventListener(supplierNameListener)
     }
 
 }
