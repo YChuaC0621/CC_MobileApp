@@ -53,19 +53,6 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
         editTxt_staffHpNum.isEnabled = false
         editTxt_working_status.isEnabled = false
 
-        //observe the edit results
-        viewModel.result.observe(viewLifecycleOwner, Observer {
-            val message: String
-            if (it == null) {
-                message = (R.string.staff_edited).toString()
-            } else {
-                message = getString(R.string.error, it.message)
-            }
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show().toString()
-            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        })
-
         //save to database
         btn_Save.setOnClickListener {
             val working_pos = editTxt_working_position.text.toString()
@@ -88,14 +75,36 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
             }
 
             if (valid) {
+                var edit_msg = ""
                 if(working_pos.equals("Staff"))
                 {
-                    staff.workingPosition = 1
+                    if(staff.workingPosition == 1)
+                    {
+                        Toast.makeText(requireContext(), getString(R.string.staff_info_remain), Toast.LENGTH_SHORT).show()
+                    }
+                    else
+                    {
+                        staff.workingPosition = 1
+                        viewModel.updateStaff(staff)
+                        Toast.makeText(requireContext(), getString(R.string.staff_edited), Toast.LENGTH_SHORT).show()
+                    }
+
                 }
                 else
-                    staff.workingPosition = 2
+                {
+                    if(staff.workingPosition == 2)
+                    {
+                        Toast.makeText(requireContext(), getString(R.string.staff_info_remain), Toast.LENGTH_SHORT).show()
+                    }
+                    else
+                    {
+                        staff.workingPosition = 2
+                        viewModel.updateStaff(staff)
+                        Toast.makeText(requireContext(), getString(R.string.staff_edited), Toast.LENGTH_SHORT).show()
+                    }
+                }
                 Log.d("Check", "Update staff data $staff")
-                viewModel.updateStaff(staff)
+
             }
         }
 
@@ -106,6 +115,7 @@ class EditStaffFragment (private val staff: Users) : Fragment() {
                 it.setTitle(getString(R.string.delete_confirmation))
                 it.setPositiveButton(getString(R.string.yes)) { dialog, which ->
                     viewModel.deleteStaff(staff)
+                    Toast.makeText(requireContext(), getString(R.string.staff_deleted), Toast.LENGTH_SHORT).show()
                 }
                 it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()

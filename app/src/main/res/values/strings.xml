@@ -221,5 +221,11 @@
     <string name="staff_edited">Edit Staff Successfully</string>
     <string name="error_pos">You can either enter "Staff" or "Top Management"</string>
     <string name="NoResults">\"No information is placed under this \"</string>
+    <string name="staff_info_remain">Staff Information Remain Unchanged</string>
+    <string name="supplier_info_remain">Supplier Info Remain Unchanged</string>
+    <string name="staff_deleted">Staff is resigned successfully</string>
+    <string name="supplier_deleted">Supplier is deleted successfully</string>
+    <string name="search_not_found">No result is found</string>
+    <string name="date_invalid_msg">Invalid Date</string>
 </resources>
 

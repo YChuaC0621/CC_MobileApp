@@ -51,19 +51,6 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
         editTxt_supCmpName.setText(supplier.supCmpName)
         editTxt_supCmpLot.setText(supplier.supCmpLot)
 
-        //check the update results
-        viewModel.result.observe(viewLifecycleOwner, Observer {
-            val message:String
-            if (it == null) {
-                message = (R.string.supplier_edited).toString()
-            } else {
-                message = getString(R.string.error, it.message)
-            }
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show().toString()
-            requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        })
-
         //update the information to database
         btn_Save.setOnClickListener {
             val supName = editTxt_supName.text.toString().trim()
@@ -132,13 +119,26 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
 
             //if all valid inputs update to database
                if(valid){
-                    supplier.supName = supName
-                    supplier.supEmail = supEmail
-                    supplier.supHpNum = supHpNum
-                    supplier.supCmpName = supCmpName
-                    supplier.supCmpLot = supCmpLot
-                    Log.d("Check", "Update client data $supplier")
-                    viewModel.updateSuppliers(supplier)
+                   if(supplier.supName.equals(supName)
+                           && supplier.supEmail.equals(supEmail)
+                           && supplier.supCmpName.equals(supCmpName)
+                           && supplier.supHpNum.equals(supHpNum)
+                           && supplier.supCmpLot.equals(supCmpLot))
+                   {
+                       Toast.makeText(requireContext(), getString(R.string.supplier_info_remain), Toast.LENGTH_SHORT).show()
+                   }
+                   else
+                   {
+                       supplier.supName = supName
+                       supplier.supEmail = supEmail
+                       supplier.supHpNum = supHpNum
+                       supplier.supCmpName = supCmpName
+                       supplier.supCmpLot = supCmpLot
+                       Log.d("Check", "Update client data $supplier")
+                       viewModel.updateSuppliers(supplier)
+                       Toast.makeText(requireContext(), getString(R.string.supplier_added), Toast.LENGTH_SHORT).show()
+                   }
+
                 }
             }
 
@@ -147,7 +147,9 @@ class EditSupplierFragment(private val supplier: Supplier) : Fragment() {
         txtDelete.setOnClickListener{
             AlertDialog.Builder(requireContext()).also{
                 it.setTitle(getString(R.string.delete_confirmation))
-                it.setPositiveButton(getString(R.string.yes)){ dialog, which -> viewModel.deleteSupplier(supplier)
+                it.setPositiveButton(getString(R.string.yes)){ dialog, which ->
+                    viewModel.deleteSupplier(supplier)
+                    Toast.makeText(requireContext(), getString(R.string.supplier_deleted), Toast.LENGTH_SHORT).show()
                 }
                 it.setNegativeButton("No"){dialog, which -> dialog.dismiss()}
             }.create().show()

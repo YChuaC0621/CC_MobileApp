@@ -38,6 +38,7 @@ class AddRackDialogFragment  : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
         //Add Rack
         btn_Save.setOnClickListener {
             val rackNum = editTxt_rackNum.text.toString().trim()
@@ -114,6 +115,9 @@ class AddRackDialogFragment  : Fragment() {
     }
 
     private fun checkRack(rack: Rack, racks: List<Rack>) {
+
+        //observe the results for add rack process
+
         //access rack database
         var found = 0
         for (checking in racks) {
@@ -133,20 +137,12 @@ class AddRackDialogFragment  : Fragment() {
         if (found == 0) {
             //pass to view model to add
             viewModel.addRack(rack)
+            Toast.makeText(requireContext(), getString(R.string.rack_added), Toast.LENGTH_SHORT).show()
             //allow the fragment navigate back to activity
             requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-            //observe the results for add rack process
-            viewModel.result.observe(viewLifecycleOwner, Observer {
-                val message = if (it == null) {// success
-                    getString(R.string.rack_added)
-                } else {
-                    getString(R.string.error, it.message)
-                }
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            })
-
         }
+
     }
 
 }

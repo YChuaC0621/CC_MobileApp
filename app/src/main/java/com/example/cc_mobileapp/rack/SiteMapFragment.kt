@@ -240,9 +240,10 @@ class SiteMapFragment: Fragment() {
     suspend fun searchResult() {
         //retreive product data from product database
         dbProduct.get().addOnSuccessListener {
+            var counter = 0
             if (it.exists()) {
                 var result = "Searching Results : \n"
-                var counter = 0
+
                 for (prod in it.children) {
                     var product: Product? =
                         prod.getValue(Product::class.java)
@@ -266,23 +267,16 @@ class SiteMapFragment: Fragment() {
 
                                 }
                             }
-                            if(counter == 0)
-                            {
-                                Toast.makeText(
-                                        requireContext(),
-                                        "No result is found ",
-                                        Toast.LENGTH_SHORT
-                                ).show()
-                                search_results.setText("")
-
-                            }
                         }
+
                     }
+
                 }
 
-
-
-
+            }
+            if(search_results.text.isNullOrBlank() && counter == 0)
+            {
+                Toast.makeText(requireContext(), getString(R.string.search_not_found), Toast.LENGTH_SHORT).show()
             }
 
         }

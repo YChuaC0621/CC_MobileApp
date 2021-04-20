@@ -48,16 +48,6 @@ class AddSupplierDialogFragment  : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        //check the adding results
-        viewModel.result.observe(viewLifecycleOwner, Observer {
-            val message = if (it == null) {// success
-                getString(R.string.supplier_added)
-            } else {
-                getString(R.string.error, it.message)
-            }
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        })
-
         //add supplier to database
         btn_Save.setOnClickListener {
             val supName = editTxt_supName.text.toString().trim()
@@ -136,6 +126,7 @@ class AddSupplierDialogFragment  : Fragment() {
                             sup.supCmpLot = supCmpLot
                             Log.d("Check", "supplier data $sup")
                             viewModel.addSupplier(sup)
+                            Toast.makeText(requireContext(), getString(R.string.supplier_added), Toast.LENGTH_SHORT).show()
                             requireActivity().supportFragmentManager.popBackStack("fragmentA", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         }
                     }

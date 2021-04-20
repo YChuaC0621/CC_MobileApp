@@ -9,11 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.cc_mobileapp.R
+import kotlinx.android.synthetic.main.fragment_edit_staff.*
 import kotlinx.android.synthetic.main.fragment_report.*
+import kotlinx.android.synthetic.main.fragment_sitemap.*
 import kotlinx.android.synthetic.main.fragment_stockreport_form.*
 import java.util.*
 
@@ -150,15 +153,37 @@ class StockReportFormFragment : Fragment() {
 
         //navigate to display stock report
         btn_continue2.setOnClickListener{
-            val startDateString = editTxt_startDate.text.toString()
-            val endDateString = editTxt_endDate.text.toString()
-            Log.d("Check", "start date: $startDateString")
-            Log.d("Check", "end date: $endDateString")
-            val currentView = (requireView().parent as ViewGroup).id
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(currentView, StockReportFragment(startDateString, endDateString))
-            transaction.addToBackStack("fragmentA")
-            transaction.commit()
+            Log.d("Check", "start date string: ${editTxt_startDate.text}")
+            Log.d("Check", "end date string: ${editTxt_endDate.text}")
+            if(editTxt_startDate.text.isNullOrBlank() || !checkRegexdate(editTxt_startDate.text.toString())){
+                txtInputLayout_startDate.error = getString(R.string.date_invalid_msg)
+                return@setOnClickListener
+            }
+            else if(editTxt_endDate.text.isNullOrBlank() || !checkRegexdate(editTxt_endDate.text.toString()))
+            {
+                txtInputLayout_endDate.error = getString(R.string.date_invalid_msg)
+                return@setOnClickListener
+            }
+            else
+            {
+                val startDateString = editTxt_startDate.text.toString()
+                val endDateString = editTxt_endDate.text.toString()
+                Log.d("Check", "start date: $startDateString")
+                Log.d("Check", "end date: $endDateString")
+                val currentView = (requireView().parent as ViewGroup).id
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(currentView, StockReportFragment(startDateString, endDateString))
+                transaction.addToBackStack("fragmentA")
+                transaction.commit()
+            }
+
         }
+    }
+
+    //check the input is only integer
+    private fun checkRegexdate(Date: String): Boolean {
+        var Date: String = Date
+        var regex: Regex = Regex(pattern = """^([0-9]{2})\\([0-9]{2})\\([0-9]{4})""")
+        return regex.matches(input = Date)
     }
 }
