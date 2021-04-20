@@ -33,6 +33,7 @@ class AddProductDialogFragment : Fragment() {
     lateinit var prodDesc: String
     var prodPrice: Double? = null
     lateinit var prodBarcode: String
+    private lateinit var supplierNameListener:ValueEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -245,6 +246,11 @@ class AddProductDialogFragment : Fragment() {
             edit_text_prodBarcode.setText(sharedBarcodeViewModel.scannedCode.value)
             sharedBarcodeViewModel.clearBarcode()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbSupplier.removeEventListener(supplierNameListener)
     }
 
 }
