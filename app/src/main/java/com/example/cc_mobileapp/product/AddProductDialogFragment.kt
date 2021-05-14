@@ -197,7 +197,7 @@ class AddProductDialogFragment : Fragment() {
         }
 
         // Autocomplete for product barcode
-        val supplierNameListener = object : ValueEventListener {
+        supplierNameListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 populateSearchSupplierName(snapshot)
             }
